@@ -1,0 +1,15 @@
+D:\App\FBTOOL\LoginYT\LoginYT\obj\Debug\LoginYT.csprojAssemblyReference.cache
+D:\App\FBTOOL\LoginYT\LoginYT\obj\Debug\LoginYT.csproj.CoreCompileInputs.cache
+D:\App\FBTOOL\LoginYT\LoginYT\bin\Debug\LoginYT.exe.config
+D:\App\FBTOOL\LoginYT\LoginYT\bin\Debug\LoginYT.exe
+D:\App\FBTOOL\LoginYT\LoginYT\bin\Debug\LoginYT.pdb
+D:\App\FBTOOL\LoginYT\LoginYT\bin\Debug\Gma.System.MouseKeyHook.dll
+D:\App\FBTOOL\LoginYT\LoginYT\bin\Debug\Newtonsoft.Json.dll
+D:\App\FBTOOL\LoginYT\LoginYT\bin\Debug\WebDriver.dll
+D:\App\FBTOOL\LoginYT\LoginYT\bin\Debug\WebDriver.Support.dll
+D:\App\FBTOOL\LoginYT\LoginYT\bin\Debug\Newtonsoft.Json.xml
+D:\App\FBTOOL\LoginYT\LoginYT\bin\Debug\WebDriver.xml
+D:\App\FBTOOL\LoginYT\LoginYT\bin\Debug\WebDriver.Support.xml
+D:\App\FBTOOL\LoginYT\LoginYT\obj\Debug\LoginYT.csproj.CopyComplete
+D:\App\FBTOOL\LoginYT\LoginYT\obj\Debug\LoginYT.exe
+D:\App\FBTOOL\LoginYT\LoginYT\obj\Debug\LoginYT.pdb

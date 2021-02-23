@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{81662DCD-CD16-4220-A55E-FAC2DDCB0BA7}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LoginYT</RootNamespace>
+    <AssemblyName>LoginYT</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <StartupObject>GenCode.Program</StartupObject>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Gma.System.MouseKeyHook, Version=5.6.130.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\SETUP\dnSpy-net-win64\facebook\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.3.141.0\lib\net45\WebDriver.Support.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Costura\AssemblyLoader.cs" />
+    <Compile Include="GenCode\HttpClientHelper.cs" />
+    <Compile Include="GenCode\ManageChannel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GenCode\ManageChannel.Designer.cs">
+      <DependentUpon>ManageChannel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GenCode\ModelTranslateRequest.cs" />
+    <Compile Include="GenCode\ModelTranslateResponse.cs" />
+    <Compile Include="GenCode\Program.cs" />
+    <Compile Include="GenCode\Properties\Resources.cs" />
+    <Compile Include="GenCode\Properties\Settings.Designer.cs">
+      <DependentUpon>Settings.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="GenCode\RegClone.cs" />
+    <Compile Include="GenCode\ShuffleHelper.cs" />
+    <Compile Include="GenCode\TextBoxUtils.cs" />
+    <Compile Include="ProcessedByFody.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Costura\csquery\dll.compressed" />
+    <EmbeddedResource Include="Costura\gma\system\mousekeyhook\dll.compressed" />
+    <EmbeddedResource Include="Costura\newtonsoft\json\dll.compressed" />
+    <EmbeddedResource Include="Costura\supersocket\clientengine\dll.compressed" />
+    <EmbeddedResource Include="Costura\system\collections\specialized\dll.compressed" />
+    <EmbeddedResource Include="Costura\system\io\dll.compressed" />
+    <EmbeddedResource Include="Costura\system\linq\dll.compressed" />
+    <EmbeddedResource Include="Costura\system\net\nameresolution\dll.compressed" />
+    <EmbeddedResource Include="Costura\system\net\security\dll.compressed" />
+    <EmbeddedResource Include="Costura\system\net\sockets\dll.compressed" />
+    <EmbeddedResource Include="Costura\system\runtime\dll.compressed" />
+    <EmbeddedResource Include="Costura\system\runtime\extensions\dll.compressed" />
+    <EmbeddedResource Include="Costura\system\runtime\interopservices\dll.compressed" />
+    <EmbeddedResource Include="Costura\system\security\cryptography\algorithms\dll.compressed" />
+    <EmbeddedResource Include="Costura\system\security\cryptography\encoding\dll.compressed" />
+    <EmbeddedResource Include="Costura\system\security\cryptography\primitives\dll.compressed" />
+    <EmbeddedResource Include="Costura\system\security\cryptography\x509certificates\dll.compressed" />
+    <EmbeddedResource Include="Costura\system\text\regularexpressions\dll.compressed" />
+    <EmbeddedResource Include="Costura\webdriver\dll.compressed" />
+    <EmbeddedResource Include="Costura\webdriver\support\dll.compressed" />
+    <EmbeddedResource Include="GenCode\ManageChannel.resources" />
+    <EmbeddedResource Include="GenCode\Properties\Resources.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="app.manifest" />
+    <None Include="GenCode\Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Selenium.Chrome.WebDriver.85.0.0\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.85.0.0\build\Selenium.Chrome.WebDriver.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.85.0.0\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.85.0.0\build\Selenium.Chrome.WebDriver.targets'))" />
+  </Target>
+</Project>
