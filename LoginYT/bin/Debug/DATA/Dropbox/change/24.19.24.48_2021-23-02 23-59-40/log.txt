@@ -1,0 +1,10 @@
+Created DATA\Dropbox\change\24.19.24.48_2021-23-02 23-59-40
+Done!
+Thread 0->--------------------------------
+Thread 0->The file driver\chromedriver.exe does not exist. The driver can be downloaded at http://chromedriver.storage.googleapis.com/index.html
+   at OpenQA.Selenium.DriverService..ctor(String servicePath, Int32 port, String driverServiceExecutableName, Uri driverServiceDownloadUrl)
+   at OpenQA.Selenium.Chrome.ChromeDriverService..ctor(String executablePath, String executableFileName, Int32 port)
+   at OpenQA.Selenium.Chrome.ChromeDriverService.CreateDefaultService(String driverPath)
+   at GenCode.RegClone.initBrowserForCreateGmail() in D:\App\FBTOOL\LoginYT\LoginYT\GenCode\RegClone.cs:line 924
+   at GenCode.RegClone.<>c__DisplayClass21_0.<<regClone>b__0>d.MoveNext() in D:\App\FBTOOL\LoginYT\LoginYT\GenCode\RegClone.cs:line 288
+Thread 0->End
