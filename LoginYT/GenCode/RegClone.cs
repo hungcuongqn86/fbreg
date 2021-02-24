@@ -441,6 +441,7 @@ namespace GenCode
 
 									if (!this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 									{
+										Delay(1000);
 										IWebElement _btConfirmResend = this.getElement(By.CssSelector("a[href*='/confirm/resend_code']"));
 										if (!this.isValid(_btConfirmResend))
 										{
@@ -450,6 +451,7 @@ namespace GenCode
 												Thread.Sleep(180000);
 												_submitBt.Click();
 												WaitAjaxLoading(By.CssSelector("a[href*='/confirm/resend_code']"), 10);
+												Delay(1000);
 												_btConfirmResend = this.getElement(By.CssSelector("a[href*='/confirm/resend_code']"));
 											}
 										}
@@ -458,12 +460,14 @@ namespace GenCode
 										{
 											_btConfirmResend.Click();
 											WaitAjaxLoading(By.CssSelector("a[href*='/change_contactpoint'][rel='dialog-post']"), 10);
+											Delay(500);
 											_btConfirmResend = this.getElement(By.CssSelector("a[href*='/change_contactpoint'][rel='dialog-post']"));
 											if (this.isValid(_btConfirmResend))
 											{
 												_btConfirmResend.Click();
 												this.log("Change new email");
 												WaitAjaxLoading(By.CssSelector("input[name='contactpoint']"), 10);
+												Delay(1000);
 												IWebElement _inputNewEmail = this.getElement(By.CssSelector("input[name='contactpoint']"));
 												if (this.isValid(_inputNewEmail))
 												{
