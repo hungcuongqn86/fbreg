@@ -1075,7 +1075,7 @@ namespace GenCode
 					await _reg.regClone(chrome);
 				}).Start();
 			}
-			this.log("All Done!");
+			// this.log("All Done!");
 		}
 
 		private void initBrowse(string viaName)

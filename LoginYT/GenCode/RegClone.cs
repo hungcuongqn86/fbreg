@@ -58,42 +58,7 @@ namespace GenCode
 			{
 				try
 				{
-					this.initBrowserIphoneX();
-					this._driver.Navigate().GoToUrl("https://www.facebook.com");
-					string[] _listCookie = _tmpCookie.Split(new char[]
-					{
-						';'
-					});
-					this._driver.Manage().Cookies.DeleteAllCookies();
-					foreach (string _c in _listCookie)
-					{
-						try
-						{
-							string[] _x = _c.Trim().Split(new char[]
-							{
-								'='
-							});
-							bool flag = _x.Length > 1;
-							if (flag)
-							{
-								bool flag2 = _x.Length == 3;
-								if (flag2)
-								{
-									_x[1] = _x[1] + "=" + _x[2];
-								}
-								bool flag3 = !string.IsNullOrEmpty(_x[0].Trim());
-								if (flag3)
-								{
-									this._driver.Manage().Cookies.AddCookie(new OpenQA.Selenium.Cookie(_x[0], _x[1], ".facebook.com", "/", new DateTime?(DateTime.Now.AddDays(400.0))));
-								}
-							}
-						}
-						catch (Exception ex)
-						{
-							this.log(ex);
-						}
-					}
-					this._driver.Navigate().GoToUrl("https://www.facebook.com");
+					this._driver.Navigate().GoToUrl("https://m.facebook.com");
 					Thread.Sleep(3000);
 					IWebElement _btskipPhone = this.getElement(By.Id("nux-nav-button"));
 					bool flag4 = this.isValid(_btskipPhone);
@@ -362,15 +327,17 @@ namespace GenCode
 								_mailKhoiPhuc
 							});
 							this.log(_tmpDataAll);
-							IWebElement _lName = this.getElement(By.CssSelector("input[name='lastname']"));
-							if (this.isValid(_lName))
+
+							this.log("Fill Name");
+							IWebElement _fName = this.getElement(By.CssSelector("input[name='firstname']"));
+							if (this.isValid(_fName))
 							{
-								this.log("Fill Name");
-								this.fillInput(_lName, _lastName);
-								IWebElement _fName = this.getElement(By.CssSelector("input[name='firstname']"));
-								if (this.isValid(_fName))
+								this.fillInput(_fName, _firstName);
+
+								IWebElement _lName = this.getElement(By.CssSelector("input[name='lastname']"));
+								if (this.isValid(_lName))
 								{
-									this.fillInput(_fName, _firstName);
+									this.fillInput(_lName, _lastName);
 								}
 								IWebElement _email = this.getElement(By.CssSelector("input[name='reg_email__']"));
 								if (this.isValid(_email))
@@ -414,7 +381,7 @@ namespace GenCode
 								{
 									this.log("Click submit");
 									_submitBt.Click();
-									Thread.Sleep(3000);
+									Thread.Sleep(20000);
 
 									if (!this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 									{
@@ -422,10 +389,14 @@ namespace GenCode
 										IWebElement _btConfirmResend = this.getElement(By.CssSelector("a[href*='/confirm/resend_code']"));
 										if (!this.isValid(_btConfirmResend))
 										{
-											Thread.Sleep(180000);
-											_submitBt.Click();
-											Thread.Sleep(3000);
-											_btConfirmResend = this.getElement(By.CssSelector("a[href*='/confirm/resend_code']"));
+											_submitBt = this.getElement(By.CssSelector("button[name='websubmit']"));
+											if (this.isValid(_submitBt))
+                                            {
+												Thread.Sleep(180000);
+												_submitBt.Click();
+												Thread.Sleep(3000);
+												_btConfirmResend = this.getElement(By.CssSelector("a[href*='/confirm/resend_code']"));
+											}
 										}
 
 										if (this.isValid(_btConfirmResend))
@@ -611,7 +582,7 @@ namespace GenCode
 										this.log("check point");
 									}
 								}
-								_fName = null;
+								_lName = null;
 								_email = null;
 								_email2 = null;
 								_pass = null;
@@ -632,7 +603,7 @@ namespace GenCode
 							_passAcc = null;
 							_mailKhoiPhuc = null;
 							_tmpDataAll = null;
-							_lName = null;
+							_fName = null;
 						}
 						_acceptBt = null;
 						_locateList = null;
@@ -644,7 +615,7 @@ namespace GenCode
 					this.log(ex);
 				}
 				this.log("End");
-				try
+				/*try
 				{
 					if (this._closeChrome && this._driver != null)
 					{
@@ -653,7 +624,7 @@ namespace GenCode
 				}
 				catch
 				{
-				}
+				}*/
 			});
 			return _status;
 		}
