@@ -466,7 +466,7 @@ namespace GenCode
 								{
 									this.log("Click submit");
 									_submitBt.Click();
-									WaitAjaxLoading(By.CssSelector("a[href*='/confirm/resend_code']"), 10);
+									WaitAjaxLoading(By.CssSelector("a[href*='/confirm/resend_code']"), 15);
 
 									if (!this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 									{
@@ -504,7 +504,8 @@ namespace GenCode
 													this.log("Submit change Email");
 
 													WaitAjaxLoading(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[@type='submit']"), 3);
-													ReadOnlyCollection<IWebElement> _btSubmitNewEmail = this._driver.FindElements(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[type='submit']"));
+													Delay(1000);
+													ReadOnlyCollection<IWebElement> _btSubmitNewEmail = this._driver.FindElements(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[@type='submit']"));
 													bool _isClickSubmit = false;
 													if (_btSubmitNewEmail.Count > 0)
 													{
