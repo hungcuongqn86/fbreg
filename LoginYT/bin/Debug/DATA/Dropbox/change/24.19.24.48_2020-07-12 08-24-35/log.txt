@@ -1,0 +1,73 @@
+Created DATA\Dropbox\change\24.19.24.48_2020-07-12 08-24-35
+Done!
+Thread 0->--------------------------------
+Thread 1->--------------------------------
+Thread 3->--------------------------------
+Thread 2->--------------------------------
+Thread 1->Start load page
+Thread 0->Start load page
+Thread 3->Start load page
+Thread 2->Start load page
+Thread 1->Find cookie banner
+Thread 0->Find cookie banner
+Thread 1->Find Locate Link
+Thread 1->https://el-gr.facebook.com/
+Thread 2->Find cookie banner
+Thread 3->Find cookie banner
+Thread 0->Find Locate Link
+Thread 0->https://el-gr.facebook.com/
+Thread 2->Find Locate Link
+Thread 3->Find Locate Link
+Thread 2->https://el-gr.facebook.com/
+Thread 3->https://el-gr.facebook.com/
+Thread 0->Find Register Button
+Thread 1->Find Register Button
+Thread 0->Generate Infomation
+Thread 2->Find Register Button
+Thread 3->Find Register Button
+Thread 1->Generate Infomation
+Thread 0->Name: Arthur Werner
+Thread 0->daughterzipper63318@gmail.com	F0KHFSa68933	meatydreary56081@fairocketsmail.com
+Thread 1->Name: Katarina Barth
+Thread 1->squeamishspoon66641@gmail.com	F0KHFSa79240	linenreceipt40994@fairocketsmail.com
+Thread 2->Generate Infomation
+Thread 3->Generate Infomation
+Thread 2->Name: Änne Wild
+Thread 2->attackinsect31209@gmail.com	F0KHFSa72186	untidycomparison00911@fairocketsmail.com
+Thread 3->Name: Eva Ruf
+Thread 3->dampdamp61421@gmail.com	F0KHFSa23159	paperbeef55155@fairocketsmail.com
+Thread 1->check point
+Thread 2->check point
+Thread 3->check point
+Done!
+Thread 0->--------------------------------
+Thread 2->--------------------------------
+Thread 1->--------------------------------
+Thread 0->Start load page
+Thread 1->Start load page
+Thread 2->Start load page
+Thread 0->Find cookie banner
+Thread 0->Find Locate Link
+Thread 0->https://el-gr.facebook.com/
+Thread 1->Find cookie banner
+Thread 1->Find Locate Link
+Thread 1->https://el-gr.facebook.com/
+Thread 2->Find cookie banner
+Thread 0->Find Register Button
+Thread 2->Find Locate Link
+Thread 2->https://el-gr.facebook.com/
+Thread 0->Generate Infomation
+Thread 1->Find Register Button
+Thread 0->Name: Hans-Jörg Meister
+Thread 0->unevenallow31893@gmail.com	F0KHFSa81099	needpump71637@fairocketsmail.com
+Thread 1->Generate Infomation
+Thread 1->Name: Juergen Grimm
+Thread 1->questionabledoubt91541@gmail.com	F0KHFSa16050	auspiciousajar53777@fairocketsmail.com
+Thread 2->Find Register Button
+Thread 2->Generate Infomation
+Thread 2->Name: Marija Freund
+Thread 2->nappymeal66992@gmail.com	F0KHFSa65418	hookhook61512@fairocketsmail.com
+Thread 0->check point
+Thread 1->check point
+Thread 2->Start retry code 0
+Thread 2->Start retry code 1

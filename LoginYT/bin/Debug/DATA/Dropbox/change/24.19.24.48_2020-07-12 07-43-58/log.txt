@@ -1,0 +1,27 @@
+Created DATA\Dropbox\change\24.19.24.48_2020-07-12 07-43-58
+Done!
+Thread 4->--------------------------------
+Thread 4->The process cannot access the file 'D:\Code\Csharpe\CheckGmail\CreateCloneFB\bin\Debug\DATA\Dropbox\change\24.19.24.48_2020-07-12 07-43-58\log.txt' because it is being used by another process.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.StreamWriter.CreateFile(String path, Boolean append, Boolean checkHost)
+   at System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding, Int32 bufferSize, Boolean checkHost)
+   at System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding)
+   at System.IO.File.InternalAppendAllText(String path, String contents, Encoding encoding)
+   at GenCode.ManageChannel.log(String s) in D:\Code\Csharpe\CheckGmail\CreateCloneFB\Form1.cs:line 207
+   at GenCode.ManageChannel.LogDelegate(String _s) in D:\Code\Csharpe\CheckGmail\CreateCloneFB\Form1.cs:line 942
+   at GenCode.RegClone.log(String s) in D:\Code\Csharpe\CheckGmail\CreateCloneFB\RegClone.cs:line 485
+   at GenCode.RegClone.<>c__DisplayClass18_0.<<regClone>b__0>d.MoveNext() in D:\Code\Csharpe\CheckGmail\CreateCloneFB\RegClone.cs:line 242
+Thread 4->The process cannot access the file 'D:\Code\Csharpe\CheckGmail\CreateCloneFB\bin\Debug\DATA\Dropbox\change\24.19.24.48_2020-07-12 07-43-58\log.txt' because it is being used by another process.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.StreamWriter.CreateFile(String path, Boolean append, Boolean checkHost)
+   at System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding, Int32 bufferSize, Boolean checkHost)
+   at System.IO.StreamWriter..ctor(String path, Boolean append, Encoding encoding)
+   at System.IO.File.InternalAppendAllText(String path, String contents, Encoding encoding)
+   at GenCode.ManageChannel.log(String s) in D:\Code\Csharpe\CheckGmail\CreateCloneFB\Form1.cs:line 207
+   at GenCode.ManageChannel.LogDelegate(String _s) in D:\Code\Csharpe\CheckGmail\CreateCloneFB\Form1.cs:line 942
+   at GenCode.RegClone.log(String s) in D:\Code\Csharpe\CheckGmail\CreateCloneFB\RegClone.cs:line 485
+   at GenCode.RegClone.<>c__DisplayClass18_0.<<regClone>b__0>d.MoveNext() in D:\Code\Csharpe\CheckGmail\CreateCloneFB\RegClone.cs:line 242

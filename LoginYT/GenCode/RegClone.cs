@@ -411,10 +411,20 @@ namespace GenCode
 								{
 									this.log("Click submit");
 									_submitBt.Click();
-									Thread.Sleep(20000);
+									Thread.Sleep(3000);
+
 									if (!this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 									{
+
 										IWebElement _btConfirmResend = this.getElement(By.CssSelector("a[href*='/confirm/resend_code']"));
+										if (!this.isValid(_btConfirmResend))
+										{
+											Thread.Sleep(180000);
+											_submitBt.Click();
+											Thread.Sleep(3000);
+											_btConfirmResend = this.getElement(By.CssSelector("a[href*='/confirm/resend_code']"));
+										}
+
 										if (this.isValid(_btConfirmResend))
 										{
 											_btConfirmResend.Click();
@@ -429,7 +439,7 @@ namespace GenCode
 												if (this.isValid(_inputNewEmail))
 												{
 													this.fillInput(_inputNewEmail, _mailKhoiPhuc);
-													Thread.Sleep(3000);
+													Thread.Sleep(1000);
 													this.log("Submit change Email");
 													ReadOnlyCollection<IWebElement> _btSubmitNewEmail = this._driver.FindElements(By.CssSelector("button[type='submit']"));
 													bool _isClickSubmit = false;
@@ -451,6 +461,56 @@ namespace GenCode
 														if (!this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 														{
 															string text2 = await this.getCode2(_mailKhoiPhuc.Replace("@fairocketsmail.com", ""));
+                                                            if (string.IsNullOrEmpty(text2))
+                                                            {
+																// change mail
+																this.log("Change new email lan 2-->");
+																IWebElement _btConfirmResend1 = this.getElement(By.CssSelector("a[href*='/confirm/resend_code']"));
+																if (this.isValid(_btConfirmResend1))
+                                                                {
+																	_btConfirmResend1.Click();
+																	Thread.Sleep(2000);
+																	_btConfirmResend1 = this.getElement(By.CssSelector("a[href*='/change_contactpoint'][rel='dialog-post']"));
+																	if (this.isValid(_btConfirmResend1))
+                                                                    {
+																		_btConfirmResend1.Click();
+																		Thread.Sleep(2000);
+																		this.log("Change new email");
+																		_inputNewEmail = this.getElement(By.CssSelector("input[name='contactpoint']"));
+																		_mailKhoiPhuc = this.randomEmail();
+																		_tmpDataAll = string.Concat(new string[]
+																		{
+																			_randomEmail,
+																			"\t",
+																			_passAcc,
+																			"\t",
+																			_mailKhoiPhuc
+																		});
+																		this.log(_tmpDataAll);
+																		this.fillInput(_inputNewEmail, _mailKhoiPhuc);
+																		Thread.Sleep(1000);
+																		this.log("Submit change Email");
+																		_btSubmitNewEmail = this._driver.FindElements(By.CssSelector("button[type='submit']"));
+																		_isClickSubmit = false;
+																		if (_btSubmitNewEmail.Count > 0)
+																		{
+																			if (this.isValid(_btSubmitNewEmail[_btSubmitNewEmail.Count - 1]))
+																			{
+																				_btSubmitNewEmail[_btSubmitNewEmail.Count - 1].Click();
+																				_isClickSubmit = true;
+																				Thread.Sleep(5000);
+																			}
+																		}
+																		else
+																		{
+																			this.log("Not found submit new email");
+																		}
+
+																		text2 = await this.getCode2(_mailKhoiPhuc.Replace("@fairocketsmail.com", ""));
+																	}
+																}
+															}
+
 															string _code = text2;
 															text2 = null;
 															if (!string.IsNullOrEmpty(_code))
@@ -611,7 +671,7 @@ namespace GenCode
 				string _tmpCode;
 				for (;;)
 				{
-					await Task.Delay(20000);
+					await Task.Delay(10000);
 					this.log("Start retry code " + _count);
 					HttpClient _client = new HttpClient(new HttpClientHandler
 					{
@@ -627,7 +687,7 @@ namespace GenCode
 						break;
 					}
 					_count++;
-					if (_count >= 7)
+					if (_count >= 3)
 					{
 						goto Block_3;
 					}

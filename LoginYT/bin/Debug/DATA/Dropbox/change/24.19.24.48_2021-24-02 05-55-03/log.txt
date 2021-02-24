@@ -1,0 +1,26 @@
+Created DATA\Dropbox\change\24.19.24.48_2021-24-02 05-55-03
+Done!
+Thread 0->--------------------------------
+Thread 0->Start load page
+Thread 0->Find cookie banner
+Thread 0->Find Locate Link
+Thread 0->https://sk-sk.facebook.com/
+Thread 0->Find Register Button
+Thread 0->Generate Infomation
+Thread 0->Name: Heinz Kurz
+Thread 0->hurtmilk21304@gmail.com	F0KHFSa64096	piesugar72948@blogemail.com
+Thread 0->Fill Name
+Thread 0->Choose gender
+Thread 0->Find submit
+Thread 0->Click submit
+Done!
+Thread 0->--------------------------------
+Thread 0->Start load page
+Thread 0->Find cookie banner
+Thread 0->Find Locate Link
+Thread 0->https://sk-sk.facebook.com/
+Thread 0->Find Register Button
+Thread 0->Generate Infomation
+Thread 0->Name: Iris Hofmann
+Thread 0->enormouspublic11462@gmail.com	F0KHFSa17080	loaftawdry73662@gddao.com
+Thread 0->Fill Name

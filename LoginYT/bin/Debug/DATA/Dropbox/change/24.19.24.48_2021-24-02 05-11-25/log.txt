@@ -1,0 +1,199 @@
+Created DATA\Dropbox\change\24.19.24.48_2021-24-02 05-11-25
+Done!
+Thread 1->--------------------------------
+Thread 2->--------------------------------
+Thread 0->--------------------------------
+Thread 3->--------------------------------
+Thread 4->--------------------------------
+Thread 1->Start load page
+Thread 4->Start load page
+Thread 3->Start load page
+Thread 2->Start load page
+Thread 0->Start load page
+Thread 1->Find cookie banner
+Thread 1->Find Locate Link
+Thread 1->https://el-gr.facebook.com/
+Thread 4->Find cookie banner
+Thread 4->Find Locate Link
+Thread 4->https://el-gr.facebook.com/
+Thread 2->Find cookie banner
+Thread 3->Find cookie banner
+Thread 2->Find Locate Link
+Thread 2->https://el-gr.facebook.com/
+Thread 3->Find Locate Link
+Thread 3->https://el-gr.facebook.com/
+Thread 1->Find Register Button
+Thread 0->Find cookie banner
+Thread 4->Find Register Button
+Thread 1->Generate Infomation
+Thread 0->Find Locate Link
+Thread 0->https://el-gr.facebook.com/
+Thread 1->Name: Hans-Walter Schulze
+Thread 1->strengthenfree15651@gmail.com	F0KHFSa81245	boilingpsychotic78256@ch13sfv.com
+Thread 4->Generate Infomation
+Thread 2->Find Register Button
+Thread 4->Name: Thomas Böhme
+Thread 4->abrasiveliquid67842@gmail.com	F0KHFSa75603	eagereggs79083@hatberkshire.com
+Thread 3->Find Register Button
+Thread 2->Generate Infomation
+Thread 3->Generate Infomation
+Thread 2->Name: Cäcilia Kirsch
+Thread 2->replaceone95827@gmail.com	F0KHFSa32323	fillalleged97165@cokils.com
+Thread 3->Name: Ismail Schindler
+Thread 3->levelbumpy74868@gmail.com	F0KHFSa56158	cookdeadpan89367@cokils.com
+Thread 0->Find Register Button
+Thread 0->Generate Infomation
+Thread 0->Name: Falk Wetzel
+Thread 0->stonesuperficial52532@gmail.com	F0KHFSa16854	thunderingquiver57858@civoo.com
+Thread 1->Fill Name
+Thread 4->Fill Name
+Thread 2->Fill Name
+Thread 3->Fill Name
+Thread 1->Choose gender
+Thread 1->Find submit
+Thread 1->Click submit
+Thread 4->Choose gender
+Thread 4->Find submit
+Thread 4->Click submit
+Thread 2->Choose gender
+Thread 2->Find submit
+Thread 3->Choose gender
+Thread 3->Find submit
+Thread 2->Click submit
+Thread 3->Click submit
+Thread 0->Fill Name
+Thread 0->Choose gender
+Thread 0->Find submit
+Thread 0->Click submit
+Thread 1->Change new email
+Thread 1->Submit change Email
+Thread 4->Change new email
+Thread 3->Change new email
+Thread 2->Change new email
+Thread 4->Submit change Email
+Thread 3->Submit change Email
+Thread 2->Submit change Email
+Thread 0->Change new email
+Thread 0->Submit change Email
+Thread 1->Start retry code 0
+Thread 4->Start retry code 0
+Thread 4->Code: 48226
+Thread 4->48226
+Thread 3->Start retry code 0
+Thread 2->Start retry code 0
+Thread 2->Code: 47233
+Thread 2->47233
+Thread 0->Start retry code 0
+Thread 1->Start retry code 1
+Thread 3->Code: 96166
+Thread 3->96166
+Thread 4->xs=47%3ARzgJeXF5-um_ew%3A2%3A1614136425%3A-1%3A-1; c_user=100063705652085; datr=9cM1YCg8VRuv-SEe13lvYqKP; locale=el_GR; sb=KMQ1YISGYiDLo090ycKCZTjL; spin=r.1003349894_b.trunk_t.1614136431_s.1_v.2_; fr=1EgpsxUkGtWXQk0Su.AWW0x_vc1ZAZBck7rYjw0PHAY84.BgNcQo.w3.AAA.0.0.BgNcRh.AWURozEg6T8; 
+Thread 2->xs=32%3A5VBNngeO8vXANg%3A2%3A1614136427%3A-1%3A-1; c_user=100063748640334; datr=9sM1YC4pGGXWVpCzqhRR9glk; locale=el_GR; sb=LMQ1YPtPNwjbMTIalkSiBqn5; spin=r.1003349894_b.trunk_t.1614136435_s.1_v.2_; fr=16RtPNED0Z4oY628P.AWXFr-MWvABhCl3oj1ziap-WoT4.BgNcQs.Oh.AAA.0.0.BgNcRj.AWXoh-lzJLE; 
+Thread 3->xs=30%3AO9cWRCmFyPCw8Q%3A2%3A1614136426%3A-1%3A-1; c_user=100064026548528; datr=9cM1YMu6L-RW2nddZOeATxy9; locale=el_GR; sb=LcQ1YJ2Hd7W6Jr-GwwDwBtai; spin=r.1003349894_b.trunk_t.1614136432_s.1_v.2_; fr=1O8wYltGtkymJQKxI.AWUjQlwE2V24AEt4Ak4UOiUU3J0.BgNcQt.ND.AAA.0.0.BgNcRk.AWW5coXE4dc; 
+Thread 0->Start retry code 1
+Thread 1->Start retry code 2
+Thread 0->Start retry code 2
+Thread 1->Start retry code 3
+Thread 0->Start retry code 3
+Thread 1->Start retry code 4
+Thread 0->Start retry code 4
+Thread 1->Start retry code 5
+Thread 4->unknown error: Element <div class="_3gk8 _2rgt _1j-g _2rgt" style="" id="u_9_7_SV" data-nt="NT:BUTTON_2">...</div> is not clickable at point (55, 125). Other element would receive the click: <div class="_5vsh" id="u_0_h_NB" style="max-height: 405px;"></div>
+  (Session info: chrome=61.0.3163.79)
+  (Driver info: chromedriver=2.34.522940 (1a76f96f66e3ca7b8e57d503b4dd3bccfba87af1),platform=Windows NT 10.0.18363 x86_64)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.UnpackAndThrowOnError(Response errorResponse)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.Remote.RemoteWebElement.Execute(String commandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.Remote.RemoteWebElement.Click()
+   at GenCode.RegClone.<>c__DisplayClass17_0.<createPage>b__0() in C:\cuongnh\fbreg\LoginYT\GenCode\RegClone.cs:line 153
+Thread 4->OK->	abrasiveliquid67842@gmail.com	F0KHFSa75603	eagereggs79083@hatberkshire.com	xs=47%3ARzgJeXF5-um_ew%3A2%3A1614136425%3A-1%3A-1; c_user=100063705652085; datr=9cM1YCg8VRuv-SEe13lvYqKP; locale=el_GR; sb=KMQ1YISGYiDLo090ycKCZTjL; spin=r.1003349894_b.trunk_t.1614136431_s.1_v.2_; fr=1EgpsxUkGtWXQk0Su.AWW0x_vc1ZAZBck7rYjw0PHAY84.BgNcQo.w3.AAA.0.0.BgNcRh.AWURozEg6T8; 	PageCreate: False
+Thread 4->End
+Thread 0->Start retry code 5
+Thread 1->Start retry code 6
+Thread 1->Code: 
+Thread 1->Get Code Error
+Thread 1->End
+Thread 0->Start retry code 6
+Thread 0->Code: 
+Thread 0->Get Code Error
+Thread 0->End
+Thread 2->OK->	replaceone95827@gmail.com	F0KHFSa32323	fillalleged97165@cokils.com	xs=32%3A5VBNngeO8vXANg%3A2%3A1614136427%3A-1%3A-1; c_user=100063748640334; datr=9sM1YC4pGGXWVpCzqhRR9glk; locale=el_GR; sb=LMQ1YPtPNwjbMTIalkSiBqn5; spin=r.1003349894_b.trunk_t.1614136435_s.1_v.2_; fr=16RtPNED0Z4oY628P.AWXFr-MWvABhCl3oj1ziap-WoT4.BgNcQs.Oh.AAA.0.0.BgNcRj.AWXoh-lzJLE; 	PageCreate: True
+Thread 2->End
+Thread 3->OK->	levelbumpy74868@gmail.com	F0KHFSa56158	cookdeadpan89367@cokils.com	xs=30%3AO9cWRCmFyPCw8Q%3A2%3A1614136426%3A-1%3A-1; c_user=100064026548528; datr=9cM1YMu6L-RW2nddZOeATxy9; locale=el_GR; sb=LcQ1YJ2Hd7W6Jr-GwwDwBtai; spin=r.1003349894_b.trunk_t.1614136432_s.1_v.2_; fr=1O8wYltGtkymJQKxI.AWUjQlwE2V24AEt4Ak4UOiUU3J0.BgNcQt.ND.AAA.0.0.BgNcRk.AWW5coXE4dc; 	PageCreate: True
+Thread 3->End
+Done!
+Thread 0->--------------------------------
+Thread 0->Start load page
+Thread 0->Find cookie banner
+Thread 0->Find Locate Link
+Thread 0->https://el-gr.facebook.com/
+Thread 0->Find Register Button
+Thread 0->Generate Infomation
+Thread 0->Name: Maik Schreiner
+Thread 0->tourfar12471@gmail.com	F0KHFSa29504	causeearsplitting40773@civoo.com
+Thread 0->Fill Name
+Thread 0->Choose gender
+Thread 0->Find submit
+Thread 0->Click submit
+Done!
+Thread 0->--------------------------------
+Thread 0->End
+Thread 0->Start load page
+Thread 0->Find cookie banner
+Thread 0->Find Locate Link
+Thread 0->https://el-gr.facebook.com/
+Thread 0->Find Register Button
+Thread 0->Generate Infomation
+Thread 0->Name: Romy Rau
+Thread 0->excitedsmoke81645@gmail.com	F0KHFSa81593	remarkablerifle75803@cent23.com
+Thread 0->Fill Name
+Thread 0->Choose gender
+Thread 0->Find submit
+Thread 0->Click submit
+Thread 0->check point
+Thread 0->End
+Done!
+Thread 0->--------------------------------
+Thread 0->Start load page
+Thread 0->Find cookie banner
+Thread 0->Find Locate Link
+Thread 0->https://el-gr.facebook.com/
+Thread 0->Find Register Button
+Thread 0->Generate Infomation
+Thread 0->Name: Aloisia Berndt
+Thread 0->amazingritzy21856@gmail.com	F0KHFSa17856	raymom78209@ch13sfv.com
+Thread 0->Fill Name
+Thread 0->Choose gender
+Thread 0->Find submit
+Thread 0->Click submit
+Thread 0->End
+Done!
+Thread 0->--------------------------------
+Thread 0->Start load page
+Thread 0->Find cookie banner
+Thread 0->Find Locate Link
+Thread 0->https://el-gr.facebook.com/
+Thread 0->Find Register Button
+Thread 0->Generate Infomation
+Thread 0->Name: Claus-Dieter Brenner
+Thread 0->wantroof37730@gmail.com	F0KHFSa41496	soggycute02272@avissena.com
+Thread 0->Fill Name
+Thread 0->Choose gender
+Thread 0->Find submit
+Thread 0->Click submit
+Done!
+Thread 0->End
+Thread 0->--------------------------------
+Thread 0->Start load page
+Thread 0->Find cookie banner
+Thread 0->Find Locate Link
+Thread 0->https://de-de.facebook.com/
+Thread 0->Find Register Button
+Thread 0->Generate Infomation
+Thread 0->Name: Thilo Schön
+Thread 0->tiredwax84937@gmail.com	F0KHFSa50707	educateopen55553@aircraftdictionary.com
+Thread 0->Fill Name
+Thread 0->Choose gender
+Thread 0->Find submit
+Thread 0->Click submit
+Thread 0->End

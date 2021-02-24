@@ -1055,7 +1055,7 @@ namespace GenCode
 		// Token: 0x06000034 RID: 52 RVA: 0x000033A4 File Offset: 0x000015A4
 		private void button3_Click(object sender, EventArgs e)
 		{
-			this.killChrome();
+			// this.killChrome();
 			int _numberThread = (int)this.tbNumberThread.Value;
 			for (int i = 0; i < _numberThread; i++)
 			{

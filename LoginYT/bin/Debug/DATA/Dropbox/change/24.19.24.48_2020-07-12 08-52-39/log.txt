@@ -1,0 +1,61 @@
+Created DATA\Dropbox\change\24.19.24.48_2020-07-12 08-52-39
+Done!
+Thread 2->--------------------------------
+Thread 3->--------------------------------
+Thread 0->--------------------------------
+Thread 1->--------------------------------
+Thread 0->session not created exception
+from disconnected: unable to connect to renderer
+  (Session info: chrome=61.0.3163.79)
+  (Driver info: chromedriver=2.34.522940 (1a76f96f66e3ca7b8e57d503b4dd3bccfba87af1),platform=Windows NT 10.0.19042 x86_64) (SessionNotCreated)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.UnpackAndThrowOnError(Response errorResponse)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.StartSession(ICapabilities desiredCapabilities)
+   at OpenQA.Selenium.Remote.RemoteWebDriver..ctor(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities)
+   at OpenQA.Selenium.Chrome.ChromeDriver..ctor(ChromeDriverService service, ChromeOptions options, TimeSpan commandTimeout)
+   at GenCode.RegClone.initBrowserForCreateGmail() in D:\Code\Csharpe\CheckGmail\CreateCloneFB\RegClone.cs:line 639
+   at GenCode.RegClone.<>c__DisplayClass22_0.<<regClone>b__0>d.MoveNext() in D:\Code\Csharpe\CheckGmail\CreateCloneFB\RegClone.cs:line 244
+Thread 3->session not created exception
+from disconnected: unable to connect to renderer
+  (Session info: chrome=61.0.3163.79)
+  (Driver info: chromedriver=2.34.522940 (1a76f96f66e3ca7b8e57d503b4dd3bccfba87af1),platform=Windows NT 10.0.19042 x86_64) (SessionNotCreated)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.UnpackAndThrowOnError(Response errorResponse)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)
+   at OpenQA.Selenium.Remote.RemoteWebDriver.StartSession(ICapabilities desiredCapabilities)
+   at OpenQA.Selenium.Remote.RemoteWebDriver..ctor(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities)
+   at OpenQA.Selenium.Chrome.ChromeDriver..ctor(ChromeDriverService service, ChromeOptions options, TimeSpan commandTimeout)
+   at GenCode.RegClone.initBrowserForCreateGmail() in D:\Code\Csharpe\CheckGmail\CreateCloneFB\RegClone.cs:line 639
+   at GenCode.RegClone.<>c__DisplayClass22_0.<<regClone>b__0>d.MoveNext() in D:\Code\Csharpe\CheckGmail\CreateCloneFB\RegClone.cs:line 244
+Thread 2->Start load page
+Thread 1->Start load page
+Thread 1->Find cookie banner
+Thread 2->Find cookie banner
+Thread 1->Find Locate Link
+Thread 1->https://el-gr.facebook.com/
+Thread 2->Find Locate Link
+Thread 2->https://el-gr.facebook.com/
+Thread 2->Find Register Button
+Thread 1->Find Register Button
+Thread 2->Generate Infomation
+Thread 1->Generate Infomation
+Thread 2->Name: Theresa Gärtner
+Thread 2->travelselfish30970@gmail.com	F0KHFSa26980	thoughtfulwall97214@walmartshops.com
+Thread 1->Name: Ernst-August Heinrich
+Thread 1->swinginnate90789@gmail.com	F0KHFSa99678	well-to-douse01924@aircraftdictionary.com
+Thread 2->Start retry code 0
+Thread 1->Start retry code 0
+Thread 2->Code: 64260
+Thread 2->64260
+Thread 2->xs=29%3A8oTgExf494YkCQ%3A2%3A1607324042%3A-1%3A-1; c_user=100058993603778; datr=VNHNX9_itFD_300STtJQMRF2; locale=el_GR; sb=ZtHNX5J6fCAujTEfIemlxUUd; spin=r.1003058335_b.trunk_t.1607324045_s.1_v.2_; fr=1Lv3qhG56n7adxBwc.AWUlBD76DVj7q3uVomCFFwDxnhs.BfzdFm.xs.AAA.0.0.BfzdGG.AWVTm-Csiog; 
+Thread 1->Start retry code 1
+Thread 1->Start retry code 2
+Thread 1->Start retry code 3
+Thread 1->Start retry code 4
+Thread 1->Start retry code 5
+Thread 1->Start retry code 6
+Thread 2->OK->	travelselfish30970@gmail.com	F0KHFSa26980	thoughtfulwall97214@walmartshops.com	xs=29%3A8oTgExf494YkCQ%3A2%3A1607324042%3A-1%3A-1; c_user=100058993603778; datr=VNHNX9_itFD_300STtJQMRF2; locale=el_GR; sb=ZtHNX5J6fCAujTEfIemlxUUd; spin=r.1003058335_b.trunk_t.1607324045_s.1_v.2_; fr=1Lv3qhG56n7adxBwc.AWUlBD76DVj7q3uVomCFFwDxnhs.BfzdFm.xs.AAA.0.0.BfzdGG.AWVTm-Csiog; 	PageCreate: True
+Thread 1->Start retry code 7
+Thread 1->Start retry code 8
+Thread 1->Start retry code 9
+Thread 1->Start retry code 10
+Thread 1->Start retry code 11

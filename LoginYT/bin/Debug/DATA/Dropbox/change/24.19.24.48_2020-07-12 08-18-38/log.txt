@@ -1,0 +1,86 @@
+Created DATA\Dropbox\change\24.19.24.48_2020-07-12 08-18-38
+Done!
+Thread 0->--------------------------------
+Thread 2->--------------------------------
+Thread 4->--------------------------------
+Thread 1->--------------------------------
+Thread 7->--------------------------------
+Thread 6->--------------------------------
+Thread 5->--------------------------------
+Thread 3->--------------------------------
+Thread 0->Start load page
+Thread 3->Start load page
+Thread 2->Start load page
+Thread 7->Start load page
+Thread 5->Start load page
+Thread 4->Start load page
+Thread 1->Start load page
+Thread 6->Start load page
+Thread 7->Find cookie banner
+Thread 7->Find Locate Link
+Thread 7->https://el-gr.facebook.com/
+Thread 3->Find cookie banner
+Thread 0->Find cookie banner
+Thread 6->Find cookie banner
+Thread 1->Find cookie banner
+Thread 3->Find Locate Link
+Thread 3->https://el-gr.facebook.com/
+Thread 0->Find Locate Link
+Thread 0->https://el-gr.facebook.com/
+Thread 4->Find cookie banner
+Thread 2->Find cookie banner
+Thread 5->Find cookie banner
+Thread 6->Find Locate Link
+Thread 6->https://el-gr.facebook.com/
+Thread 1->Find Locate Link
+Thread 1->https://el-gr.facebook.com/
+Thread 4->Find Locate Link
+Thread 4->https://el-gr.facebook.com/
+Thread 2->Find Locate Link
+Thread 2->https://el-gr.facebook.com/
+Thread 5->Find Locate Link
+Thread 5->https://el-gr.facebook.com/
+Thread 7->Find Register Button
+Thread 7->Generate Infomation
+Thread 7->Name: Bertram Buck
+Thread 7->acceptablesky64328@gmail.com	F0KHFSa48624	aboriginalsmoggy01312@fairocketsmail.com
+Thread 0->Find Register Button
+Thread 0->Generate Infomation
+Thread 0->Name: Dietmar König
+Thread 0->snatchinterfere63376@gmail.com	F0KHFSa64725	proudearth40161@fairocketsmail.com
+Thread 3->Find Register Button
+Thread 1->Find Register Button
+Thread 6->Find Register Button
+Thread 2->Find Register Button
+Thread 4->Find Register Button
+Thread 5->Find Register Button
+Thread 3->Generate Infomation
+Thread 1->Generate Infomation
+Thread 3->Name: Silvio Nagel
+Thread 3->fullconfuse53433@gmail.com	F0KHFSa89882	cooldamage92839@fairocketsmail.com
+Thread 1->Name: Birte Stoll
+Thread 1->filthysmash08396@gmail.com	F0KHFSa69069	lamentabledesign37966@fairocketsmail.com
+Thread 6->Generate Infomation
+Thread 2->Generate Infomation
+Thread 6->Name: Gabriele Ulrich
+Thread 6->stoveletter38145@gmail.com	F0KHFSa37849	gratefulcrack07308@fairocketsmail.com
+Thread 4->Generate Infomation
+Thread 5->Generate Infomation
+Thread 2->Name: Rebecca Brinkmann
+Thread 2->sipmeeting11045@gmail.com	F0KHFSa73277	zooegg29529@fairocketsmail.com
+Thread 4->Name: Lothar Kunz
+Thread 4->boardsnakes02582@gmail.com	F0KHFSa18829	abortivecrazy42138@fairocketsmail.com
+Thread 5->Name: Armin Schröter
+Thread 5->scalebabies36651@gmail.com	F0KHFSa65089	waitingexclusive98692@fairocketsmail.com
+Thread 7->Start retry code 0
+Thread 7->Code: 10906
+Thread 7->10906
+Thread 0->Start retry code 0
+Thread 0->Code: 57462
+Thread 0->57462
+Thread 1->check point
+Thread 3->check point
+Thread 6->check point
+Thread 2->check point
+Thread 4->check point
+Thread 5->check point

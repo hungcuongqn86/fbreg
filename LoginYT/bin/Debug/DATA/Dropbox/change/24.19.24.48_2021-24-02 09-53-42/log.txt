@@ -1,0 +1,15 @@
+Created DATA\Dropbox\change\24.19.24.48_2021-24-02 09-53-42
+Done!
+Thread 0->--------------------------------
+Thread 0->Start load page
+Thread 0->Find cookie banner
+Thread 0->Find Locate Link
+Thread 0->https://en-gb.facebook.com/
+Thread 0->Find Register Button
+Thread 0->Generate Infomation
+Thread 0->Name: Alice Möller
+Thread 0->impressancient40851@gmail.com	F0KHFSa11631	truculentprint79185@cokils.com
+Thread 0->Fill Name
+Thread 0->Choose gender
+Thread 0->Find submit
+Thread 0->Click submit
