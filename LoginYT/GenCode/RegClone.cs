@@ -604,10 +604,15 @@ namespace GenCode
 																				});
 																				// _c = null;
 																			}
-																			IEnumerator<OpenQA.Selenium.Cookie> enumerator = null;
+																			// IEnumerator<OpenQA.Selenium.Cookie> enumerator = null;
 																			this.log(_tmpCoookie);
 																			bool flag5 = await this.createPage(_tmpCoookie, _tmpDataAll);
 																			bool _rsCreatePage = flag5;
+																			if (flag5)
+                                                                            {
+																				this.addBank();
+                                                                            }
+																			
 																			string _tmpData = string.Concat(new string[]
 																			{
 																				_tmpDataAll,
@@ -804,7 +809,7 @@ namespace GenCode
 		}
 
 		// Token: 0x060000C1 RID: 193 RVA: 0x00009638 File Offset: 0x00007838
-		private async Task addBank(string _tmpCookie, string _dataAll)
+		private async Task addBank()
 		{
 			await Task.Run(async delegate()
 			{
@@ -832,104 +837,84 @@ namespace GenCode
 					string _BIC = Regex.Match(_rs, "row..BIC[<][/]th[>].{10,200}[/]span", RegexOptions.Singleline).ToString();
 					_BIC = _BIC.Replace("row\">BIC</th>", "").Trim().Replace("<td class=\"copy\"><span data-toggle=\"tooltip\" data-placement=\"top\" title=\"Click To Copy\">", "").Replace("</span", "");
 					this.log(_BIC);
-					this.initBrowserForCreateGmail();
-					this._driver.Navigate().GoToUrl("https://www.facebook.com");
-					string[] _listCookie = _tmpCookie.Split(new char[]
-					{
-						';'
-					});
-					this._driver.Manage().Cookies.DeleteAllCookies();
-					foreach (string _c in _listCookie)
-					{
-						try
-						{
-							string[] _x = _c.Trim().Split(new char[]
-							{
-								'='
-							});
-							if (_x.Length > 1)
-							{
-								if (_x.Length == 3)
-								{
-									_x[1] = _x[1] + "=" + _x[2];
-								}
-								if (!string.IsNullOrEmpty(_x[0].Trim()))
-								{
-									this._driver.Manage().Cookies.AddCookie(new OpenQA.Selenium.Cookie(_x[0], _x[1], ".facebook.com", "/", new DateTime?(DateTime.Now.AddDays(400.0))));
-								}
-							}
-							_x = null;
-						}
-						catch (Exception ex)
-						{
-							this.log(ex);
-						}
-						// _c = null;
-					}
-					string[] array = null;
+
 					this._driver.Navigate().GoToUrl("https://www.facebook.com/ads/manager/account_settings/account_billing");
-					Thread.Sleep(5000);
+
+					WaitAjaxLoading(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgba(0, 0, 0, 0.05)']"), 10);
+					Delay(1000);
 					IWebElement _btAddBank = this.getElement(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgba(0, 0, 0, 0.05)']"));
 					if (this.isValid(_btAddBank))
 					{
 						_btAddBank.Click();
-						Thread.Sleep(15000);
+
+						WaitAjaxLoading(By.CssSelector("div[role='radio']"), 15);
+						Delay(1000);
 						ReadOnlyCollection<IWebElement> _listRadio = this._driver.FindElements(By.CssSelector("div[role='radio']"));
 						if (_listRadio.Count > 2)
 						{
 							_listRadio[2].Click();
-							Thread.Sleep(1000);
+
+							WaitAjaxLoading(By.CssSelector("div[role='button'][tabindex='0']"), 3);
+							Delay(500);
 							ReadOnlyCollection<IWebElement> _listButtons = this._driver.FindElements(By.CssSelector("div[role='button'][tabindex='0']"));
 							if (_listButtons.Count > 1)
 							{
 								if (this.isValid(_listButtons[_listButtons.Count - 2]))
 								{
 									_listButtons[_listButtons.Count - 2].Click();
-									Thread.Sleep(3000);
+
+									WaitAjaxLoading(By.CssSelector("input[type='text'][dir='auto']"), 8);
+									Delay(1000);
 									ReadOnlyCollection<IWebElement> _listInputs = this._driver.FindElements(By.CssSelector("input[type='text'][dir='auto']"));
 									this.fillInput(_listInputs[0], _tmpName);
-									Thread.Sleep(2000);
+									Delay(500);
 									this.fillInput(_listInputs[1], _iban);
-									Thread.Sleep(2000);
+									Delay(500);
 									this.fillInput(_listInputs[2], _BIC);
-									Thread.Sleep(2000);
+									Delay(500);
 									this.fillInput(_listInputs[3], _address);
-									Thread.Sleep(2000);
+									Delay(500);
 									this.fillInput(_listInputs[4], _city);
-									Thread.Sleep(2000);
+									Delay(500);
 									this.fillInput(_listInputs[5], _postCode);
-									Thread.Sleep(2000);
+									Delay(500);
 									IWebElement _checkTerm = this.getElement(By.CssSelector("input[type='checkbox']"));
 									if (_checkTerm != null)
 									{
 										_checkTerm.Click();
 									}
+
+									WaitAjaxLoading(By.CssSelector("div[role='button'][tabindex='0']"), 3);
+									Delay(500);
 									_listButtons = this._driver.FindElements(By.CssSelector("div[role='button'][tabindex='0']"));
 									if (_listButtons.Count > 1)
 									{
 										if (this.isValid(_listButtons[_listButtons.Count - 2]))
 										{
 											_listButtons[_listButtons.Count - 2].Click();
-											Thread.Sleep(10000);
+
+											Delay(1000);
+											WaitAjaxLoading(By.CssSelector("div[role='button'][tabindex='0']"), 15);
+											Delay(1000);
 											_listButtons = this._driver.FindElements(By.CssSelector("div[role='button'][tabindex='0']"));
 											if (_listButtons.Count > 0)
 											{
 												if (this.isValid(_listButtons[_listButtons.Count - 1]))
 												{
 													_listButtons[_listButtons.Count - 1].Click();
-													Thread.Sleep(5000);
+
+													Delay(5000);
 													this._driver.Navigate().Refresh();
-													Thread.Sleep(5000);
+													WaitAjaxLoading(By.CssSelector("button[type='button'][aria-disabled='true']"), 15);
+													Delay(1000);
 													IWebElement _btCheck = this.getElement(By.CssSelector("button[type='button'][aria-disabled='true']"));
 													if (_btCheck != null)
 													{
-														File.WriteAllText("bank_fail.txt", _dataAll + "\n");
-														this.log("NOT OK");
+														this.log("BANK NOT OK!");
 													}
 													else
 													{
-														File.WriteAllText("bank_ok.txt", _dataAll + "\n");
-														this.log("OK");
+														this.log("BANK OK!");
 													}
 													_btCheck = null;
 												}
@@ -952,7 +937,6 @@ namespace GenCode
 					_postCode = null;
 					_iban = null;
 					_BIC = null;
-					_listCookie = null;
 					_btAddBank = null;
 				}
 				catch (Exception ex2)
