@@ -477,7 +477,7 @@ namespace GenCode
 											_submitBt = this.getElement(By.CssSelector("button[name='websubmit']"));
 											if (this.isValid(_submitBt))
                                             {
-												Thread.Sleep(180000);
+												Thread.Sleep(120000);
 												_submitBt.Click();
 												WaitAjaxLoading(By.CssSelector("a[href*='/confirm/resend_code']"), 10);
 												Delay(1000);
@@ -502,8 +502,9 @@ namespace GenCode
 												{
 													this.fillInput(_inputNewEmail, _mailKhoiPhuc);
 													this.log("Submit change Email");
-													WaitAjaxLoading(By.CssSelector("button[type='submit']"), 3);
-													ReadOnlyCollection<IWebElement> _btSubmitNewEmail = this._driver.FindElements(By.CssSelector("button[type='submit']"));
+
+													WaitAjaxLoading(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[@type='submit']"), 3);
+													ReadOnlyCollection<IWebElement> _btSubmitNewEmail = this._driver.FindElements(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[type='submit']"));
 													bool _isClickSubmit = false;
 													if (_btSubmitNewEmail.Count > 0)
 													{
@@ -752,7 +753,7 @@ namespace GenCode
 						break;
 					}
 					_count++;
-					if (_count >= 3)
+					if (_count >= 5)
 					{
 						goto Block_3;
 					}
