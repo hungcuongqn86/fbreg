@@ -437,7 +437,7 @@ namespace GenCode
 								{
 									this.log("Click submit");
 									_submitBt.Click();
-									WaitAjaxLoading(By.CssSelector("a[href*='/confirm/resend_code']"), 5);
+									WaitAjaxLoading(By.CssSelector("a[href*='/confirm/resend_code']"), 10);
 
 									if (!this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 									{
@@ -449,7 +449,7 @@ namespace GenCode
                                             {
 												Thread.Sleep(180000);
 												_submitBt.Click();
-												Thread.Sleep(3000);
+												WaitAjaxLoading(By.CssSelector("a[href*='/confirm/resend_code']"), 10);
 												_btConfirmResend = this.getElement(By.CssSelector("a[href*='/confirm/resend_code']"));
 											}
 										}
@@ -457,19 +457,19 @@ namespace GenCode
 										if (this.isValid(_btConfirmResend))
 										{
 											_btConfirmResend.Click();
-											Thread.Sleep(5000);
+											WaitAjaxLoading(By.CssSelector("a[href*='/change_contactpoint'][rel='dialog-post']"), 10);
 											_btConfirmResend = this.getElement(By.CssSelector("a[href*='/change_contactpoint'][rel='dialog-post']"));
 											if (this.isValid(_btConfirmResend))
 											{
 												_btConfirmResend.Click();
-												Thread.Sleep(5000);
 												this.log("Change new email");
+												WaitAjaxLoading(By.CssSelector("input[name='contactpoint']"), 10);
 												IWebElement _inputNewEmail = this.getElement(By.CssSelector("input[name='contactpoint']"));
 												if (this.isValid(_inputNewEmail))
 												{
 													this.fillInput(_inputNewEmail, _mailKhoiPhuc);
-													Thread.Sleep(2000);
 													this.log("Submit change Email");
+													WaitAjaxLoading(By.CssSelector("button[type='submit']"), 3);
 													ReadOnlyCollection<IWebElement> _btSubmitNewEmail = this._driver.FindElements(By.CssSelector("button[type='submit']"));
 													bool _isClickSubmit = false;
 													if (_btSubmitNewEmail.Count > 0)
@@ -478,7 +478,6 @@ namespace GenCode
 														{
 															_btSubmitNewEmail[_btSubmitNewEmail.Count - 1].Click();
 															_isClickSubmit = true;
-															Thread.Sleep(5000);
 														}
 													}
 													else
@@ -487,6 +486,7 @@ namespace GenCode
 													}
 													if (_isClickSubmit)
 													{
+														Delay(5000);
 														if (!this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 														{
 															string text2 = await this.getCode2(_mailKhoiPhuc.Replace("@fairocketsmail.com", ""));
@@ -498,13 +498,13 @@ namespace GenCode
 																if (this.isValid(_btConfirmResend1))
                                                                 {
 																	_btConfirmResend1.Click();
-																	Thread.Sleep(2000);
+																	WaitAjaxLoading(By.CssSelector("a[href*='/change_contactpoint'][rel='dialog-post']"), 10);
 																	_btConfirmResend1 = this.getElement(By.CssSelector("a[href*='/change_contactpoint'][rel='dialog-post']"));
 																	if (this.isValid(_btConfirmResend1))
                                                                     {
 																		_btConfirmResend1.Click();
-																		Thread.Sleep(2000);
 																		this.log("Change new email");
+																		WaitAjaxLoading(By.CssSelector("input[name='contactpoint']"), 10);
 																		_inputNewEmail = this.getElement(By.CssSelector("input[name='contactpoint']"));
 																		_mailKhoiPhuc = this.randomEmail();
 																		_tmpDataAll = string.Concat(new string[]
@@ -517,16 +517,15 @@ namespace GenCode
 																		});
 																		this.log(_tmpDataAll);
 																		this.fillInput(_inputNewEmail, _mailKhoiPhuc);
-																		Thread.Sleep(1000);
+																		
 																		this.log("Submit change Email");
+																		WaitAjaxLoading(By.CssSelector("button[type='submit']"), 3);
 																		_btSubmitNewEmail = this._driver.FindElements(By.CssSelector("button[type='submit']"));
-																		_isClickSubmit = false;
 																		if (_btSubmitNewEmail.Count > 0)
 																		{
 																			if (this.isValid(_btSubmitNewEmail[_btSubmitNewEmail.Count - 1]))
 																			{
 																				_btSubmitNewEmail[_btSubmitNewEmail.Count - 1].Click();
-																				_isClickSubmit = true;
 																				Thread.Sleep(5000);
 																			}
 																		}
@@ -602,6 +601,7 @@ namespace GenCode
 																		{
 																			_status = -1;
 																			this.log("check point");
+																			QuitDriver(chrome);
 																		}
 																	}
 																	_btConfirmCode = null;
@@ -611,6 +611,7 @@ namespace GenCode
 															else
 															{
 																this.log("Get Code Error");
+																// QuitDriver(chrome);
 															}
 															_code = null;
 														}
@@ -618,6 +619,7 @@ namespace GenCode
 														{
 															_status = -1;
 															this.log("check point");
+															QuitDriver(chrome);
 														}
 													}
 													_btSubmitNewEmail = null;
