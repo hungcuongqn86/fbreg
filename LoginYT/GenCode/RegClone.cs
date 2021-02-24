@@ -554,14 +554,15 @@ namespace GenCode
 																		this.fillInput(_inputNewEmail, _mailKhoiPhuc);
 																		
 																		this.log("Submit change Email");
-																		WaitAjaxLoading(By.CssSelector("button[type='submit']"), 3);
-																		_btSubmitNewEmail = this._driver.FindElements(By.CssSelector("button[type='submit']"));
+																		WaitAjaxLoading(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[@type='submit']"), 3);
+																		Delay(1000);
+																		_btSubmitNewEmail = this._driver.FindElements(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[@type='submit']"));
 																		if (_btSubmitNewEmail.Count > 0)
 																		{
-																			if (this.isValid(_btSubmitNewEmail[_btSubmitNewEmail.Count - 1]))
+																			if (this.isValid(_btSubmitNewEmail[0]))
 																			{
-																				_btSubmitNewEmail[_btSubmitNewEmail.Count - 1].Click();
-																				Thread.Sleep(5000);
+																				_btSubmitNewEmail[0].Click();
+																				Delay(5000);
 																			}
 																		}
 																		else
