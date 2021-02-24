@@ -995,7 +995,7 @@ namespace GenCode
 			bool flag = this._driver != null;
 			if (flag)
 			{
-				this._driver.Quit();
+				// this._driver.Quit();
 			}
 			ChromeOptions options = new ChromeOptions();
 			options.AddArgument("--silent");

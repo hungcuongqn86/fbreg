@@ -22,14 +22,14 @@
     <ConnectionLoopDetection enabled="false" />
     <ProcessServices enabled="false" />
     <ProcessOtherUsers enabled="false" />
-	<DisableProxyEngine enabled="true" />
+	<DisableProxyEngine enabled="false" />
 	<ApplicationMode mode="tcp" />
 	<InjectionMode mode="spe" />
   </Options>
   <ProxyList>
     <Proxy id="100" type="SOCKS5">
       <Address>127.0.0.1</Address>
-      <Port>4162</Port>
+      <Port>32613</Port>
       <Options>0</Options>
       <Authentication enabled="false">
         <Username></Username>
@@ -65,4 +65,4 @@
       <Action type="Direct" />
     </Rule>
   </RuleList>
-</ProxifierProfile>>
+</ProxifierProfile>

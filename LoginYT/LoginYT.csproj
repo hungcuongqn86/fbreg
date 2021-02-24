@@ -81,6 +81,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GenCode\ManageChannel.resources" />
+    <EmbeddedResource Include="GenCode\ManageChannel.resx">
+      <DependentUpon>ManageChannel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GenCode\Properties\Resources.resources" />
   </ItemGroup>
   <ItemGroup>
