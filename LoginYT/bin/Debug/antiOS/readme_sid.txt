@@ -1,1 +1,0 @@
-http://www.stratesave.com/html/sidchg.html
