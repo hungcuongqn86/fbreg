@@ -86,7 +86,7 @@ namespace GenCode
 					if (flag7)
 					{
 						_btBookmark.Click();
-						Thread.Sleep(1000);
+						Thread.Sleep(3000);
 						IWebElement _pageBt = this.getElement(By.CssSelector("a[href*='nt_launchpoint_redesign']"));
 						bool flag8 = this.isValid(_pageBt);
 						if (flag8)
@@ -123,6 +123,7 @@ namespace GenCode
 							bool flag12 = _isClickBt;
 							if (flag12)
 							{
+								Thread.Sleep(6000);
 								IWebElement _btCreate = this.getElement(By.CssSelector("a[href*='/pages/creation_flow']"));
 								bool flag13 = this.isValid(_btCreate);
 								if (flag13)
@@ -170,6 +171,7 @@ namespace GenCode
 												if (flag19)
 												{
 													_btSubmits[1].Click();
+													Thread.Sleep(5000);
 													IWebElement _btAds = this.getElement(By.CssSelector("a[href*='https://m.facebook.com/ads/create/choose_objective']"));
 													bool flag20 = this.isValid(_btAds);
 													if (flag20)
@@ -290,7 +292,7 @@ namespace GenCode
 						if (flag4)
 						{
 							_regBt.Click();
-							Thread.Sleep(2000);
+							Thread.Sleep(5000);
 							this.log("Generate Infomation");
 							HttpClient _client = new HttpClient();
 							string text = await _client.GetStringAsync("https://fake-it.ws/de/");
@@ -402,18 +404,18 @@ namespace GenCode
 										if (this.isValid(_btConfirmResend))
 										{
 											_btConfirmResend.Click();
-											Thread.Sleep(2000);
+											Thread.Sleep(5000);
 											_btConfirmResend = this.getElement(By.CssSelector("a[href*='/change_contactpoint'][rel='dialog-post']"));
 											if (this.isValid(_btConfirmResend))
 											{
 												_btConfirmResend.Click();
-												Thread.Sleep(2000);
+												Thread.Sleep(5000);
 												this.log("Change new email");
 												IWebElement _inputNewEmail = this.getElement(By.CssSelector("input[name='contactpoint']"));
 												if (this.isValid(_inputNewEmail))
 												{
 													this.fillInput(_inputNewEmail, _mailKhoiPhuc);
-													Thread.Sleep(1000);
+													Thread.Sleep(2000);
 													this.log("Submit change Email");
 													ReadOnlyCollection<IWebElement> _btSubmitNewEmail = this._driver.FindElements(By.CssSelector("button[type='submit']"));
 													bool _isClickSubmit = false;
