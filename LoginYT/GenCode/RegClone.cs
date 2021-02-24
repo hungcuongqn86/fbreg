@@ -509,9 +509,9 @@ namespace GenCode
 													bool _isClickSubmit = false;
 													if (_btSubmitNewEmail.Count > 0)
 													{
-														if (this.isValid(_btSubmitNewEmail[_btSubmitNewEmail.Count - 1]))
+														if (this.isValid(_btSubmitNewEmail[0]))
 														{
-															_btSubmitNewEmail[_btSubmitNewEmail.Count - 1].Click();
+															_btSubmitNewEmail[0].Click();
 															_isClickSubmit = true;
 														}
 													}
