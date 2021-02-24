@@ -13,3 +13,17 @@ D:\App\FBTOOL\LoginYT\LoginYT\bin\Debug\WebDriver.Support.xml
 D:\App\FBTOOL\LoginYT\LoginYT\obj\Debug\LoginYT.csproj.CopyComplete
 D:\App\FBTOOL\LoginYT\LoginYT\obj\Debug\LoginYT.exe
 D:\App\FBTOOL\LoginYT\LoginYT\obj\Debug\LoginYT.pdb
+C:\cuongnh\fbreg\LoginYT\bin\Debug\LoginYT.exe.config
+C:\cuongnh\fbreg\LoginYT\bin\Debug\LoginYT.exe
+C:\cuongnh\fbreg\LoginYT\bin\Debug\LoginYT.pdb
+C:\cuongnh\fbreg\LoginYT\bin\Debug\Gma.System.MouseKeyHook.dll
+C:\cuongnh\fbreg\LoginYT\bin\Debug\WebDriver.dll
+C:\cuongnh\fbreg\LoginYT\bin\Debug\WebDriver.Support.dll
+C:\cuongnh\fbreg\LoginYT\bin\Debug\Newtonsoft.Json.xml
+C:\cuongnh\fbreg\LoginYT\bin\Debug\WebDriver.xml
+C:\cuongnh\fbreg\LoginYT\bin\Debug\WebDriver.Support.xml
+C:\cuongnh\fbreg\LoginYT\obj\Debug\LoginYT.csprojAssemblyReference.cache
+C:\cuongnh\fbreg\LoginYT\obj\Debug\LoginYT.csproj.CoreCompileInputs.cache
+C:\cuongnh\fbreg\LoginYT\obj\Debug\LoginYT.csproj.CopyComplete
+C:\cuongnh\fbreg\LoginYT\obj\Debug\LoginYT.exe
+C:\cuongnh\fbreg\LoginYT\obj\Debug\LoginYT.pdb

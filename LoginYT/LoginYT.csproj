@@ -57,7 +57,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Costura\AssemblyLoader.cs" />
     <Compile Include="GenCode\HttpClientHelper.cs" />
     <Compile Include="GenCode\ManageChannel.cs">
       <SubType>Form</SubType>
@@ -81,26 +80,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Costura\csquery\dll.compressed" />
-    <EmbeddedResource Include="Costura\gma\system\mousekeyhook\dll.compressed" />
-    <EmbeddedResource Include="Costura\newtonsoft\json\dll.compressed" />
-    <EmbeddedResource Include="Costura\supersocket\clientengine\dll.compressed" />
-    <EmbeddedResource Include="Costura\system\collections\specialized\dll.compressed" />
-    <EmbeddedResource Include="Costura\system\io\dll.compressed" />
-    <EmbeddedResource Include="Costura\system\linq\dll.compressed" />
-    <EmbeddedResource Include="Costura\system\net\nameresolution\dll.compressed" />
-    <EmbeddedResource Include="Costura\system\net\security\dll.compressed" />
-    <EmbeddedResource Include="Costura\system\net\sockets\dll.compressed" />
-    <EmbeddedResource Include="Costura\system\runtime\dll.compressed" />
-    <EmbeddedResource Include="Costura\system\runtime\extensions\dll.compressed" />
-    <EmbeddedResource Include="Costura\system\runtime\interopservices\dll.compressed" />
-    <EmbeddedResource Include="Costura\system\security\cryptography\algorithms\dll.compressed" />
-    <EmbeddedResource Include="Costura\system\security\cryptography\encoding\dll.compressed" />
-    <EmbeddedResource Include="Costura\system\security\cryptography\primitives\dll.compressed" />
-    <EmbeddedResource Include="Costura\system\security\cryptography\x509certificates\dll.compressed" />
-    <EmbeddedResource Include="Costura\system\text\regularexpressions\dll.compressed" />
-    <EmbeddedResource Include="Costura\webdriver\dll.compressed" />
-    <EmbeddedResource Include="Costura\webdriver\support\dll.compressed" />
     <EmbeddedResource Include="GenCode\ManageChannel.resources" />
     <EmbeddedResource Include="GenCode\Properties\Resources.resources" />
   </ItemGroup>
