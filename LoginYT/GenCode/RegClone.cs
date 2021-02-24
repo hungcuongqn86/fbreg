@@ -50,6 +50,56 @@ namespace GenCode
 			return s;
 		}
 
+		private void WaitAjaxLoading(By byFinter, int time = 3)
+		{
+			WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(time));
+			Func<IWebDriver, bool> waitLoading = new Func<IWebDriver, bool>((IWebDriver Web) =>
+			{
+				try
+				{
+					ReadOnlyCollection<IWebElement> alertE = Web.FindElements(byFinter);
+					if (alertE.Count > 0)
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				catch
+				{
+					return false;
+				}
+			});
+
+			try
+			{
+				wait.Until(waitLoading);
+			}
+			catch { }
+		}
+
+		private static void Delay(int Time_delay)
+		{
+			int i = 0;
+			System.Timers.Timer _delayTimer = new System.Timers.Timer();
+			_delayTimer.Interval = Time_delay;
+			_delayTimer.AutoReset = false; //so that it only calls the method once
+			_delayTimer.Elapsed += (s, args) => i = 1;
+			_delayTimer.Start();
+			while (i == 0) { };
+		}
+
+		private void QuitDriver(string chromept)
+		{
+			if (this._driver != null)
+			{
+				this._driver.Quit();
+			}
+
+		}
+
 		// Token: 0x060000B9 RID: 185 RVA: 0x00009278 File Offset: 0x00007478
 		private async Task<bool> createPage(string _tmpCookie, string _dataAll)
 		{
@@ -245,6 +295,8 @@ namespace GenCode
 			return _id + "@" + this._listDomain[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listDomain.Length - 1)];
 		}
 
+
+
 		// Token: 0x060000BD RID: 189 RVA: 0x000094F8 File Offset: 0x000076F8
 		public async Task<int> regClone(string chrome)
 		{
@@ -258,7 +310,7 @@ namespace GenCode
 					this.initChromePortable(chrome);
 					this.log("Start load page");
 					this._driver.Navigate().GoToUrl("https://facebook.com");
-					Thread.Sleep(2000);
+					Thread.Sleep(1000);
 					bool flag = this._driver.PageSource.Contains("This site can’t be reached");
 					if (flag)
 					{
@@ -268,14 +320,15 @@ namespace GenCode
 					else
 					{
 						this.log("Find cookie banner");
+						WaitAjaxLoading(By.CssSelector("button[data-testid='cookie-policy-banner-accept']"));
 						IWebElement _acceptBt = this.getElement(By.CssSelector("button[data-testid='cookie-policy-banner-accept']"));
 						bool flag2 = this.isValid(_acceptBt);
 						if (flag2)
 						{
 							_acceptBt.Click();
-							Thread.Sleep(2000);
 						}
 						this.log("Find Locate Link");
+						WaitAjaxLoading(By.CssSelector("a[href*='facebook.com/']"));
 						ReadOnlyCollection<IWebElement> _locateList = this._driver.FindElements(By.CssSelector("a[href*='facebook.com/']"));
 						bool flag3 = _locateList.Count > 1;
 						if (flag3)
@@ -283,16 +336,16 @@ namespace GenCode
 							string _url = _locateList[1].GetAttribute("href");
 							this.log(_url);
 							this._driver.Navigate().GoToUrl(_url);
-							Thread.Sleep(2000);
 							_url = null;
 						}
 						this.log("Find Register Button");
+						WaitAjaxLoading(By.CssSelector("a[data-testid='open-registration-form-button']"));
 						IWebElement _regBt = this.getElement(By.CssSelector("a[data-testid='open-registration-form-button']"));
 						bool flag4 = this.isValid(_regBt);
 						if (flag4)
 						{
 							_regBt.Click();
-							Thread.Sleep(5000);
+							
 							this.log("Generate Infomation");
 							HttpClient _client = new HttpClient();
 							string text = await _client.GetStringAsync("https://fake-it.ws/de/");
@@ -331,6 +384,7 @@ namespace GenCode
 							this.log(_tmpDataAll);
 
 							this.log("Fill Name");
+							WaitAjaxLoading(By.CssSelector("input[name='firstname']"), 10);
 							IWebElement _fName = this.getElement(By.CssSelector("input[name='firstname']"));
 							if (this.isValid(_fName))
 							{
@@ -383,11 +437,10 @@ namespace GenCode
 								{
 									this.log("Click submit");
 									_submitBt.Click();
-									Thread.Sleep(20000);
+									WaitAjaxLoading(By.CssSelector("a[href*='/confirm/resend_code']"), 5);
 
 									if (!this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 									{
-
 										IWebElement _btConfirmResend = this.getElement(By.CssSelector("a[href*='/confirm/resend_code']"));
 										if (!this.isValid(_btConfirmResend))
 										{
@@ -582,6 +635,7 @@ namespace GenCode
 									{
 										_status = -1;
 										this.log("check point");
+										QuitDriver(chrome);
 									}
 								}
 								_lName = null;
