@@ -93,11 +93,7 @@ namespace GenCode
 
 		private void QuitDriver(string chromept)
 		{
-			if (this._driver != null)
-			{
-				this._driver.Quit();
-			}
-
+			this._driver.Quit();
 		}
 
 		// Token: 0x060000B9 RID: 185 RVA: 0x00009278 File Offset: 0x00007478
