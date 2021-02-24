@@ -105,34 +105,41 @@ namespace GenCode
 				try
 				{
 					this._driver.Navigate().GoToUrl("https://m.facebook.com");
-					Thread.Sleep(3000);
+					WaitAjaxLoading(By.Id("nux-nav-button"), 3);
+					Delay(1000);
 					IWebElement _btskipPhone = this.getElement(By.Id("nux-nav-button"));
 					bool flag4 = this.isValid(_btskipPhone);
 					if (flag4)
 					{
 						_btskipPhone.Click();
-						Thread.Sleep(3000);
+						WaitAjaxLoading(By.Id("nux-nav-button"), 3);
+						Delay(1000);
 						_btskipPhone = this.getElement(By.Id("nux-nav-button"));
 						bool flag5 = this.isValid(_btskipPhone);
 						if (flag5)
 						{
 							_btskipPhone.Click();
-							Thread.Sleep(3000);
+							WaitAjaxLoading(By.Id("nux-nav-button"), 3);
+							Delay(1000);
 							_btskipPhone = this.getElement(By.Id("nux-nav-button"));
 							bool flag6 = this.isValid(_btskipPhone);
 							if (flag6)
 							{
 								_btskipPhone.Click();
-								Thread.Sleep(3000);
 							}
 						}
 					}
+
+					WaitAjaxLoading(By.Id("bookmarks_jewel"), 8);
+					Delay(1000);
 					IWebElement _btBookmark = this.getElement(By.Id("bookmarks_jewel"));
 					bool flag7 = this.isValid(_btBookmark);
 					if (flag7)
 					{
 						_btBookmark.Click();
-						Thread.Sleep(3000);
+
+						WaitAjaxLoading(By.CssSelector("a[href*='nt_launchpoint_redesign']"), 8);
+						Delay(1000);
 						IWebElement _pageBt = this.getElement(By.CssSelector("a[href*='nt_launchpoint_redesign']"));
 						bool flag8 = this.isValid(_pageBt);
 						if (flag8)
@@ -143,13 +150,14 @@ namespace GenCode
 							ReadOnlyCollection<IWebElement> _listBt;
 							for (;;)
 							{
-								Thread.Sleep(5000);
 								_tmpCount++;
 								bool flag9 = _tmpCount > 5;
 								if (flag9)
 								{
 									break;
 								}
+								WaitAjaxLoading(By.CssSelector("div[data-nt='NT:BUTTON_2']"), 10);
+								Delay(1000);
 								_listBt = this._driver.FindElements(By.CssSelector("div[data-nt='NT:BUTTON_2']"));
 								bool flag10 = _listBt.Count > 0;
 								if (flag10)
@@ -169,61 +177,82 @@ namespace GenCode
 							bool flag12 = _isClickBt;
 							if (flag12)
 							{
-								Thread.Sleep(6000);
+								WaitAjaxLoading(By.CssSelector("a[href*='/pages/creation_flow']"), 10);
+								Delay(1000);
 								IWebElement _btCreate = this.getElement(By.CssSelector("a[href*='/pages/creation_flow']"));
 								bool flag13 = this.isValid(_btCreate);
 								if (flag13)
 								{
 									_btCreate.Click();
-									Thread.Sleep(2000);
+
+									WaitAjaxLoading(By.CssSelector("input[data-sigil='page_creation_name_input']"), 10);
+									Delay(1000);
 									IWebElement _inputPageName = this.getElement(By.CssSelector("input[data-sigil='page_creation_name_input']"));
 									bool flag14 = this.isValid(_inputPageName);
 									if (flag14)
 									{
 										string _rNamePage = this._listKeyword[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listKeyword.Count)] + " " + this.randomNumber(2);
 										this.fillInput(_inputPageName, _rNamePage);
+
+										WaitAjaxLoading(By.CssSelector("button[type='submit']"), 3);
+										Delay(500);
 										IWebElement _submitBt = this.getElement(By.CssSelector("button[type='submit']"));
 										bool flag15 = this.isValid(_submitBt);
 										if (flag15)
 										{
 											_submitBt.Click();
-											Thread.Sleep(2000);
+
+											WaitAjaxLoading(By.CssSelector("select[name='super_category_selector']"), 10);
+											Delay(1000);
 											SelectElement _selectCategory = new SelectElement(this.getElement(By.CssSelector("select[name='super_category_selector']")));
 											_selectCategory.SelectByIndex(new Random().Next(2, _selectCategory.Options.Count));
 											_selectCategory = new SelectElement(this.getElement(By.CssSelector("select[name='sub_category_selector']")));
 											_selectCategory.SelectByIndex(new Random().Next(2, _selectCategory.Options.Count));
+
+											WaitAjaxLoading(By.CssSelector("button[type='submit']"), 3);
+											Delay(500);
 											_submitBt = this.getElement(By.CssSelector("button[type='submit']"));
 											bool flag16 = this.isValid(_submitBt);
 											if (flag16)
 											{
 												_submitBt.Click();
-												Thread.Sleep(10000);
+
+												WaitAjaxLoading(By.CssSelector("a[href*='/pages/creation_flow/?step=profile_pic']"), 20);
+												Delay(1000);
 												IWebElement _btNext = this.getElement(By.CssSelector("a[href*='/pages/creation_flow/?step=profile_pic']"));
 												bool flag17 = this.isValid(_btNext);
 												if (flag17)
 												{
 													_btNext.Click();
 												}
-												Thread.Sleep(2000);
+
+												WaitAjaxLoading(By.CssSelector("a[href*='/pages/creation_flow/?step=cover_photo']"), 5);
+												Delay(1000);
 												_btNext = this.getElement(By.CssSelector("a[href*='/pages/creation_flow/?step=cover_photo']"));
 												bool flag18 = this.isValid(_btNext);
 												if (flag18)
 												{
 													_btNext.Click();
 												}
-												Thread.Sleep(5000);
+
+												WaitAjaxLoading(By.CssSelector("button[type='submit']"), 8);
+												Delay(1000);
 												ReadOnlyCollection<IWebElement> _btSubmits = this._driver.FindElements(By.CssSelector("button[type='submit']"));
 												bool flag19 = _btSubmits.Count > 1;
 												if (flag19)
 												{
 													_btSubmits[1].Click();
-													Thread.Sleep(5000);
+
+													WaitAjaxLoading(By.CssSelector("a[href*='https://m.facebook.com/ads/create/choose_objective']"), 10);
+													Delay(1000);
 													IWebElement _btAds = this.getElement(By.CssSelector("a[href*='https://m.facebook.com/ads/create/choose_objective']"));
 													bool flag20 = this.isValid(_btAds);
 													if (flag20)
 													{
 														_btAds.Click();
-														Thread.Sleep(2000);
+
+														WaitAjaxLoading(By.CssSelector("a[href*='product=boosted_pagelike']"), 8);
+														Delay(1000);
 														IWebElement _pageLike = this.getElement(By.CssSelector("a[href*='product=boosted_pagelike']"));
 														bool flag21 = _pageLike != null;
 														if (flag21)
@@ -235,17 +264,21 @@ namespace GenCode
 															catch
 															{
 															}
-															Thread.Sleep(2000);
-															this._driver.Navigate().GoToUrl("https://m.facebook.com/certification/nondiscrimination/");
+
+
 															Thread.Sleep(3000);
+															this._driver.Navigate().GoToUrl("https://m.facebook.com/certification/nondiscrimination/");
+
+															WaitAjaxLoading(By.CssSelector("button[use='primary'][type='submit']"), 5);
+															Delay(1000);
 															IWebElement _btSubmit = this.getElement(By.CssSelector("button[use='primary'][type='submit']"));
 															bool flag22 = this.isValid(_btSubmit);
 															if (flag22)
 															{
 																_btSubmit.Click();
-																Thread.Sleep(1000);
+																Delay(1000);
 																_btSubmit.Click();
-																Thread.Sleep(3000);
+																Delay(3000);
 																_rsCreatePage = true;
 															}
 														}
