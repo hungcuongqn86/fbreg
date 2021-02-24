@@ -5,6 +5,8 @@ using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -277,7 +279,7 @@ namespace GenCode
 		}
 
 		// Token: 0x060000BD RID: 189 RVA: 0x000094F8 File Offset: 0x000076F8
-		public async Task<int> regClone()
+		public async Task<int> regClone(string chrome)
 		{
 			int _status = 0;
 			await Task.Run(async delegate()
@@ -285,7 +287,8 @@ namespace GenCode
 				try
 				{
 					this.log("--------------------------------");
-					this.initBrowserForCreateGmail();
+					// this.initBrowserForCreateGmail();
+					this.initChromePortable(chrome);
 					this.log("Start load page");
 					this._driver.Navigate().GoToUrl("https://facebook.com");
 					Thread.Sleep(2000);
@@ -962,6 +965,36 @@ namespace GenCode
 			_ele.SendKeys(Keys.Control + "a");
 			_ele.SendKeys("\b");
 			_ele.SendKeys(s);
+		}
+
+		private void initChromePortable(string chrome)
+		{
+			bool flag = this._driver != null;
+			if (flag)
+			{
+				this._driver.Quit();
+			}
+
+			string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			string folderPath = m_exePath + "\\via";
+			string viaPath = folderPath + "\\" + chrome + "\\GoogleChromePortable";
+
+
+			var options = new ChromeOptions();
+			options.BinaryLocation = viaPath + "\\App\\Chrome-bin\\chrome.exe";
+			StringBuilder builder = new StringBuilder(viaPath);
+			builder.Replace("\\", "/");
+			options.AddArgument("--user-data-dir=" + builder.ToString() + "/Data/profile");
+			options.AddArgument("profile-directory=Default");
+			// options.AddArgument("--no-sandbox");
+			// options.AddArgument("--start-maximized");
+			// options.AddArgument("--headless");
+
+			var driverService = ChromeDriverService.CreateDefaultService();
+			driverService.HideCommandPromptWindow = true;
+
+			this._driver = new ChromeDriver(driverService, options, TimeSpan.FromMinutes(3.0));
+			this._driver.Manage().Window.Size = new Size(1486, 800);
 		}
 
 		// Token: 0x060000C7 RID: 199 RVA: 0x0000977C File Offset: 0x0000797C

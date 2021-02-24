@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.NetworkInformation;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -23,6 +24,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using Keys = OpenQA.Selenium.Keys;
+using System.IO.Compression;
 
 namespace GenCode
 {
@@ -1068,10 +1070,53 @@ namespace GenCode
 					_reg._closeChrome = this._closeChrome;
 					RegClone regClone = _reg;
 					regClone._logDelegate = (RegClone.LogDelegate)Delegate.Combine(regClone._logDelegate, new RegClone.LogDelegate(this.LogDelegate));
-					await _reg.regClone();
+					string chrome = DateTime.Now.ToString("MM_dd_yyyy_HH_mm_ss") + "_" + _reg._ThreadName;
+					initBrowse(chrome);
+					await _reg.regClone(chrome);
 				}).Start();
 			}
-			this.log("Done!");
+			this.log("All Done!");
+		}
+
+		private void initBrowse(string viaName)
+		{
+			try
+			{
+				string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+				string folderPath = m_exePath + "\\via";
+				bool exists = System.IO.Directory.Exists(folderPath);
+				if (!exists)
+					System.IO.Directory.CreateDirectory(folderPath);
+
+				string viaPath = folderPath + "\\" + viaName;
+				// this.autoRun = new AutoRun(viaPath + "\\GoogleChromePortable");
+				// this.autoRun.viaAccess(viaArr);
+
+				bool viaExists = System.IO.Directory.Exists(viaPath);
+				if (!viaExists)
+				{
+					string portablePath = m_exePath + "\\portable\\GoogleChromePortable.zip";
+					bool portableExists = File.Exists(portablePath);
+					if (!portableExists)
+					{
+						MessageBox.Show("Chưa có bộ cài portable, liên hệ cuongnh!", "Thông báo!", MessageBoxButtons.OK);
+						return;
+					}
+					// Create via portable
+					System.IO.Directory.CreateDirectory(viaPath);
+					ZipFile.ExtractToDirectory(portablePath, viaPath);
+				}
+				else
+				{
+					MessageBox.Show("Via đã tồn tại!", "Thông báo!", MessageBoxButtons.OK);
+					return;
+				}
+			}
+			catch (Exception error)
+			{
+				MessageBox.Show(error.Message.ToString());
+				MessageBox.Show("Add via không thành công!", "Thông báo!", MessageBoxButtons.OK);
+			}
 		}
 
 		// Token: 0x06000035 RID: 53 RVA: 0x00003424 File Offset: 0x00001624
