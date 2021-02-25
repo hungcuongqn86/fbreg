@@ -814,18 +814,7 @@ namespace GenCode
 														{
 															await this.addBank();
 														}
-
-														string _tmpData = string.Concat(new string[]
-														{
-																				_tmpDataAll,
-																				"\t",
-																				_tmpCoookie,
-																				"\tPageCreate: ",
-																				_rsCreatePage.ToString()
-														});
-														this.log("OK->\t" + _tmpData);
 														_status = 1;
-														_tmpData = null;
 													}
 													else
 													{
@@ -889,7 +878,8 @@ namespace GenCode
 
 				for (; ; )
 				{
-					string _subjectXPath = "//div[contains(@class, 'nbox-dataList')]/ul/li/div/span[contains(@class, 'nboxSubject')]/a[contains(@class, 'iewLink')]";
+					string _subjectXPath = "//div[contains(@class, 'nbox-dataList')]/ul/li/div/a/span[contains(@class, 'nboxSubject')]";
+					string _subjectXPath1 = "//div[contains(@class, 'nbox-dataList')]/ul/li/div/span[contains(@class, 'nboxSubject')]/a[contains(@class, 'iewLink')]";
 					WaitAjaxLoading(By.XPath(_subjectXPath), 10);
 					Delay(1000);
 					ReadOnlyCollection<IWebElement> _subject = this._driver.FindElements(By.XPath(_subjectXPath));
@@ -903,13 +893,26 @@ namespace GenCode
 						}
 					}
 
+					WaitAjaxLoading(By.XPath(_subjectXPath1), 10);
+					Delay(1000);
+					_subject = this._driver.FindElements(By.XPath(_subjectXPath1));
+					if (_subject.Count > 1)
+					{
+						string text = _subject[1].Text;
+						_tmpCode = Regex.Match(text, "FB[-][0-9]+").ToString();
+						if (!string.IsNullOrEmpty(_tmpCode))
+						{
+							break;
+						}
+					}
+
 					_count++;
-					if (_count >= 3)
+					if (_count >= 5)
 					{
 						goto Block_3;
 					}
 					_tmpCode = null;
-					await Task.Delay(10000);
+					await Task.Delay(20000);
 				}
 				_code = _tmpCode.Replace("FB-", "");
 				Block_3:
