@@ -575,8 +575,8 @@ namespace GenCode
 							}
 							string _randomEmail = this.randomGmail();
 							string _passAcc = "F0KHFSa" + new Random(Guid.NewGuid().GetHashCode()).Next(10000, 99999);
-							// string _mailKhoiPhuc = this.getTempEmailCom();
-							string _mailKhoiPhuc = this.newTempEmailCom();
+							string _mailKhoiPhuc = this.getTempEmailCom();
+							// string _mailKhoiPhuc = this.newTempEmailCom();
 							string _tmpDataAll = string.Concat(new string[]
 							{
 								_randomEmail,
@@ -889,7 +889,7 @@ namespace GenCode
 
 				for (; ; )
 				{
-					string _subjectXPath = "//div[contains(@class, 'nbox-dataList')]/ul/li/div/a/span[contains(@class, 'nboxSubject ')]";
+					string _subjectXPath = "//div[contains(@class, 'nbox-dataList')]/ul/li/div/span[contains(@class, 'nboxSubject')]/a[contains(@class, 'iewLink')]";
 					WaitAjaxLoading(By.XPath(_subjectXPath), 10);
 					Delay(1000);
 					ReadOnlyCollection<IWebElement> _subject = this._driver.FindElements(By.XPath(_subjectXPath));
