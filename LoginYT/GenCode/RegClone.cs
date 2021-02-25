@@ -922,9 +922,7 @@ namespace GenCode
 					this.log(_BIC);
 
 					this._driver.Navigate().GoToUrl("https://www.facebook.com/ads/manager/account_settings/account_billing");
-
-					WaitAjaxLoading(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgb(24, 119, 242)']"), 10);
-					Delay(1000);
+					Delay(5000);
 					IWebElement _btAddStart = this.getElement(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgb(24, 119, 242)']"));
 					if (this.isValid(_btAddStart))
                     {
@@ -934,7 +932,7 @@ namespace GenCode
 
 					string addPaymentDivName = "//div[contains(@class, '48j0')]/div/button[contains(@class, '271k')]";
 					WaitAjaxLoading(By.XPath(addPaymentDivName), 10);
-
+					Delay(1000);
 					ReadOnlyCollection<IWebElement> addPaymentDev = this._driver.FindElements(By.XPath(addPaymentDivName));
 
 					if (addPaymentDev.Count > 0)
@@ -1045,6 +1043,10 @@ namespace GenCode
 							this.log("Not banking radio!");
 						}
 						_listRadio = null;
+					}
+					else
+					{
+						this.log("Not Add Payment button!");
 					}
 					_client = null;
 					_rs = null;
