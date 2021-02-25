@@ -931,7 +931,7 @@ namespace GenCode
 					}
 
 					string addPaymentDivName = "//div[contains(@class, '48j0')]/div/button[contains(@class, '271k')]";
-					WaitAjaxLoading(By.XPath(addPaymentDivName), 10);
+					WaitAjaxLoading(By.XPath(addPaymentDivName), 300);
 					Delay(1000);
 					ReadOnlyCollection<IWebElement> addPaymentDev = this._driver.FindElements(By.XPath(addPaymentDivName));
 
@@ -941,14 +941,14 @@ namespace GenCode
 						Delay(3000);
 
 						string addPaymentRadName = "//i[contains(@class, 'x_18fa0a')]";
-						WaitAjaxLoading(By.XPath(addPaymentRadName), 15);
+						WaitAjaxLoading(By.XPath(addPaymentRadName), 300);
 						Delay(1000);
 						ReadOnlyCollection<IWebElement> _listRadio = this._driver.FindElements(By.XPath(addPaymentRadName));
 						if (_listRadio.Count > 0)
 						{
 							_listRadio[0].Click();
 
-							string btnNext1Name = "//div[@role='button' and contains(@class, 's1i5eluu')]/div/div/span[contains(@class, 'bwm1u5wc')]]";
+							string btnNext1Name = "//div[@role='button' and contains(@class, 's1i5eluu')]/div/div/span[contains(@class, 'bwm1u5wc')]";
 							WaitAjaxLoading(By.XPath(btnNext1Name));
 							Delay(1000);
 							ReadOnlyCollection<IWebElement> _listButtons = this._driver.FindElements(By.XPath(btnNext1Name));
@@ -956,7 +956,7 @@ namespace GenCode
 							{
 								if (this.isValid(_listButtons[0]))
 								{
-									_listButtons[0].Click();
+									_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
 
 									WaitAjaxLoading(By.CssSelector("input[type='text'][dir='auto']"), 8);
 									Delay(1000);
@@ -987,20 +987,20 @@ namespace GenCode
 									{
 										if (this.isValid(_listButtons[0]))
 										{
-											_listButtons[0].Click();
+											_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
 											Delay(500);
-											WaitAjaxLoading(By.XPath(btnNext2Name), 15);
+											WaitAjaxLoading(By.XPath(btnNext2Name), 60);
 											Delay(1000);
 											_listButtons = this._driver.FindElements(By.XPath(btnNext2Name));
 											if (_listButtons.Count > 0)
 											{
 												if (this.isValid(_listButtons[0]))
 												{
-													_listButtons[0].Click();
+													_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
 
 													Delay(5000);
 													this._driver.Navigate().Refresh();
-													WaitAjaxLoading(By.CssSelector("button[type='button'][aria-disabled='true']"), 15);
+													WaitAjaxLoading(By.CssSelector("button[type='button'][aria-disabled='true']"), 60);
 													Delay(1000);
 													IWebElement _btCheck = this.getElement(By.CssSelector("button[type='button'][aria-disabled='true']"));
 													if (_btCheck != null)
