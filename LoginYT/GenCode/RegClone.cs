@@ -938,10 +938,10 @@ namespace GenCode
 					if (addPaymentDev.Count > 0)
 					{
 						addPaymentDev[0].Click();
-						Delay(3000);
+						Delay(5000);
 
 						string addPaymentRadName = "//i[contains(@class, 'x_18fa0a')]";
-						WaitAjaxLoading(By.XPath(addPaymentRadName), 300);
+						WaitAjaxLoading(By.XPath(addPaymentRadName), 20);
 						Delay(1000);
 						ReadOnlyCollection<IWebElement> _listRadio = this._driver.FindElements(By.XPath(addPaymentRadName));
 						if (_listRadio.Count > 0)
@@ -988,8 +988,8 @@ namespace GenCode
 										if (this.isValid(_listButtons[0]))
 										{
 											_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
-											Delay(500);
-											WaitAjaxLoading(By.XPath(btnNext2Name), 60);
+											Delay(8000);
+											WaitAjaxLoading(By.XPath(btnNext2Name), 10);
 											Delay(1000);
 											_listButtons = this._driver.FindElements(By.XPath(btnNext2Name));
 											if (_listButtons.Count > 0)
