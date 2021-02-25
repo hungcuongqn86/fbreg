@@ -1032,7 +1032,7 @@ namespace GenCode
 					_postCode = null;
 					_iban = null;
 					_BIC = null;
-					_btAddBank = null;
+					addPaymentDev = null;
 				}
 				catch (Exception ex2)
 				{
