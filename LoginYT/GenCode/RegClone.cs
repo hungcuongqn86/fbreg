@@ -610,7 +610,7 @@ namespace GenCode
 																			bool _rsCreatePage = flag5;
 																			if (flag5)
                                                                             {
-																				this.addBank();
+                                                                                await this.addBank();
                                                                             }
 																			
 																			string _tmpData = string.Concat(new string[]
@@ -840,8 +840,18 @@ namespace GenCode
 
 					this._driver.Navigate().GoToUrl("https://www.facebook.com/ads/manager/account_settings/account_billing");
 
-					WaitAjaxLoading(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgba(0, 0, 0, 0.05)']"), 10);
+					WaitAjaxLoading(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgba(0, 0, 0, 0.05)']"), 15);
 					Delay(1000);
+
+					WaitAjaxLoading(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgb(24, 119, 242)']"), 5);
+					Delay(1000);
+					IWebElement _btAddStart = this.getElement(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgb(24, 119, 242)']"));
+					if (this.isValid(_btAddStart))
+                    {
+						_btAddStart.Click();
+						Delay(1000);
+					}
+
 					IWebElement _btAddBank = this.getElement(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgba(0, 0, 0, 0.05)']"));
 					if (this.isValid(_btAddBank))
 					{
