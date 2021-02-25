@@ -423,7 +423,8 @@ namespace GenCode
 					this.initChromePortable(chrome);
 					this.log("Start load page");
 					this._driver.Navigate().GoToUrl("https://facebook.com");
-					Thread.Sleep(1000);
+					WaitLoading();
+					Delay(1000);
 					bool flag = this._driver.PageSource.Contains("This site can’t be reached");
 					if (flag)
 					{
@@ -434,6 +435,7 @@ namespace GenCode
 					{
 						this.log("Find cookie banner");
 						WaitAjaxLoading(By.CssSelector("button[data-testid='cookie-policy-banner-accept']"));
+						Delay(1000);
 						IWebElement _acceptBt = this.getElement(By.CssSelector("button[data-testid='cookie-policy-banner-accept']"));
 						bool flag2 = this.isValid(_acceptBt);
 						if (flag2)
@@ -442,6 +444,7 @@ namespace GenCode
 						}
 						this.log("Find Locate Link");
 						WaitAjaxLoading(By.CssSelector("a[href*='facebook.com/']"));
+						Delay(1000);
 						ReadOnlyCollection<IWebElement> _locateList = this._driver.FindElements(By.CssSelector("a[href*='facebook.com/']"));
 						bool flag3 = _locateList.Count > 1;
 						if (flag3)
@@ -453,6 +456,7 @@ namespace GenCode
 						}
 						this.log("Find Register Button");
 						WaitAjaxLoading(By.CssSelector("a[data-testid='open-registration-form-button']"));
+						Delay(1000);
 						IWebElement _regBt = this.getElement(By.CssSelector("a[data-testid='open-registration-form-button']"));
 						bool flag4 = this.isValid(_regBt);
 						if (flag4)
@@ -497,7 +501,8 @@ namespace GenCode
 							this.log(_tmpDataAll);
 
 							this.log("Fill Name");
-							WaitAjaxLoading(By.CssSelector("input[name='firstname']"), 10);
+							WaitAjaxLoading(By.CssSelector("input[name='firstname']"), 20);
+							Delay(1000);
 							IWebElement _fName = this.getElement(By.CssSelector("input[name='firstname']"));
 							if (this.isValid(_fName))
 							{
