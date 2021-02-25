@@ -348,6 +348,27 @@ namespace GenCode
 			return _id + "@" + this._listDomain[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listDomain.Length - 1)];
 		}
 
+		private string getTempEmailCom()
+		{
+			string _id = this._listKeyword[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listKeyword.Count)] + this._listKeyword[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listKeyword.Count)] + this.randomNumber(5);
+			_id = _id.Replace(" ", "");
+			return _id + "@" + this._listDomain[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listDomain.Length - 1)];
+		}
+
+		private string getTempEmailComCode()
+		{
+			string _id = this._listKeyword[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listKeyword.Count)] + this._listKeyword[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listKeyword.Count)] + this.randomNumber(5);
+			_id = _id.Replace(" ", "");
+			return _id + "@" + this._listDomain[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listDomain.Length - 1)];
+		}
+
+		private string newTempEmailCom()
+		{
+			string _id = this._listKeyword[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listKeyword.Count)] + this._listKeyword[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listKeyword.Count)] + this.randomNumber(5);
+			_id = _id.Replace(" ", "");
+			return _id + "@" + this._listDomain[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listDomain.Length - 1)];
+		}
+
 		private bool changeEmail(string newmail)
 		{
 			try
@@ -902,10 +923,7 @@ namespace GenCode
 
 					this._driver.Navigate().GoToUrl("https://www.facebook.com/ads/manager/account_settings/account_billing");
 
-					WaitAjaxLoading(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgba(0, 0, 0, 0.05)']"), 15);
-					Delay(1000);
-
-					WaitAjaxLoading(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgb(24, 119, 242)']"), 5);
+					WaitAjaxLoading(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgb(24, 119, 242)']"), 10);
 					Delay(1000);
 					IWebElement _btAddStart = this.getElement(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgb(24, 119, 242)']"));
 					if (this.isValid(_btAddStart))
@@ -914,10 +932,14 @@ namespace GenCode
 						Delay(1000);
 					}
 
-					IWebElement _btAddBank = this.getElement(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgba(0, 0, 0, 0.05)']"));
-					if (this.isValid(_btAddBank))
+					string addPaymentDivName = "//div[contains(@class, '48j0')]/div/button[contains(@class, '271k')]";
+					WaitAjaxLoading(By.XPath(addPaymentDivName), 10);
+
+					ReadOnlyCollection<IWebElement> addPaymentDev = this._driver.FindElements(By.XPath(addPaymentDivName));
+
+					if (addPaymentDev.Count > 0)
 					{
-						_btAddBank.Click();
+						addPaymentDev[0].Click();
 
 						WaitAjaxLoading(By.CssSelector("div[role='radio']"), 15);
 						Delay(1000);
@@ -956,16 +978,17 @@ namespace GenCode
 										_checkTerm.Click();
 									}
 
-									WaitAjaxLoading(By.CssSelector("div[role='button'][tabindex='0']"), 3);
-									Delay(500);
-									_listButtons = this._driver.FindElements(By.CssSelector("div[role='button'][tabindex='0']"));
-									if (_listButtons.Count > 1)
-									{
-										if (this.isValid(_listButtons[_listButtons.Count - 2]))
-										{
-											_listButtons[_listButtons.Count - 2].Click();
 
-											Delay(1000);
+									string btnNext2Name = "//div[@role='button' and contains(@class, 's1i5eluu')]/div/div/span[contains(@class, 'bwm1u5wc')]/span]";
+									WaitAjaxLoading(By.XPath(btnNext2Name));
+									Delay(500);
+									_listButtons = this._driver.FindElements(By.XPath(btnNext2Name));
+									if (_listButtons.Count > 0)
+									{
+										if (this.isValid(_listButtons[0]))
+										{
+											_listButtons[0].Click();
+
 											WaitAjaxLoading(By.CssSelector("div[role='button'][tabindex='0']"), 15);
 											Delay(1000);
 											_listButtons = this._driver.FindElements(By.CssSelector("div[role='button'][tabindex='0']"));
