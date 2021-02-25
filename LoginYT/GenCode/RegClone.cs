@@ -1114,7 +1114,7 @@ namespace GenCode
 			var driverService = ChromeDriverService.CreateDefaultService();
 			driverService.HideCommandPromptWindow = true;
 
-			this._driver = new ChromeDriver(driverService, options, TimeSpan.FromMinutes(3.0));
+			this._driver = new ChromeDriver(driverService, options, TimeSpan.FromMinutes(15.0));
 			this._driver.Manage().Window.Size = new Size(1486, 800);
 		}
 
