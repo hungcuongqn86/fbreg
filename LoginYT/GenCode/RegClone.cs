@@ -940,22 +940,25 @@ namespace GenCode
 					if (addPaymentDev.Count > 0)
 					{
 						addPaymentDev[0].Click();
+						Delay(3000);
 
-						WaitAjaxLoading(By.CssSelector("div[role='radio']"), 15);
+						string addPaymentRadName = "//i[contains(@class, 'x_18fa0a')]";
+						WaitAjaxLoading(By.XPath(addPaymentRadName), 15);
 						Delay(1000);
-						ReadOnlyCollection<IWebElement> _listRadio = this._driver.FindElements(By.CssSelector("div[role='radio']"));
-						if (_listRadio.Count > 2)
+						ReadOnlyCollection<IWebElement> _listRadio = this._driver.FindElements(By.XPath(addPaymentRadName));
+						if (_listRadio.Count > 0)
 						{
-							_listRadio[2].Click();
+							_listRadio[0].Click();
 
-							WaitAjaxLoading(By.CssSelector("div[role='button'][tabindex='0']"), 3);
-							Delay(500);
-							ReadOnlyCollection<IWebElement> _listButtons = this._driver.FindElements(By.CssSelector("div[role='button'][tabindex='0']"));
-							if (_listButtons.Count > 1)
+							string btnNext1Name = "//div[@role='button' and contains(@class, 's1i5eluu')]/div/div/span[contains(@class, 'bwm1u5wc')]]";
+							WaitAjaxLoading(By.XPath(btnNext1Name));
+							Delay(1000);
+							ReadOnlyCollection<IWebElement> _listButtons = this._driver.FindElements(By.XPath(btnNext1Name));
+							if (_listButtons.Count > 0)
 							{
-								if (this.isValid(_listButtons[_listButtons.Count - 2]))
+								if (this.isValid(_listButtons[0]))
 								{
-									_listButtons[_listButtons.Count - 2].Click();
+									_listButtons[0].Click();
 
 									WaitAjaxLoading(By.CssSelector("input[type='text'][dir='auto']"), 8);
 									Delay(1000);
@@ -978,8 +981,7 @@ namespace GenCode
 										_checkTerm.Click();
 									}
 
-
-									string btnNext2Name = "//div[@role='button' and contains(@class, 's1i5eluu')]/div/div/span[contains(@class, 'bwm1u5wc')]/span]";
+									string btnNext2Name = btnNext1Name;
 									WaitAjaxLoading(By.XPath(btnNext2Name));
 									Delay(500);
 									_listButtons = this._driver.FindElements(By.XPath(btnNext2Name));
@@ -988,15 +990,15 @@ namespace GenCode
 										if (this.isValid(_listButtons[0]))
 										{
 											_listButtons[0].Click();
-
-											WaitAjaxLoading(By.CssSelector("div[role='button'][tabindex='0']"), 15);
+											Delay(500);
+											WaitAjaxLoading(By.XPath(btnNext2Name), 15);
 											Delay(1000);
-											_listButtons = this._driver.FindElements(By.CssSelector("div[role='button'][tabindex='0']"));
+											_listButtons = this._driver.FindElements(By.XPath(btnNext2Name));
 											if (_listButtons.Count > 0)
 											{
-												if (this.isValid(_listButtons[_listButtons.Count - 1]))
+												if (this.isValid(_listButtons[0]))
 												{
-													_listButtons[_listButtons.Count - 1].Click();
+													_listButtons[0].Click();
 
 													Delay(5000);
 													this._driver.Navigate().Refresh();
@@ -1015,12 +1017,32 @@ namespace GenCode
 												}
 											}
 										}
+										else
+										{
+											this.log("Not Next button - 2!");
+										}
+									}
+									else
+									{
+										this.log("Not Next button - 2!");
 									}
 									_listInputs = null;
 									_checkTerm = null;
 								}
+								else
+								{
+									this.log("Not Next button - 1!");
+								}
+							}
+							else
+							{
+								this.log("Not Next button - 1!");
 							}
 							_listButtons = null;
+                        }
+                        else
+                        {
+							this.log("Not banking radio!");
 						}
 						_listRadio = null;
 					}
@@ -1038,6 +1060,8 @@ namespace GenCode
 				{
 					this.log(ex2);
 				}
+
+				this.log("End banking!");
 			});
 		}
 
