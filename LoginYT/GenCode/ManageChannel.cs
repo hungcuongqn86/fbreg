@@ -1048,6 +1048,28 @@ namespace GenCode
 			}
 		}
 
+		private void killChromePortable()
+		{
+			try
+			{
+				string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+				string folderPath = m_exePath + "\\via";
+				bool exists = System.IO.Directory.Exists(folderPath);
+                if (exists)
+                {
+					DirectoryInfo directory = new DirectoryInfo(folderPath);
+					foreach (DirectoryInfo dir in directory.EnumerateDirectories())
+					{
+						dir.Delete(true);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				this.log(ex);
+			}
+		}
+
 		// Token: 0x06000033 RID: 51 RVA: 0x00003398 File Offset: 0x00001598
 		private void LogDelegate(string _s)
 		{
@@ -1057,7 +1079,13 @@ namespace GenCode
 		// Token: 0x06000034 RID: 52 RVA: 0x000033A4 File Offset: 0x000015A4
 		private void button3_Click(object sender, EventArgs e)
 		{
-			// this.killChrome();
+			this.log("Kill Chrome!");
+			this.killChrome();
+
+			this.log("Delete ChromePortable!");
+			this.killChromePortable();
+
+			this.log("New session!");
 			int _numberThread = (int)this.tbNumberThread.Value;
 			for (int i = 0; i < _numberThread; i++)
 			{
