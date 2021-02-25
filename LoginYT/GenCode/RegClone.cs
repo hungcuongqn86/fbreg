@@ -91,6 +91,30 @@ namespace GenCode
 			while (i == 0) { };
 		}
 
+		private void WaitLoading()
+		{
+			// wait loading
+			WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
+			Func<IWebDriver, bool> waitLoading = new Func<IWebDriver, bool>((IWebDriver Web) =>
+			{
+				try
+				{
+					IWebElement alertE = Web.FindElement(By.Id("abccuongnh"));
+					return false;
+				}
+				catch
+				{
+					return true;
+				}
+			});
+
+			try
+			{
+				wait.Until(waitLoading);
+			}
+			catch { }
+		}
+
 		private void QuitDriver(string chromept)
 		{
 			this._driver.Quit();
@@ -324,7 +348,67 @@ namespace GenCode
 			return _id + "@" + this._listDomain[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listDomain.Length - 1)];
 		}
 
+		private bool changeEmail(string newmail)
+		{
+			try
+            {
+				WaitAjaxLoading(By.XPath("//div[contains(@class, 'iOverlayFooter')]/a[contains(@class, 'ayerCancel')]"), 3);
+				Delay(1000);
+				IWebElement _btCancel = this.getElement(By.XPath("//div[contains(@class, 'iOverlayFooter')]/a[contains(@class, 'ayerCancel')]"));
+				if (this.isValid(_btCancel))
+				{
+					_btCancel.Click();
+				}
 
+				WaitAjaxLoading(By.CssSelector("a[href*='/confirm/resend_code']"), 15);
+				Delay(1000);
+				IWebElement _btConfirmResend = this.getElement(By.CssSelector("a[href*='/confirm/resend_code']"));
+				if (!this.isValid(_btConfirmResend))
+                {
+					return false;
+				}
+				_btConfirmResend.Click();
+
+				WaitAjaxLoading(By.CssSelector("a[href*='/change_contactpoint'][rel='dialog-post']"), 10);
+				Delay(500);
+				_btConfirmResend = this.getElement(By.CssSelector("a[href*='/change_contactpoint'][rel='dialog-post']"));
+				if (!this.isValid(_btConfirmResend))
+				{
+					return false;
+				}
+				_btConfirmResend.Click();
+
+				WaitAjaxLoading(By.CssSelector("input[name='contactpoint']"), 10);
+				Delay(1000);
+				IWebElement _inputNewEmail = this.getElement(By.CssSelector("input[name='contactpoint']"));
+				if (!this.isValid(_inputNewEmail))
+				{
+					return false;
+				}
+
+				this.fillInput(_inputNewEmail, newmail);
+				WaitAjaxLoading(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[@type='submit']"), 3);
+				Delay(1000);
+				ReadOnlyCollection<IWebElement> _btSubmitNewEmail = this._driver.FindElements(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[@type='submit']"));
+				if (_btSubmitNewEmail.Count > 0)
+				{
+					if (this.isValid(_btSubmitNewEmail[0]))
+					{
+						_btSubmitNewEmail[0].Click();
+						Delay(1000);
+					}
+				}
+				else
+				{
+					return false;
+				}
+
+				return true;
+            } catch
+            {
+				return false;
+            }
+		}
 
 		// Token: 0x060000BD RID: 189 RVA: 0x000094F8 File Offset: 0x000076F8
 		public async Task<int> regClone(string chrome)
@@ -466,18 +550,28 @@ namespace GenCode
 								{
 									this.log("Click submit");
 									_submitBt.Click();
-									WaitAjaxLoading(By.CssSelector("a[href*='/confirm/resend_code']"), 15);
 
-									if (!this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
+									WaitLoading();
+									Delay(1000);
+									if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 									{
+										_status = -1;
+										this.log("check point");
+										QuitDriver(chrome);
+									}
+
+									IWebElement _btConfirmResend = null;
+									if (_status >= 0)
+									{
+										WaitAjaxLoading(By.CssSelector("a[href*='/confirm/resend_code']"), 15);
 										Delay(1000);
-										IWebElement _btConfirmResend = this.getElement(By.CssSelector("a[href*='/confirm/resend_code']"));
+										_btConfirmResend = this.getElement(By.CssSelector("a[href*='/confirm/resend_code']"));
 										if (!this.isValid(_btConfirmResend))
 										{
 											_submitBt = this.getElement(By.CssSelector("button[name='websubmit']"));
 											if (this.isValid(_submitBt))
-                                            {
-												Thread.Sleep(120000);
+											{
+												Delay(120000);
 												_submitBt.Click();
 												WaitAjaxLoading(By.CssSelector("a[href*='/confirm/resend_code']"), 10);
 												Delay(1000);
@@ -485,200 +579,173 @@ namespace GenCode
 											}
 										}
 
-										if (this.isValid(_btConfirmResend))
+										WaitLoading();
+										Delay(1000);
+										if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 										{
-											_btConfirmResend.Click();
-											WaitAjaxLoading(By.CssSelector("a[href*='/change_contactpoint'][rel='dialog-post']"), 10);
-											Delay(500);
-											_btConfirmResend = this.getElement(By.CssSelector("a[href*='/change_contactpoint'][rel='dialog-post']"));
-											if (this.isValid(_btConfirmResend))
+											_status = -1;
+											this.log("check point");
+											QuitDriver(chrome);
+										}
+
+										if (_status >= 0)
+                                        {
+											if (!this.isValid(_btConfirmResend))
 											{
-												_btConfirmResend.Click();
-												this.log("Change new email");
-												WaitAjaxLoading(By.CssSelector("input[name='contactpoint']"), 10);
-												Delay(1000);
-												IWebElement _inputNewEmail = this.getElement(By.CssSelector("input[name='contactpoint']"));
-												if (this.isValid(_inputNewEmail))
+												_status = -1;
+												this.log("Not reg submit!");
+												QuitDriver(chrome);
+											}
+										}
+									}
+
+									if (_status >= 0)
+									{
+										if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
+										{
+											_status = -1;
+											this.log("check point");
+											QuitDriver(chrome);
+										}
+									}
+
+									// Lan 1
+									string secCode = "";
+                                    if (_status >= 0)
+                                    {
+										this.log("Change new email lan 1 -->");
+										if (this.changeEmail(_mailKhoiPhuc))
+										{
+											secCode = await this.getCode2(_mailKhoiPhuc.Replace("@fairocketsmail.com", ""));
+										}
+									}
+
+									if (_status >= 0)
+									{
+										if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
+										{
+											_status = -1;
+											this.log("check point");
+											QuitDriver(chrome);
+										}
+									}
+
+									// Lan 2
+									if (string.IsNullOrEmpty(secCode) && (_status >= 0))
+                                    {
+										this.log("Change new email lan 2 -->");
+										_mailKhoiPhuc = this.randomEmail();
+										if (this.changeEmail(_mailKhoiPhuc))
+										{
+											secCode = await this.getCode2(_mailKhoiPhuc.Replace("@fairocketsmail.com", ""));
+										}
+									}
+
+									if (_status >= 0)
+									{
+										if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
+										{
+											_status = -1;
+											this.log("check point");
+											QuitDriver(chrome);
+										}
+									}
+
+									// Lan 3
+									if (string.IsNullOrEmpty(secCode) && (_status >= 0))
+									{
+										this.log("Change new email lan 3 -->");
+										_mailKhoiPhuc = this.randomEmail();
+										if (this.changeEmail(_mailKhoiPhuc))
+										{
+											secCode = await this.getCode2(_mailKhoiPhuc.Replace("@fairocketsmail.com", ""));
+										}
+									}
+
+									if (_status >= 0)
+									{
+										if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
+										{
+											_status = -1;
+											this.log("check point");
+											QuitDriver(chrome);
+										}
+									}
+
+									// Lan 4
+									if (string.IsNullOrEmpty(secCode) && (_status >= 0))
+									{
+										this.log("Change new email lan 4 -->");
+										_mailKhoiPhuc = this.randomEmail();
+										if (this.changeEmail(_mailKhoiPhuc))
+										{
+											secCode = await this.getCode2(_mailKhoiPhuc.Replace("@fairocketsmail.com", ""));
+										}
+									}
+
+									if (_status >= 0)
+									{
+										if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
+										{
+											_status = -1;
+											this.log("check point");
+											QuitDriver(chrome);
+										}
+									}
+
+									// next
+									if (_status >= 0)
+                                    {
+										if (string.IsNullOrEmpty(secCode))
+										{
+											this.log("Get secCode Error");
+										}
+										else
+										{
+											this.log(secCode);
+											IWebElement _inputCode = this.getElement(By.CssSelector("input[name='code']"));
+											if (this.isValid(_inputCode))
+											{
+												this.fillInput(_inputCode, secCode);
+												IWebElement _btConfirmCode = this.getElement(By.CssSelector("button[name='confirm']"));
+												if (this.isValid(_btConfirmCode))
 												{
-													this.fillInput(_inputNewEmail, _mailKhoiPhuc);
-													this.log("Submit change Email");
+													_btConfirmCode.Click();
+													Thread.Sleep(10000);
 
-													WaitAjaxLoading(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[@type='submit']"), 3);
-													Delay(1000);
-													ReadOnlyCollection<IWebElement> _btSubmitNewEmail = this._driver.FindElements(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[@type='submit']"));
-													bool _isClickSubmit = false;
-													if (_btSubmitNewEmail.Count > 0)
+													if (!this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 													{
-														if (this.isValid(_btSubmitNewEmail[0]))
+														string _tmpCoookie = "";
+														bool flag5 = await this.createPage(_tmpCoookie, _tmpDataAll);
+														bool _rsCreatePage = flag5;
+														if (flag5)
 														{
-															_btSubmitNewEmail[0].Click();
-															_isClickSubmit = true;
+															await this.addBank();
 														}
-													}
-													else
-													{
-														this.log("Not found submit new email");
-													}
-													if (_isClickSubmit)
-													{
-														Delay(5000);
-														if (!this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
+
+														string _tmpData = string.Concat(new string[]
 														{
-															string text2 = await this.getCode2(_mailKhoiPhuc.Replace("@fairocketsmail.com", ""));
-                                                            if (string.IsNullOrEmpty(text2))
-                                                            {
-																// change mail
-																this.log("Change new email lan 2-->");
-																IWebElement _btConfirmResend1 = this.getElement(By.CssSelector("a[href*='/confirm/resend_code']"));
-																if (this.isValid(_btConfirmResend1))
-                                                                {
-																	_btConfirmResend1.Click();
-																	WaitAjaxLoading(By.CssSelector("a[href*='/change_contactpoint'][rel='dialog-post']"), 10);
-																	_btConfirmResend1 = this.getElement(By.CssSelector("a[href*='/change_contactpoint'][rel='dialog-post']"));
-																	if (this.isValid(_btConfirmResend1))
-                                                                    {
-																		_btConfirmResend1.Click();
-																		this.log("Change new email");
-																		WaitAjaxLoading(By.CssSelector("input[name='contactpoint']"), 10);
-																		_inputNewEmail = this.getElement(By.CssSelector("input[name='contactpoint']"));
-																		_mailKhoiPhuc = this.randomEmail();
-																		_tmpDataAll = string.Concat(new string[]
-																		{
-																			_randomEmail,
-																			"\t",
-																			_passAcc,
-																			"\t",
-																			_mailKhoiPhuc
-																		});
-																		this.log(_tmpDataAll);
-																		this.fillInput(_inputNewEmail, _mailKhoiPhuc);
-																		
-																		this.log("Submit change Email");
-																		WaitAjaxLoading(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[@type='submit']"), 3);
-																		Delay(1000);
-																		_btSubmitNewEmail = this._driver.FindElements(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[@type='submit']"));
-																		if (_btSubmitNewEmail.Count > 0)
-																		{
-																			if (this.isValid(_btSubmitNewEmail[0]))
-																			{
-																				_btSubmitNewEmail[0].Click();
-																				Delay(5000);
-																			}
-																		}
-																		else
-																		{
-																			this.log("Not found submit new email");
-																		}
-
-																		text2 = await this.getCode2(_mailKhoiPhuc.Replace("@fairocketsmail.com", ""));
-																	}
-																}
-															}
-
-															string _code = text2;
-															text2 = null;
-															if (!string.IsNullOrEmpty(_code))
-															{
-																this.log(_code);
-																IWebElement _inputCode = this.getElement(By.CssSelector("input[name='code']"));
-																if (this.isValid(_inputCode))
-																{
-																	this.fillInput(_inputCode, _code);
-																	IWebElement _btConfirmCode = this.getElement(By.CssSelector("button[name='confirm']"));
-																	if (this.isValid(_btConfirmCode))
-																	{
-																		_btConfirmCode.Click();
-																		Thread.Sleep(10000);
-																		if (!this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
-																		{
-																			string _tmpCoookie = "";
-																			foreach (OpenQA.Selenium.Cookie _c in this._driver.Manage().Cookies.AllCookies)
-																			{
-																				_tmpCoookie = string.Concat(new string[]
-																				{
-																					_tmpCoookie,
-																					_c.Name,
-																					"=",
-																					_c.Value,
-																					"; "
-																				});
-																				// _c = null;
-																			}
-																			// IEnumerator<OpenQA.Selenium.Cookie> enumerator = null;
-																			this.log(_tmpCoookie);
-																			bool flag5 = await this.createPage(_tmpCoookie, _tmpDataAll);
-																			bool _rsCreatePage = flag5;
-																			if (flag5)
-                                                                            {
-                                                                                await this.addBank();
-                                                                            }
-																			
-																			string _tmpData = string.Concat(new string[]
-																			{
 																				_tmpDataAll,
 																				"\t",
 																				_tmpCoookie,
 																				"\tPageCreate: ",
 																				_rsCreatePage.ToString()
-																			});
-																			this.log("OK->\t" + _tmpData);
-																			_status = 1;
-																			for (;;)
-																			{
-																				try
-																				{
-																					File.AppendAllText("data_log.txt", _tmpData + "\n");
-																					break;
-																				}
-																				catch
-																				{
-																				}
-																				Thread.Sleep(500);
-																			}
-																			_tmpCoookie = null;
-																			_tmpData = null;
-																		}
-																		else
-																		{
-																			_status = -1;
-																			this.log("check point");
-																			QuitDriver(chrome);
-																		}
-																	}
-																	_btConfirmCode = null;
-																}
-																_inputCode = null;
-															}
-															else
-															{
-																this.log("Get Code Error");
-																// QuitDriver(chrome);
-															}
-															_code = null;
-														}
-														else
-														{
-															_status = -1;
-															this.log("check point");
-															QuitDriver(chrome);
-														}
+														});
+														this.log("OK->\t" + _tmpData);
+														_status = 1;
+														_tmpData = null;
 													}
-													_btSubmitNewEmail = null;
+													else
+													{
+														_status = -1;
+														this.log("check point");
+														QuitDriver(chrome);
+													}
 												}
-												else
-												{
-													this.log("Not found new email");
-												}
-												_inputNewEmail = null;
+												_btConfirmCode = null;
 											}
+											_inputCode = null;
 										}
-										_btConfirmResend = null;
-									}
-									else
-									{
-										_status = -1;
-										this.log("check point");
-										QuitDriver(chrome);
 									}
 								}
 								_lName = null;
@@ -714,16 +781,6 @@ namespace GenCode
 					this.log(ex);
 				}
 				this.log("End");
-				/*try
-				{
-					if (this._closeChrome && this._driver != null)
-					{
-						this._driver.Quit();
-					}
-				}
-				catch
-				{
-				}*/
 			});
 			return _status;
 		}
@@ -760,7 +817,7 @@ namespace GenCode
 						break;
 					}
 					_count++;
-					if (_count >= 5)
+					if (_count >= 3)
 					{
 						goto Block_3;
 					}
