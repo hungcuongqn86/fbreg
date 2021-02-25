@@ -1620,34 +1620,7 @@ namespace GenCode
 		// Token: 0x0600003B RID: 59 RVA: 0x0000360C File Offset: 0x0000180C
 		private async void button1_Click(object sender, EventArgs e)
 		{
-			string[] _list = this.tbInput.Text.Trim().Split(new char[]
-			{
-				'\n'
-			});
-			int _count = 0;
-			foreach (string _item in _list)
-			{
-				this.log("---------------------");
-				int num = _count;
-				_count = num + 1;
-				this.log(string.Concat(new object[]
-				{
-					"Running: ",
-					_count,
-					"/",
-					_list.Length
-				}));
-				this.log(_item);
-				string[] _tmp = _item.Split(new char[]
-				{
-					'\t'
-				});
-				await this.addBank(_tmp[3], _item);
-				_tmp = null;
-				// _item = null;
-			}
-			string[] array = null;
-			this.log("Done");
+			
 		}
 
 		// Token: 0x0600003C RID: 60 RVA: 0x00003658 File Offset: 0x00001858
