@@ -1090,7 +1090,7 @@ namespace GenCode
 			for (int i = 0; i < _numberThread; i++)
 			{
 				string _threadName = i.ToString().Clone().ToString();
-				new Thread(async delegate()
+				Thread _myThread = new Thread(async delegate()
 				{
 					RegClone _reg = new RegClone();
 					_reg._listKeyword = this._listKeyword;
@@ -1101,7 +1101,10 @@ namespace GenCode
 					string chrome = DateTime.Now.ToString("MM_dd_yyyy_HH_mm_ss") + "_" + _reg._ThreadName;
 					initBrowse(chrome);
 					await _reg.regClone(chrome);
-				}).Start();
+				});
+
+				_myThread.Start();
+
 			}
 			// this.log("All Done!");
 		}

@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
@@ -350,9 +351,26 @@ namespace GenCode
 
 		private string getTempEmailCom()
 		{
-			string _id = this._listKeyword[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listKeyword.Count)] + this._listKeyword[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listKeyword.Count)] + this.randomNumber(5);
-			_id = _id.Replace(" ", "");
-			return _id + "@" + this._listDomain[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listDomain.Length - 1)];
+			try
+			{
+				this._driver.SwitchTo().Window(this.emailTabHandle);
+				WaitLoading();
+				Delay(1000);
+                OpenQA.Selenium.Cookie cookie1 = this._driver.Manage().Cookies.GetCookieNamed("email");
+                if (cookie1 != null)
+                {
+					this._driver.SwitchTo().Window(this.regTabHandle);
+					return Uri.UnescapeDataString(cookie1.Value);
+				}
+				this._driver.SwitchTo().Window(this.regTabHandle);
+				return null;
+			}
+			catch (Exception ex)
+			{
+				this.log(ex);
+				this._driver.SwitchTo().Window(this.regTabHandle);
+				return null;
+			}
 		}
 
 		private string getTempEmailComCode()
@@ -364,9 +382,39 @@ namespace GenCode
 
 		private string newTempEmailCom()
 		{
-			string _id = this._listKeyword[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listKeyword.Count)] + this._listKeyword[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listKeyword.Count)] + this.randomNumber(5);
-			_id = _id.Replace(" ", "");
-			return _id + "@" + this._listDomain[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listDomain.Length - 1)];
+			try
+			{
+				this._driver.SwitchTo().Window(this.emailTabHandle);
+				WaitLoading();
+				WaitAjaxLoading(By.Id("click-to-delete"), 5);
+				Delay(1000);
+				IWebElement _btDelete = this.getElement(By.Id("click-to-delete"));
+				if (this.isValid(_btDelete))
+				{
+					_btDelete.Click();
+					Delay(3000);
+                }
+                else
+                {
+					this._driver.SwitchTo().Window(this.regTabHandle);
+					return null;
+				}
+
+				OpenQA.Selenium.Cookie cookie1 = this._driver.Manage().Cookies.GetCookieNamed("email");
+				if (cookie1 != null)
+				{
+					this._driver.SwitchTo().Window(this.regTabHandle);
+					return Uri.UnescapeDataString(cookie1.Value);
+				}
+				this._driver.SwitchTo().Window(this.regTabHandle);
+				return null;
+			}
+			catch (Exception ex)
+			{
+				this.log(ex);
+				this._driver.SwitchTo().Window(this.regTabHandle);
+				return null;
+			}
 		}
 
 		private bool changeEmail(string newmail)
@@ -444,6 +492,23 @@ namespace GenCode
 					this.initChromePortable(chrome);
 					this.log("Start load page");
 					this._driver.Navigate().GoToUrl("https://facebook.com");
+					((IJavaScriptExecutor)this._driver).ExecuteScript("window.open();");
+					Delay(1000);
+
+					ReadOnlyCollection<string> tabs = this._driver.WindowHandles;
+					if (tabs.Count < 2)
+					{
+						this.log("Die Tab!");
+						return;
+					}
+
+					this.regTabHandle = tabs[0];
+					this.emailTabHandle = tabs[1];
+
+					this._driver.SwitchTo().Window(this.emailTabHandle);
+					this._driver.Navigate().GoToUrl("https://temp-mail.org/en/");
+					this._driver.SwitchTo().Window(this.regTabHandle);
+
 					WaitLoading();
 					Delay(1000);
 					bool flag = this._driver.PageSource.Contains("This site can’t be reached");
@@ -510,7 +575,8 @@ namespace GenCode
 							}
 							string _randomEmail = this.randomGmail();
 							string _passAcc = "F0KHFSa" + new Random(Guid.NewGuid().GetHashCode()).Next(10000, 99999);
-							string _mailKhoiPhuc = this.randomEmail();
+							// string _mailKhoiPhuc = this.getTempEmailCom();
+							string _mailKhoiPhuc = this.newTempEmailCom();
 							string _tmpDataAll = string.Concat(new string[]
 							{
 								_randomEmail,
@@ -642,7 +708,7 @@ namespace GenCode
 										this.log("Change new email lan 1 -->");
 										if (this.changeEmail(_mailKhoiPhuc))
 										{
-											secCode = await this.getCode2(_mailKhoiPhuc.Replace("@fairocketsmail.com", ""));
+											secCode = await this.getSecurityCode();
 										}
 									}
 
@@ -660,10 +726,10 @@ namespace GenCode
 									if (string.IsNullOrEmpty(secCode) && (_status >= 0))
                                     {
 										this.log("Change new email lan 2 -->");
-										_mailKhoiPhuc = this.randomEmail();
+										_mailKhoiPhuc = this.newTempEmailCom();
 										if (this.changeEmail(_mailKhoiPhuc))
 										{
-											secCode = await this.getCode2(_mailKhoiPhuc.Replace("@fairocketsmail.com", ""));
+											secCode = await this.getSecurityCode();
 										}
 									}
 
@@ -681,10 +747,10 @@ namespace GenCode
 									if (string.IsNullOrEmpty(secCode) && (_status >= 0))
 									{
 										this.log("Change new email lan 3 -->");
-										_mailKhoiPhuc = this.randomEmail();
+										_mailKhoiPhuc = this.newTempEmailCom();
 										if (this.changeEmail(_mailKhoiPhuc))
 										{
-											secCode = await this.getCode2(_mailKhoiPhuc.Replace("@fairocketsmail.com", ""));
+											secCode = await this.getSecurityCode();
 										}
 									}
 
@@ -702,10 +768,10 @@ namespace GenCode
 									if (string.IsNullOrEmpty(secCode) && (_status >= 0))
 									{
 										this.log("Change new email lan 4 -->");
-										_mailKhoiPhuc = this.randomEmail();
+										_mailKhoiPhuc = this.newTempEmailCom();
 										if (this.changeEmail(_mailKhoiPhuc))
 										{
-											secCode = await this.getCode2(_mailKhoiPhuc.Replace("@fairocketsmail.com", ""));
+											secCode = await this.getSecurityCode();
 										}
 									}
 
@@ -809,6 +875,54 @@ namespace GenCode
 				this.log("End");
 			});
 			return _status;
+		}
+
+		private async Task<string> getSecurityCode()
+		{
+			try
+			{
+				string _tmpCode;
+				this._driver.SwitchTo().Window(this.emailTabHandle);
+				WaitLoading();
+				int _count = 0;
+				string _code = "";
+
+				for (; ; )
+				{
+					string _subjectXPath = "//div[contains(@class, 'nbox-dataList')]/ul/li/div/a/span[contains(@class, 'nboxSubject ')]";
+					WaitAjaxLoading(By.XPath(_subjectXPath), 10);
+					Delay(1000);
+					ReadOnlyCollection<IWebElement> _subject = this._driver.FindElements(By.XPath(_subjectXPath));
+					if (_subject.Count > 1)
+					{
+						string text = _subject[1].Text;
+						_tmpCode = Regex.Match(text, "FB[-][0-9]+").ToString();
+						if (!string.IsNullOrEmpty(_tmpCode))
+						{
+							break;
+						}
+					}
+
+					_count++;
+					if (_count >= 3)
+					{
+						goto Block_3;
+					}
+					_tmpCode = null;
+					await Task.Delay(10000);
+				}
+				_code = _tmpCode.Replace("FB-", "");
+				Block_3:
+				this.log("Code: " + _code);
+				this._driver.SwitchTo().Window(this.regTabHandle);
+				return _code;
+			}
+			catch (Exception ex)
+			{
+				this.log(ex);
+				this._driver.SwitchTo().Window(this.regTabHandle);
+				return null;
+			}
 		}
 
 		// Token: 0x060000BE RID: 190 RVA: 0x00009540 File Offset: 0x00007740
@@ -1132,7 +1246,7 @@ namespace GenCode
 		private void fillInput(IWebElement _ele, string s)
 		{
 			_ele.Click();
-			_ele.SendKeys(Keys.Control + "a");
+			_ele.SendKeys(OpenQA.Selenium.Keys.Control + "a");
 			_ele.SendKeys("\b");
 			_ele.SendKeys(s);
 		}
@@ -1326,6 +1440,8 @@ namespace GenCode
 
 		// Token: 0x04000166 RID: 358
 		private IWebDriver _driver = null;
+		private string regTabHandle = null;
+		private string emailTabHandle = null;
 
 		// Token: 0x02000026 RID: 38
 		// (Invoke) Token: 0x060000CE RID: 206
