@@ -970,13 +970,14 @@ namespace GenCode
 
 					this._driver.Navigate().GoToUrl("https://www.facebook.com/ads/manager/account_settings/account_billing");
 					Delay(5000);
+					WaitLoading();
 					IWebElement _btAddStart = this.getElement(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgb(24, 119, 242)']"));
 					if (this.isValid(_btAddStart))
                     {
 						_btAddStart.Click();
 						Delay(1000);
 					}
-
+					WaitLoading();
 					string addPaymentDivName = "//div[contains(@class, '48j0')]/div/button[contains(@class, '271k')]";
 					WaitAjaxLoading(By.XPath(addPaymentDivName), 300);
 					Delay(1000);
@@ -986,10 +987,11 @@ namespace GenCode
 					{
 						addPaymentDev[0].Click();
 						Delay(5000);
+						WaitLoading();
 
 						string addPaymentRadName = "//i[contains(@class, 'x_18fa0a')]";
 						WaitAjaxLoading(By.XPath(addPaymentRadName), 20);
-						Delay(1000);
+						Delay(3000);
 						ReadOnlyCollection<IWebElement> _listRadio = this._driver.FindElements(By.XPath(addPaymentRadName));
 						if (_listRadio.Count > 0)
 						{
@@ -1005,25 +1007,37 @@ namespace GenCode
 								{
 									_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
 
-									WaitAjaxLoading(By.CssSelector("input[type='text'][dir='auto']"), 8);
 									Delay(1000);
-									ReadOnlyCollection<IWebElement> _listInputs = this._driver.FindElements(By.CssSelector("input[type='text'][dir='auto']"));
-									this.fillInput(_listInputs[0], _tmpName);
-									Delay(500);
-									this.fillInput(_listInputs[1], _iban);
-									Delay(500);
-									this.fillInput(_listInputs[2], _BIC);
-									Delay(500);
-									this.fillInput(_listInputs[3], _address);
-									Delay(500);
-									this.fillInput(_listInputs[4], _city);
-									Delay(500);
-									this.fillInput(_listInputs[5], _postCode);
-									Delay(500);
-									IWebElement _checkTerm = this.getElement(By.CssSelector("input[type='checkbox']"));
-									if (_checkTerm != null)
+									WaitLoading();
+									string inputTagName = "//input[@type='text']";
+									WaitAjaxLoading(By.XPath(inputTagName));
+									ReadOnlyCollection<IWebElement> inputs = this._driver.FindElements(By.XPath(inputTagName));
+									if (inputs.Count > 5)
 									{
-										_checkTerm.Click();
+										inputs[0].Click();
+										inputs[0].SendKeys(_tmpName);
+										Delay(500);
+										inputs[1].Click();
+										inputs[1].SendKeys(_iban);
+										Delay(500);
+										inputs[2].Click();
+										inputs[2].SendKeys(_BIC);
+										Delay(500);
+										inputs[3].Click();
+										inputs[3].SendKeys(_address);
+										Delay(500);
+										inputs[4].Click();
+										inputs[4].SendKeys(_city);
+										Delay(500);
+										inputs[5].Click();
+										inputs[5].SendKeys(_postCode);
+										Delay(500);
+										// checkbox
+										string inputAccountName = "//input[@type='checkbox']";
+										WaitAjaxLoading(By.XPath(inputAccountName));
+										Delay(500);
+										IWebElement input = this._driver.FindElement(By.XPath(inputAccountName));
+										input.Click();
 									}
 
 									string btnNext2Name = btnNext1Name;
@@ -1071,8 +1085,6 @@ namespace GenCode
 									{
 										this.log("Not Next button - 2!");
 									}
-									_listInputs = null;
-									_checkTerm = null;
 								}
 								else
 								{
