@@ -937,9 +937,12 @@ namespace GenCode
 					ReadOnlyCollection<IWebElement> addPaymentDev = this._driver.FindElements(By.XPath(addPaymentDivName));
 					if (addPaymentDev.Count < 1)
                     {
+						WaitAjaxLoading(By.XPath(addPaymentDivName1), 5);
+						Delay(1000);
 						addPaymentDev = this._driver.FindElements(By.XPath(addPaymentDivName1));
                         if (addPaymentDev.Count > 0)
                         {
+							this.log("New banking form --- AAA");
 							addPamt = addPaymentDev[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
 						}
                     }
