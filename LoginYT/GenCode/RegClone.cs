@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
 namespace GenCode
@@ -577,7 +578,6 @@ namespace GenCode
 							string _randomEmail = this.randomGmail();
 							string _passAcc = "F0KHFSa" + new Random(Guid.NewGuid().GetHashCode()).Next(10000, 99999);
 							string _mailKhoiPhuc = this.getTempEmailCom();
-							// string _mailKhoiPhuc = this.newTempEmailCom();
 							string _tmpDataAll = string.Concat(new string[]
 							{
 								_randomEmail,
@@ -724,69 +724,6 @@ namespace GenCode
 										}
 									}
 
-									// Lan 2
-									if (string.IsNullOrEmpty(secCode) && (_status >= 0))
-                                    {
-										this.log("Change new email lan 2 -->");
-										_mailKhoiPhuc = this.newTempEmailCom();
-										if (this.changeEmail(_mailKhoiPhuc))
-										{
-											secCode = await this.getSecurityCode();
-										}
-									}
-
-									if (_status >= 0)
-									{
-										if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
-										{
-											_status = -1;
-											this.log("check point");
-											QuitDriver(chrome);
-										}
-									}
-
-									// Lan 3
-									if (string.IsNullOrEmpty(secCode) && (_status >= 0))
-									{
-										this.log("Change new email lan 3 -->");
-										_mailKhoiPhuc = this.newTempEmailCom();
-										if (this.changeEmail(_mailKhoiPhuc))
-										{
-											secCode = await this.getSecurityCode();
-										}
-									}
-
-									if (_status >= 0)
-									{
-										if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
-										{
-											_status = -1;
-											this.log("check point");
-											QuitDriver(chrome);
-										}
-									}
-
-									// Lan 4
-									if (string.IsNullOrEmpty(secCode) && (_status >= 0))
-									{
-										this.log("Change new email lan 4 -->");
-										_mailKhoiPhuc = this.newTempEmailCom();
-										if (this.changeEmail(_mailKhoiPhuc))
-										{
-											secCode = await this.getSecurityCode();
-										}
-									}
-
-									if (_status >= 0)
-									{
-										if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
-										{
-											_status = -1;
-											this.log("check point");
-											QuitDriver(chrome);
-										}
-									}
-
 									// next
 									if (_status >= 0)
                                     {
@@ -875,38 +812,33 @@ namespace GenCode
 				string _tmpCode;
 				this._driver.SwitchTo().Window(this.emailTabHandle);
 				WaitLoading();
+				Delay(1000);
 				int _count = 0;
 				string _code = "";
 
 				for (; ; )
 				{
-
 					await Task.Delay(10000);
-					this.log("Check mailcode - " + _count.ToString());
-					string _subjectXPath = "//div[contains(@class, 'nbox-dataList')]/ul/li/div/a/span[contains(@class, 'nboxSubject')]";
-					string _subjectXPath1 = "//div[contains(@class, 'nbox-dataList')]/ul/li/div/span[contains(@class, 'nboxSubject')]/a[contains(@class, 'iewLink')]";
-					WaitAjaxLoading(By.XPath(_subjectXPath), 10);
-					Delay(1000);
-					ReadOnlyCollection<IWebElement> _subject = this._driver.FindElements(By.XPath(_subjectXPath));
-					if (_subject.Count < 2)
-					{
-						WaitAjaxLoading(By.XPath(_subjectXPath1), 10);
-						Delay(1000);
-						_subject = this._driver.FindElements(By.XPath(_subjectXPath1));
+					this.log("Requet code -  " + _count);
+					WaitAjaxLoading(By.CssSelector("div[class*='tm-content']"));
+					await Task.Delay(1000);
+					ReadOnlyCollection<IWebElement> tmcontent = this._driver.FindElements(By.CssSelector("div[class*='tm-content']"));
+                    if (tmcontent.Count > 0 )
+                    {
+						Actions actions = new Actions(this._driver);
+						actions.MoveToElement(tmcontent[0]);
+						await Task.Delay(3000);
+						actions.Perform();
 					}
-
-					if (_subject.Count > 1)
+					
+					string pageSource = this._driver.PageSource;
+					_tmpCode = Regex.Match(pageSource, "FB[-][0-9]+").ToString();
+					if (!string.IsNullOrEmpty(_tmpCode))
 					{
-						string text = _subject[1].Text;
-						_tmpCode = Regex.Match(text, "FB[-][0-9]+").ToString();
-						if (!string.IsNullOrEmpty(_tmpCode))
-						{
-							break;
-						}
+						break;
 					}
-
 					_count++;
-					if (_count >= 15)
+					if (_count >= 10)
 					{
 						goto Block_3;
 					}
