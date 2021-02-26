@@ -393,7 +393,8 @@ namespace GenCode
 				{
 					_btDelete.Click();
 					Delay(3000);
-                }
+					WaitLoading();
+				}
                 else
                 {
 					this._driver.SwitchTo().Window(this.regTabHandle);
@@ -587,6 +588,7 @@ namespace GenCode
 							});
 							this.log(_tmpDataAll);
 
+							WaitLoading();
 							this.log("Fill Name");
 							WaitAjaxLoading(By.CssSelector("input[name='firstname']"), 20);
 							Delay(1000);
