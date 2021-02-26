@@ -932,15 +932,26 @@ namespace GenCode
 					string addPaymentDivName1 = "//div[@role='button']/div/div/span[contains(@class, '66pz984')]";
 					WaitAjaxLoading(By.XPath(addPaymentDivName), 300);
 					Delay(1000);
+
+					IWebElement addPamt = null;
 					ReadOnlyCollection<IWebElement> addPaymentDev = this._driver.FindElements(By.XPath(addPaymentDivName));
 					if (addPaymentDev.Count < 1)
                     {
 						addPaymentDev = this._driver.FindElements(By.XPath(addPaymentDivName1));
+                        if (addPaymentDev.Count > 0)
+                        {
+							addPamt = addPaymentDev[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+						}
+                    }
+                    else
+                    {
+						addPamt = addPaymentDev[0];
+
 					}
 
-					if (addPaymentDev.Count > 0)
+					if (this.isValid(addPamt))
 					{
-						addPaymentDev[0].Click();
+						addPamt.Click();
 						Delay(5000);
 						WaitLoading();
 
