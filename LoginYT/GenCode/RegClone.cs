@@ -858,58 +858,6 @@ namespace GenCode
 			}
 		}
 
-		// Token: 0x060000BE RID: 190 RVA: 0x00009540 File Offset: 0x00007740
-		private async Task<string> getCode2(string _email)
-		{
-			try
-			{
-				ServicePointManager.Expect100Continue = true;
-				ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-				int _count = 0;
-				string _code = "";
-				string[] _tmpEmail = _email.Split(new char[]
-				{
-					'@'
-				});
-				string _tmpCode;
-				for (;;)
-				{
-					await Task.Delay(10000);
-					this.log("Start retry code " + _count);
-					HttpClient _client = new HttpClient(new HttpClientHandler
-					{
-						UseCookies = false
-					});
-					_client.DefaultRequestHeaders.Add("Cookie", "_ga=GA1.2.61770657.1607270767; _gid=GA1.2.1123466691.1607270767; __gads=ID=a94e27823af01929-224a441f08c50006:T=1607270768:RT=1607270768:S=ALNI_Mbp8D2iSYvRQYtco_GgwN6Nq2Askg; embx=%5B%22tec313213afdsafsa%40fairocketsmail.com%22%2C%22tecopa4324321%40fairocketsmail.com%22%5D; _gat=1; surl=" + _tmpEmail[1] + "/" + _tmpEmail[0]);
-					string text = await _client.GetStringAsync("https://vi.emailfake.com/channel5/");
-					string _rs = text;
-					text = null;
-					_tmpCode = Regex.Match(_rs, "FB[-][0-9]+").ToString();
-					if (!string.IsNullOrEmpty(_tmpCode))
-					{
-						break;
-					}
-					_count++;
-					if (_count >= 3)
-					{
-						goto Block_3;
-					}
-					_client = null;
-					_rs = null;
-					_tmpCode = null;
-				}
-				_code = _tmpCode.Replace("FB-", "");
-				Block_3:
-				this.log("Code: " + _code);
-				return _code;
-			}
-			catch (Exception ex)
-			{
-				this.log(ex);
-			}
-			return null;
-		}
-
 		// Token: 0x060000BF RID: 191 RVA: 0x00009590 File Offset: 0x00007790
 		private void log(string s)
 		{
@@ -971,6 +919,7 @@ namespace GenCode
 					this._driver.Navigate().GoToUrl("https://www.facebook.com/ads/manager/account_settings/account_billing");
 					Delay(5000);
 					WaitLoading();
+
 					IWebElement _btAddStart = this.getElement(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgb(24, 119, 242)']"));
 					if (this.isValid(_btAddStart))
                     {
@@ -978,10 +927,16 @@ namespace GenCode
 						Delay(1000);
 					}
 					WaitLoading();
+
 					string addPaymentDivName = "//div[contains(@class, '48j0')]/div/button[contains(@class, '271k')]";
+					string addPaymentDivName1 = "//div[@role='button']/div/div/span[contains(@class, '66pz984')]";
 					WaitAjaxLoading(By.XPath(addPaymentDivName), 300);
 					Delay(1000);
 					ReadOnlyCollection<IWebElement> addPaymentDev = this._driver.FindElements(By.XPath(addPaymentDivName));
+					if (addPaymentDev.Count < 1)
+                    {
+						addPaymentDev = this._driver.FindElements(By.XPath(addPaymentDivName1));
+					}
 
 					if (addPaymentDev.Count > 0)
 					{
@@ -989,13 +944,14 @@ namespace GenCode
 						Delay(5000);
 						WaitLoading();
 
-						string addPaymentRadName = "//i[contains(@class, 'x_18fa0a')]";
+						string addPaymentRadName = "//div[@role='button']/div/div/div/div/i[contains(@class, 'x_18fa0a')]";
 						WaitAjaxLoading(By.XPath(addPaymentRadName), 20);
 						Delay(3000);
 						ReadOnlyCollection<IWebElement> _listRadio = this._driver.FindElements(By.XPath(addPaymentRadName));
 						if (_listRadio.Count > 0)
 						{
-							_listRadio[0].Click();
+							_listRadio[0].FindElement(By.XPath("..")).FindElement(By.XPath(".."))
+							.FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
 
 							string btnNext1Name = "//div[@role='button' and contains(@class, 's1i5eluu')]/div/div/span[contains(@class, 'bwm1u5wc')]";
 							WaitAjaxLoading(By.XPath(btnNext1Name));
