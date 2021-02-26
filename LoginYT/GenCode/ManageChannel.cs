@@ -743,6 +743,7 @@ namespace GenCode
 		// Token: 0x0600002E RID: 46 RVA: 0x00002358 File Offset: 0x00000558
 		private void ManageChannel_Load(object sender, EventArgs e)
 		{
+			this.log("Version 1.1.0");
 		}
 
 		// Token: 0x0600002F RID: 47 RVA: 0x000032D8 File Offset: 0x000014D8
@@ -1677,7 +1678,7 @@ namespace GenCode
 		// Token: 0x0600003D RID: 61 RVA: 0x000036A2 File Offset: 0x000018A2
 		private void cbCloseChrome_CheckedChanged(object sender, EventArgs e)
 		{
-			this._closeChrome = this.cbCloseChrome.Checked;
+			// this._closeChrome = this.cbCloseChrome.Checked;
 		}
 
 		// Token: 0x04000003 RID: 3
@@ -1729,7 +1730,7 @@ namespace GenCode
 		private string _ip = "";
 
 		// Token: 0x04000013 RID: 19
-		private bool _closeChrome = true;
+		private bool _closeChrome = false;
 
 		// Token: 0x02000004 RID: 4
 		public class TmpDisplay

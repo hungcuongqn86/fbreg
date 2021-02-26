@@ -18,10 +18,8 @@
 		private void InitializeComponent()
 		{
             this.tbInfo = new System.Windows.Forms.RichTextBox();
-            this.lbProgress = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.tbNumberThread = new System.Windows.Forms.NumericUpDown();
-            this.cbCloseChrome = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.tbNumberThread)).BeginInit();
             this.SuspendLayout();
             // 
@@ -29,26 +27,17 @@
             // 
             this.tbInfo.Location = new System.Drawing.Point(12, 44);
             this.tbInfo.Name = "tbInfo";
-            this.tbInfo.Size = new System.Drawing.Size(469, 681);
+            this.tbInfo.Size = new System.Drawing.Size(334, 681);
             this.tbInfo.TabIndex = 33;
             this.tbInfo.Text = "";
             // 
-            // lbProgress
-            // 
-            this.lbProgress.AutoSize = true;
-            this.lbProgress.Location = new System.Drawing.Point(152, 22);
-            this.lbProgress.Name = "lbProgress";
-            this.lbProgress.Size = new System.Drawing.Size(24, 13);
-            this.lbProgress.TabIndex = 38;
-            this.lbProgress.Text = "0/0";
-            // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(368, 13);
+            this.button3.Location = new System.Drawing.Point(233, 13);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(113, 23);
             this.button3.TabIndex = 73;
-            this.button3.Text = "Reg Clone";
+            this.button3.Text = "Run";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -64,33 +53,19 @@
             0,
             0});
             // 
-            // cbCloseChrome
-            // 
-            this.cbCloseChrome.AutoSize = true;
-            this.cbCloseChrome.Location = new System.Drawing.Point(209, 15);
-            this.cbCloseChrome.Name = "cbCloseChrome";
-            this.cbCloseChrome.Size = new System.Drawing.Size(91, 17);
-            this.cbCloseChrome.TabIndex = 80;
-            this.cbCloseChrome.Text = "Close Chrome";
-            this.cbCloseChrome.UseVisualStyleBackColor = true;
-            this.cbCloseChrome.CheckedChanged += new System.EventHandler(this.cbCloseChrome_CheckedChanged);
-            // 
             // ManageChannel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(495, 737);
-            this.Controls.Add(this.cbCloseChrome);
+            this.ClientSize = new System.Drawing.Size(357, 737);
             this.Controls.Add(this.tbNumberThread);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.lbProgress);
             this.Controls.Add(this.tbInfo);
             this.Name = "ManageChannel";
             this.Text = "FbReg";
             this.Load += new System.EventHandler(this.ManageChannel_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tbNumberThread)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
 		}
 
@@ -100,16 +75,10 @@
 		// Token: 0x04000015 RID: 21
 		private global::System.Windows.Forms.RichTextBox tbInfo;
 
-		// Token: 0x04000016 RID: 22
-		private global::System.Windows.Forms.Label lbProgress;
-
 		// Token: 0x04000019 RID: 25
 		private global::System.Windows.Forms.Button button3;
 
 		// Token: 0x0400001F RID: 31
 		private global::System.Windows.Forms.NumericUpDown tbNumberThread;
-
-		// Token: 0x04000020 RID: 32
-		private global::System.Windows.Forms.CheckBox cbCloseChrome;
 	}
 }
