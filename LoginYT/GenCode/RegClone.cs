@@ -644,6 +644,13 @@ namespace GenCode
 							Delay(1000);
 
 							IWebElement _fName = this.getElement(By.CssSelector("input[name='firstname']"));
+							if (!this.isValid(_fName))
+							{
+								WaitAjaxLoading(By.CssSelector("input[name='firstname']"), 60);
+								Delay(1000);
+								_fName = this.getElement(By.CssSelector("input[name='firstname']"));
+							}
+
 							if (this.isValid(_fName))
 							{
 								this.fillInput(_fName, _firstName);
