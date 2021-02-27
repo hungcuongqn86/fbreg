@@ -639,13 +639,16 @@ namespace GenCode
 
 							WaitLoading();
 
-							this.log("Fill Name");
+							this.log("Fill Name -- lan 1!");
 							WaitAjaxLoading(By.CssSelector("input[name='firstname']"), 60);
 							Delay(1000);
 
 							IWebElement _fName = this.getElement(By.CssSelector("input[name='firstname']"));
 							if (!this.isValid(_fName))
 							{
+								this.log("Fill Name -- lan 2!");
+								this._driver.Navigate().Refresh();
+								WaitLoading();
 								WaitAjaxLoading(By.CssSelector("input[name='firstname']"), 60);
 								Delay(1000);
 								_fName = this.getElement(By.CssSelector("input[name='firstname']"));
