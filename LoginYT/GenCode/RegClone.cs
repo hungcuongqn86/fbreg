@@ -570,7 +570,7 @@ namespace GenCode
 					}
 					else
 					{
-						this.log("Find cookie banner");
+						// this.log("Find cookie banner");
 						WaitAjaxLoading(By.CssSelector("button[data-testid='cookie-policy-banner-accept']"));
 						Delay(1000);
 						IWebElement _acceptBt = this.getElement(By.CssSelector("button[data-testid='cookie-policy-banner-accept']"));
@@ -579,7 +579,7 @@ namespace GenCode
 						{
 							_acceptBt.Click();
 						}
-						this.log("Find Locate Link");
+						// this.log("Find Locate Link");
 						WaitAjaxLoading(By.CssSelector("a[href*='facebook.com/']"));
 						Delay(1000);
 						ReadOnlyCollection<IWebElement> _locateList = this._driver.FindElements(By.CssSelector("a[href*='facebook.com/']"));
@@ -591,7 +591,7 @@ namespace GenCode
 							this._driver.Navigate().GoToUrl(_url);
 							_url = null;
 						}
-						this.log("Find Register Button");
+						// this.log("Find Register Button");
 						WaitAjaxLoading(By.CssSelector("a[data-testid='open-registration-form-button']"));
 						Delay(1000);
 						IWebElement _regBt = this.getElement(By.CssSelector("a[data-testid='open-registration-form-button']"));
@@ -638,9 +638,11 @@ namespace GenCode
 							this.log(_tmpDataAll);
 
 							WaitLoading();
+
 							this.log("Fill Name");
-							WaitAjaxLoading(By.CssSelector("input[name='firstname']"), 20);
+							WaitAjaxLoading(By.CssSelector("input[name='firstname']"), 60);
 							Delay(1000);
+
 							IWebElement _fName = this.getElement(By.CssSelector("input[name='firstname']"));
 							if (this.isValid(_fName))
 							{
@@ -673,7 +675,7 @@ namespace GenCode
 								_selectMonth.SelectByValue(_random.Next(1, 12).ToString());
 								SelectElement _selectYear = new SelectElement(this.getElement(By.Id("year")));
 								_selectYear.SelectByValue(_random.Next(1970, 1996).ToString());
-								this.log("Choose gender");
+								// this.log("Choose gender");
 								ReadOnlyCollection<IWebElement> _gender = this._driver.FindElements(By.CssSelector("input[name='sex']"));
 								if (_gender.Count > 1)
 								{
@@ -687,7 +689,8 @@ namespace GenCode
 										_gender[1].Click();
 									}
 								}
-								this.log("Find submit");
+
+								// this.log("Find submit");
 								IWebElement _submitBt = this.getElement(By.CssSelector("button[name='websubmit']"));
 								if (this.isValid(_submitBt))
 								{
@@ -699,7 +702,7 @@ namespace GenCode
 									if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 									{
 										_status = -1;
-										this.log("check point");
+										this.log("-- check point");
 										QuitDriver(chrome);
 									}
 
@@ -727,7 +730,7 @@ namespace GenCode
 										if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 										{
 											_status = -1;
-											this.log("check point");
+											this.log("-- check point");
 											QuitDriver(chrome);
 										}
 
@@ -747,7 +750,7 @@ namespace GenCode
 										if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 										{
 											_status = -1;
-											this.log("check point");
+											this.log("-- check point");
 											QuitDriver(chrome);
 										}
 									}
@@ -768,7 +771,7 @@ namespace GenCode
 										if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 										{
 											_status = -1;
-											this.log("check point");
+											this.log("-- check point");
 											QuitDriver(chrome);
 										}
 									}
@@ -778,7 +781,7 @@ namespace GenCode
                                     {
 										if (string.IsNullOrEmpty(secCode))
 										{
-											this.log("Get secCode Error");
+											this.log("Miss -- Get Auth Code!");
 										}
 										else
 										{
@@ -807,7 +810,7 @@ namespace GenCode
 													else
 													{
 														_status = -1;
-														this.log("check point");
+														this.log("-- check point");
 														QuitDriver(chrome);
 													}
 												}

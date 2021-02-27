@@ -965,7 +965,7 @@ namespace GenCode
 																	else
 																	{
 																		_status = -1;
-																		this.log("check point");
+																		this.log("-- check point");
 																	}
 																}
 																_btConfirmCode = null;
@@ -981,7 +981,7 @@ namespace GenCode
 													else
 													{
 														_status = -1;
-														this.log("check point");
+														this.log("-- check point");
 													}
 												}
 												_btSubmitNewEmail = null;
@@ -994,7 +994,7 @@ namespace GenCode
 								else
 								{
 									_status = -1;
-									this.log("check point");
+									this.log("-- check point");
 								}
 							}
 							_fName = null;
