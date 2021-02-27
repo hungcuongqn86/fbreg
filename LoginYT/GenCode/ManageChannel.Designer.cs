@@ -61,8 +61,14 @@
             this.Controls.Add(this.tbNumberThread);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.tbInfo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Location = new System.Drawing.Point(100, 100);
+            this.MaximumSize = new System.Drawing.Size(373, 642);
+            this.MinimumSize = new System.Drawing.Size(373, 642);
             this.Name = "ManageChannel";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FbReg";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.ManageChannel_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tbNumberThread)).EndInit();
             this.ResumeLayout(false);
