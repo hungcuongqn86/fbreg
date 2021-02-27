@@ -1085,7 +1085,7 @@ namespace GenCode
 
 													Delay(5000);
 													this._driver.Navigate().Refresh();
-													WaitAjaxLoading(By.CssSelector("button[type='button'][aria-disabled='true']"), 60);
+													Waitf2AjaxLoading(By.CssSelector("button[type='button'][aria-disabled='true']"), By.CssSelector("div[role='button'][aria-disabled='true']"), 60);
 													Delay(1000);
 													IWebElement _btCheck = this.getElement(By.CssSelector("button[type='button'][aria-disabled='true']"));
 													if (_btCheck is null)
