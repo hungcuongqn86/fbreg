@@ -587,7 +587,7 @@ namespace GenCode
 						if (flag3)
 						{
 							string _url = _locateList[1].GetAttribute("href");
-							this.log(_url);
+							// this.log(_url);
 							this._driver.Navigate().GoToUrl(_url);
 							_url = null;
 						}
@@ -635,7 +635,7 @@ namespace GenCode
 								"\t",
 								_mailKhoiPhuc
 							});
-							this.log(_tmpDataAll);
+							// this.log(_tmpDataAll);
 
 							WaitLoading();
 
@@ -1029,10 +1029,17 @@ namespace GenCode
 						WaitAjaxLoading(By.XPath(addPaymentRadName), 20);
 						Delay(3000);
 						ReadOnlyCollection<IWebElement> _listRadio = this._driver.FindElements(By.XPath(addPaymentRadName));
+						if (_listRadio.Count < 1)
+                        {
+							WaitAjaxLoading(By.XPath(addPaymentRadName), 10);
+							Delay(3000);
+							_listRadio = this._driver.FindElements(By.XPath(addPaymentRadName));
+						}
+
 						if (_listRadio.Count > 0)
 						{
 							_listRadio[0].FindElement(By.XPath("..")).FindElement(By.XPath(".."))
-							.FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
+							.FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
 
 							string btnNext1Name = "//div[@role='button' and contains(@class, 's1i5eluu')]/div/div/span[contains(@class, 'bwm1u5wc')]";
 							WaitAjaxLoading(By.XPath(btnNext1Name));
@@ -1086,6 +1093,18 @@ namespace GenCode
 										if (this.isValid(_listButtons[0]))
 										{
 											_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
+											// if hrsnp83r
+											string errorAlert = "//div[contains(@class, 'hrsnp83r')]";
+											WaitAjaxLoading(By.XPath(errorAlert), 5);
+											ReadOnlyCollection<IWebElement> _listAlerts = this._driver.FindElements(By.XPath(errorAlert));
+											if (_listAlerts.Count > 0)
+                                            {
+												inputs[5].Click();
+												inputs[5].SendKeys("11112");
+												Delay(500);
+												_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
+											}
+
 											Delay(8000);
 											WaitAjaxLoading(By.XPath(btnNext2Name), 10);
 											Delay(1000);
