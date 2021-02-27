@@ -598,6 +598,10 @@ namespace GenCode
 						bool flag4 = this.isValid(_regBt);
 						if (flag4)
 						{
+							Actions actions = new Actions(this._driver);
+							actions.MoveToElement(_regBt);
+							Delay(500);
+							actions.Perform();
 							_regBt.Click();
 							
 							this.log("Generate Infomation");
