@@ -52,6 +52,44 @@ namespace GenCode
 			return s;
 		}
 
+		private void Waitf2AjaxLoading(By byFinter1, By byFinter2, int time = 3)
+		{
+			WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(time));
+			Func<IWebDriver, bool> waitLoading = new Func<IWebDriver, bool>((IWebDriver Web) =>
+			{
+				try
+				{
+					ReadOnlyCollection<IWebElement> alertE = Web.FindElements(byFinter1);
+					if (alertE.Count > 0)
+					{
+						return true;
+					}
+					else
+					{
+						alertE = Web.FindElements(byFinter2);
+						if (alertE.Count > 0)
+						{
+							return true;
+                        }
+                        else
+                        {
+							return false;
+						}
+					}
+				}
+				catch
+				{
+					return false;
+				}
+			});
+
+			try
+			{
+				wait.Until(waitLoading);
+			}
+			catch { }
+		}
+
 		private void WaitAjaxLoading(By byFinter, int time = 3)
 		{
 			WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(time));
@@ -358,13 +396,24 @@ namespace GenCode
 				WaitLoading();
 				Delay(1000);
                 OpenQA.Selenium.Cookie cookie1 = this._driver.Manage().Cookies.GetCookieNamed("email");
-                if (cookie1 != null)
+                if (cookie1 is null)
                 {
-					this._driver.SwitchTo().Window(this.regTabHandle);
-					return Uri.UnescapeDataString(cookie1.Value);
+					this._driver.Navigate().Refresh();
+					WaitLoading();
+					Delay(1000);
+					cookie1 = this._driver.Manage().Cookies.GetCookieNamed("email");
 				}
+
+				if (cookie1 is null)
+				{
+					this._driver.Navigate().Refresh();
+					WaitLoading();
+					Delay(1000);
+					cookie1 = this._driver.Manage().Cookies.GetCookieNamed("email");
+				}
+
 				this._driver.SwitchTo().Window(this.regTabHandle);
-				return null;
+				return Uri.UnescapeDataString(cookie1.Value);
 			}
 			catch (Exception ex)
 			{
@@ -836,7 +885,13 @@ namespace GenCode
 					if (!string.IsNullOrEmpty(_tmpCode))
 					{
 						break;
+                    }
+                    else
+                    {
+						this._driver.Navigate().Refresh();
+						WaitLoading();
 					}
+
 					_count++;
 					if (_count >= 10)
 					{
@@ -930,20 +985,19 @@ namespace GenCode
 
 					string addPaymentDivName = "//div[contains(@class, '48j0')]/div/button[contains(@class, '271k')]";
 					string addPaymentDivName1 = "//div[@role='button']/div/div/span[contains(@class, '66pz984')]";
-					WaitAjaxLoading(By.XPath(addPaymentDivName), 300);
+					Waitf2AjaxLoading(By.XPath(addPaymentDivName), By.XPath(addPaymentDivName1), 300);
 					Delay(1000);
 
 					IWebElement addPamt = null;
 					ReadOnlyCollection<IWebElement> addPaymentDev = this._driver.FindElements(By.XPath(addPaymentDivName));
 					if (addPaymentDev.Count < 1)
                     {
-						WaitAjaxLoading(By.XPath(addPaymentDivName1), 5);
-						Delay(1000);
 						addPaymentDev = this._driver.FindElements(By.XPath(addPaymentDivName1));
                         if (addPaymentDev.Count > 0)
                         {
 							this.log("New banking form --- AAA");
 							addPamt = addPaymentDev[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+
 						}
                     }
                     else
@@ -1034,6 +1088,11 @@ namespace GenCode
 													WaitAjaxLoading(By.CssSelector("button[type='button'][aria-disabled='true']"), 60);
 													Delay(1000);
 													IWebElement _btCheck = this.getElement(By.CssSelector("button[type='button'][aria-disabled='true']"));
+													if (_btCheck is null)
+													{
+														_btCheck = this.getElement(By.CssSelector("div[role='button'][aria-disabled='true']"));
+													}
+
 													if (_btCheck != null)
 													{
 														this.log("BANK NOT OK!");

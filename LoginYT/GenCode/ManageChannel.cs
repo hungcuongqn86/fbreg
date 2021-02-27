@@ -743,7 +743,7 @@ namespace GenCode
 		// Token: 0x0600002E RID: 46 RVA: 0x00002358 File Offset: 0x00000558
 		private void ManageChannel_Load(object sender, EventArgs e)
 		{
-			this.log("Version 1.1.1");
+			this.log("Version 1.1.2");
 		}
 
 		// Token: 0x0600002F RID: 47 RVA: 0x000032D8 File Offset: 0x000014D8
