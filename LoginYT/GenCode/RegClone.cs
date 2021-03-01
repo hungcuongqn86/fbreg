@@ -958,6 +958,14 @@ namespace GenCode
 			}
 		}
 
+		private void clearWebField(IWebElement element)
+		{
+			while (!element.GetAttribute("value").Equals(""))
+			{
+				element.SendKeys(OpenQA.Selenium.Keys.Backspace);
+			}
+		}
+
 		// Token: 0x060000C1 RID: 193 RVA: 0x00009638 File Offset: 0x00007838
 		private async Task addBank()
 		{
@@ -1104,6 +1112,7 @@ namespace GenCode
 											if (_listAlerts.Count > 0)
                                             {
 												inputs[5].Click();
+												clearWebField(inputs[5]);
 												inputs[5].SendKeys("11112");
 												Delay(500);
 												_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
