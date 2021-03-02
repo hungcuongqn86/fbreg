@@ -886,17 +886,34 @@ namespace GenCode
 				{
 					await Task.Delay(10000);
 					this.log("Requet code -  " + _count);
-					WaitAjaxLoading(By.CssSelector("div[class*='tm-content']"));
+					WaitAjaxLoading(By.CssSelector("div[class*='tm-content']"), 20);
 					await Task.Delay(1000);
 					ReadOnlyCollection<IWebElement> tmcontent = this._driver.FindElements(By.CssSelector("div[class*='tm-content']"));
                     if (tmcontent.Count > 0 )
                     {
-						Actions actions = new Actions(this._driver);
-						actions.MoveToElement(tmcontent[0]);
-						await Task.Delay(3000);
-						actions.Perform();
+						if (this.isValid(tmcontent[0]))
+                        {
+							Actions actions = new Actions(this._driver);
+							actions.MoveToElement(tmcontent[0]);
+							await Task.Delay(3000);
+							actions.Perform();
+						}
 					}
-					
+
+					WaitAjaxLoading(By.CssSelector("div[class*='beforeContentBannerBl']"), 20);
+					await Task.Delay(1000);
+					tmcontent = this._driver.FindElements(By.CssSelector("div[class*='beforeContentBannerBl']"));
+					if (tmcontent.Count > 0)
+					{
+						if (this.isValid(tmcontent[0]))
+						{
+							Actions actions = new Actions(this._driver);
+							actions.MoveToElement(tmcontent[0]);
+							await Task.Delay(3000);
+							actions.Perform();
+						}
+					}
+
 					string pageSource = this._driver.PageSource;
 					_tmpCode = Regex.Match(pageSource, "FB[-][0-9]+").ToString();
 					if (!string.IsNullOrEmpty(_tmpCode))
