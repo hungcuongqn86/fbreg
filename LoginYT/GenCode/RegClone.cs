@@ -571,9 +571,10 @@ namespace GenCode
 					else
 					{
 						// this.log("Find cookie banner");
-						WaitAjaxLoading(By.CssSelector("button[data-testid='cookie-policy-banner-accept']"));
+						WaitAjaxLoading(By.CssSelector("button[data-testid='cookie-policy-dialog-accept-button']"));
 						Delay(1000);
-						IWebElement _acceptBt = this.getElement(By.CssSelector("button[data-testid='cookie-policy-banner-accept']"));
+						// IWebElement _acceptBt = this.getElement(By.CssSelector("button[data-testid='cookie-policy-banner-accept']"));
+						IWebElement _acceptBt = this.getElement(By.CssSelector("button[data-testid='cookie-policy-dialog-accept-button']"));
 						bool flag2 = this.isValid(_acceptBt);
 						if (flag2)
 						{
@@ -592,9 +593,10 @@ namespace GenCode
 							_url = null;
 						}
 						// this.log("Find Register Button");
-						WaitAjaxLoading(By.CssSelector("a[data-testid='open-registration-form-button']"));
+						string btnreg = "a[data-testid='open-registration-form-button']";
+						WaitAjaxLoading(By.CssSelector(btnreg));
 						Delay(1000);
-						IWebElement _regBt = this.getElement(By.CssSelector("a[data-testid='open-registration-form-button']"));
+						IWebElement _regBt = this.getElement(By.CssSelector(btnreg));
 						bool flag4 = this.isValid(_regBt);
 						if (flag4)
 						{
