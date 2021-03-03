@@ -570,16 +570,27 @@ namespace GenCode
 					}
 					else
 					{
-						// this.log("Find cookie banner");
-						WaitAjaxLoading(By.CssSelector("button[data-testid='cookie-policy-dialog-accept-button']"));
+						string cookieBanner1 = "button[data-testid='cookie-policy-dialog-accept-button']";
+						string cookieBanner2 = "button[data-testid='cookie-policy-banner-accept']";
+						Waitf2AjaxLoading(By.CssSelector(cookieBanner1), By.CssSelector(cookieBanner2));
 						Delay(1000);
-						// IWebElement _acceptBt = this.getElement(By.CssSelector("button[data-testid='cookie-policy-banner-accept']"));
-						IWebElement _acceptBt = this.getElement(By.CssSelector("button[data-testid='cookie-policy-dialog-accept-button']"));
+
+						IWebElement _acceptBt = this.getElement(By.CssSelector(cookieBanner1));
 						bool flag2 = this.isValid(_acceptBt);
 						if (flag2)
 						{
 							_acceptBt.Click();
+                        }
+                        else
+                        {
+							_acceptBt = this.getElement(By.CssSelector(cookieBanner2));
+							flag2 = this.isValid(_acceptBt);
+							if (flag2)
+                            {
+								_acceptBt.Click();
+							}
 						}
+
 						// this.log("Find Locate Link");
 						WaitAjaxLoading(By.CssSelector("a[href*='facebook.com/']"));
 						Delay(1000);
@@ -592,6 +603,7 @@ namespace GenCode
 							this._driver.Navigate().GoToUrl(_url);
 							_url = null;
 						}
+
 						// this.log("Find Register Button");
 						string btnreg = "a[data-testid='open-registration-form-button']";
 						WaitAjaxLoading(By.CssSelector(btnreg));
