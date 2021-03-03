@@ -46,6 +46,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
@@ -93,6 +94,7 @@
     <Compile Include="GenCode\ManageChannel.Designer.cs">
       <DependentUpon>ManageChannel.cs</DependentUpon>
     </Compile>
+    <Compile Include="GenCode\Message.cs" />
     <Compile Include="GenCode\ModelTranslateRequest.cs" />
     <Compile Include="GenCode\ModelTranslateResponse.cs" />
     <Compile Include="GenCode\Program.cs" />

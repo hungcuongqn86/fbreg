@@ -25,6 +25,9 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using Keys = OpenQA.Selenium.Keys;
 using System.IO.Compression;
+using System.Configuration;
+using Firebase.Database;
+using Firebase.Database.Query;
 
 namespace GenCode
 {
@@ -35,6 +38,8 @@ namespace GenCode
 		[DllImport("user32.dll")]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+
+		private FirebaseClient firebase;
 
 		// Token: 0x06000009 RID: 9 RVA: 0x00002194 File Offset: 0x00000394
 		public ManageChannel()
@@ -744,8 +749,30 @@ namespace GenCode
 		private void ManageChannel_Load(object sender, EventArgs e)
 		{
 			this.StartPosition = FormStartPosition.CenterScreen;
-			this.log("Version 1.1.3");
+			this.log("Version 2.0.0");
+			StartFirebase();
 		}
+
+		private bool StartFirebase()
+        {
+            bool result;
+            try
+            {
+                string FirebaseUrl = ConfigurationManager.AppSettings["FirebaseUrl"];
+                string FirebaseSecretKey = ConfigurationManager.AppSettings["FirebaseSecretKey"];
+
+                firebase = new FirebaseClient(FirebaseUrl, new FirebaseOptions
+                {
+                    AuthTokenAsyncFactory = () => Task.FromResult(FirebaseSecretKey)
+                });
+                result = true;
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
+        }
 
 		// Token: 0x0600002F RID: 47 RVA: 0x000032D8 File Offset: 0x000014D8
 		private void btOpenDirect_Click(object sender, EventArgs e)
@@ -939,5 +966,37 @@ namespace GenCode
 			// (set) Token: 0x06000044 RID: 68 RVA: 0x00003ED7 File Offset: 0x000020D7
 			public string Value { get; set; }
 		}
-	}
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+			if (this.textBox1.Text.Trim().Length == 0)
+			{
+				MessageBox.Show("Phải nhập link facebook cá nhân!", "Thông báo!", MessageBoxButtons.OK);
+				return;
+			}
+
+			FireBaseMessage message = new FireBaseMessage();
+			int Timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+			message.Id = Timestamp.ToString();
+			message.Profile = this.textBox1.Text.Trim();
+			message.Type = 1;
+			await firebase.Child("share/vps1").Child(message.Id).PutAsync(message);
+		}
+
+        private async void button2_Click(object sender, EventArgs e)
+        {
+			if (this.textBox2.Text.Trim().Length == 0)
+			{
+				MessageBox.Show("Phải nhập Ads ID!", "Thông báo!", MessageBoxButtons.OK);
+				return;
+			}
+
+			FireBaseMessage message = new FireBaseMessage();
+			int Timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+			message.Id = Timestamp.ToString();
+			message.Profile = this.textBox2.Text.Trim();
+			message.Type = 2;
+			await firebase.Child("share/vps1").Child(message.Id).PutAsync(message);
+		}
+    }
 }

@@ -20,6 +20,10 @@
             this.tbInfo = new System.Windows.Forms.RichTextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.tbNumberThread = new System.Windows.Forms.NumericUpDown();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tbNumberThread)).BeginInit();
             this.SuspendLayout();
             // 
@@ -27,7 +31,7 @@
             // 
             this.tbInfo.Location = new System.Drawing.Point(12, 44);
             this.tbInfo.Name = "tbInfo";
-            this.tbInfo.Size = new System.Drawing.Size(334, 549);
+            this.tbInfo.Size = new System.Drawing.Size(334, 489);
             this.tbInfo.TabIndex = 33;
             this.tbInfo.Text = "";
             // 
@@ -53,11 +57,49 @@
             0,
             0});
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(12, 540);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(268, 20);
+            this.textBox1.TabIndex = 80;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(286, 539);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(60, 23);
+            this.button1.TabIndex = 81;
+            this.button1.Text = "Send";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(12, 566);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(268, 20);
+            this.textBox2.TabIndex = 82;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(285, 564);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(60, 23);
+            this.button2.TabIndex = 83;
+            this.button2.Text = "Send";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // ManageChannel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(357, 603);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.tbNumberThread);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.tbInfo);
@@ -72,6 +114,7 @@
             this.Load += new System.EventHandler(this.ManageChannel_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tbNumberThread)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
 		}
 
@@ -86,5 +129,9 @@
 
 		// Token: 0x0400001F RID: 31
 		private global::System.Windows.Forms.NumericUpDown tbNumberThread;
-	}
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button button2;
+    }
 }
