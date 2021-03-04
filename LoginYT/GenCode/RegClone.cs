@@ -827,12 +827,34 @@ namespace GenCode
 													if (!this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 													{
 														string _tmpCoookie = "";
+														foreach (OpenQA.Selenium.Cookie _c in this._driver.Manage().Cookies.AllCookies)
+														{
+															_tmpCoookie = string.Concat(new string[]
+															{
+																					_tmpCoookie,
+																					_c.Name,
+																					"=",
+																					_c.Value,
+																					"; "
+															});
+														}
+														this.log(_tmpCoookie);
+
 														bool flag5 = await this.createPage(_tmpCoookie, _tmpDataAll);
 														bool _rsCreatePage = flag5;
 														if (flag5)
 														{
 															await this.addBank();
 														}
+														string _tmpData = string.Concat(new string[]
+{
+																				_tmpDataAll,
+																				"\t",
+																				_tmpCoookie,
+																				"\tPageCreate: ",
+																				_rsCreatePage.ToString()
+});
+														this.log("Clone Data: ->\t" + _tmpData);
 														_status = 1;
 													}
 													else
