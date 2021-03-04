@@ -969,18 +969,29 @@ namespace GenCode
 
         private async void button1_Click(object sender, EventArgs e)
         {
+
 			if (this.textBox1.Text.Trim().Length == 0)
 			{
 				MessageBox.Show("Phải nhập link facebook cá nhân!", "Thông báo!", MessageBoxButtons.OK);
 				return;
 			}
 
-			FireBaseMessage message = new FireBaseMessage();
-			int Timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-			message.Id = Timestamp.ToString();
-			message.Profile = this.textBox1.Text.Trim();
-			message.Type = 1;
-			await firebase.Child("share/vps1").Child(message.Id).PutAsync(message);
+			try
+			{
+				this.log("Yêu cầu kết bạn: " + this.textBox1.Text.Trim());
+				FireBaseMessage message = new FireBaseMessage();
+				int Timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+				message.Id = Timestamp.ToString();
+				message.Profile = this.textBox1.Text.Trim();
+				message.Type = 1;
+				await firebase.Child("share/vps1").Child(message.Id).PutAsync(message);
+				this.log("Gửi yêu cầu kết bạn thành công!");
+			}
+			catch (Exception error)
+			{
+				this.log(error);
+				this.log("Gửi yêu cầu kết bạn KHÔNG thành công!");
+			}
 		}
 
         private async void button2_Click(object sender, EventArgs e)
@@ -991,12 +1002,22 @@ namespace GenCode
 				return;
 			}
 
-			FireBaseMessage message = new FireBaseMessage();
-			int Timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-			message.Id = Timestamp.ToString();
-			message.Profile = this.textBox2.Text.Trim();
-			message.Type = 2;
-			await firebase.Child("share/vps1").Child(message.Id).PutAsync(message);
+			try
+			{
+				this.log("Share Ads: " + this.textBox2.Text.Trim());
+				FireBaseMessage message = new FireBaseMessage();
+				int Timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+				message.Id = Timestamp.ToString();
+				message.Profile = this.textBox2.Text.Trim();
+				message.Type = 2;
+				await firebase.Child("share/vps1").Child(message.Id).PutAsync(message);
+				this.log("Share Ads thành công!");
+			}
+			catch (Exception error)
+			{
+				this.log(error);
+				this.log("Share Ads KHÔNG thành công!");
+			}
 		}
     }
 }
