@@ -572,7 +572,7 @@ namespace GenCode
 					{
 						string cookieBanner1 = "button[data-testid='cookie-policy-dialog-accept-button']";
 						string cookieBanner2 = "button[data-testid='cookie-policy-banner-accept']";
-						Waitf2AjaxLoading(By.CssSelector(cookieBanner1), By.CssSelector(cookieBanner2));
+						Waitf2AjaxLoading(By.CssSelector(cookieBanner1), By.CssSelector(cookieBanner2), 10);
 						Delay(1000);
 
 						IWebElement _acceptBt = this.getElement(By.CssSelector(cookieBanner1));
