@@ -967,9 +967,51 @@ namespace GenCode
 			public string Value { get; set; }
 		}
 
-        private async void button1_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)
         {
+			if (this.textBox3.Text.Trim().Length == 0)
+			{
+				MessageBox.Show("Phải nhập BM Id!", "Thông báo!", MessageBoxButtons.OK);
+				return;
+			}
 
+			if (this.textBox4.Text.Trim().Length == 0)
+			{
+				MessageBox.Show("Phải nhập BM Token!", "Thông báo!", MessageBoxButtons.OK);
+				return;
+			}
+
+			if (this.textBox5.Text.Trim().Length == 0)
+			{
+				MessageBox.Show("Phải nhập clone_uid!", "Thông báo!", MessageBoxButtons.OK);
+				return;
+			}
+
+			if (this.textBox6.Text.Trim().Length == 0)
+			{
+				MessageBox.Show("Phải nhập clone_adsID!", "Thông báo!", MessageBoxButtons.OK);
+				return;
+			}
+
+			if (this.textBox7.Text.Trim().Length == 0)
+			{
+				MessageBox.Show("Phải nhập clone_cookie!", "Thông báo!", MessageBoxButtons.OK);
+				return;
+			}
+
+			RegClone _reg = new RegClone();
+			_reg._listKeyword = this._listKeyword;
+			_reg._ThreadName = "df";
+			_reg._closeChrome = this._closeChrome;
+			_reg.bm_id = this.textBox3.Text.Trim();
+			_reg.bm_token = this.textBox4.Text.Trim();
+			RegClone regClone = _reg;
+			regClone._logDelegate = (RegClone.LogDelegate)Delegate.Combine(regClone._logDelegate, new RegClone.LogDelegate(this.LogDelegate));
+			_reg.shareAds(this.textBox5.Text.Trim(), this.textBox6.Text.Trim(), this.textBox7.Text.Trim());
+		}
+
+        private async void button1_Click_1(object sender, EventArgs e)
+        {
 			if (this.textBox1.Text.Trim().Length == 0)
 			{
 				MessageBox.Show("Phải nhập link facebook cá nhân!", "Thông báo!", MessageBoxButtons.OK);
@@ -994,7 +1036,7 @@ namespace GenCode
 			}
 		}
 
-        private async void button2_Click(object sender, EventArgs e)
+        private async void button2_Click_1(object sender, EventArgs e)
         {
 			if (this.textBox2.Text.Trim().Length == 0)
 			{
@@ -1005,6 +1047,7 @@ namespace GenCode
 			try
 			{
 				this.log("Share Ads: " + this.textBox2.Text.Trim());
+				// Post share
 				FireBaseMessage message = new FireBaseMessage();
 				int Timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
 				message.Id = Timestamp.ToString();

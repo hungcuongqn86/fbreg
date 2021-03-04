@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
@@ -15,6 +16,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using xNet;
 
 namespace GenCode
 {
@@ -51,6 +53,19 @@ namespace GenCode
 			}
 			return s;
 		}
+
+
+		public string bm_id = "";
+		public string bm_token = "";
+
+		// Token: 0x0400005B RID: 91
+		private string _userAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.5 Mobile/15E148 Snapchat/10.77.5.59 (like Safari/604.1)";
+
+		// Token: 0x0400005C RID: 92
+		private string _userAgent2 = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36";
+
+		// Token: 0x0400005D RID: 93
+		private string _contentType = "application/x-www-form-urlencoded";
 
 		private void Waitf2AjaxLoading(By byFinter1, By byFinter2, int time = 3)
 		{
@@ -847,6 +862,211 @@ namespace GenCode
 				this.log("End");
 			});
 			return _status;
+		}
+
+		private string GetData(HttpRequest http, string url, string cookie = null, string userArgent = "")
+		{
+			string result;
+			try
+			{
+				if (http == null)
+				{
+					http = new HttpRequest
+					{
+						Cookies = new CookieDictionary(false)
+					};
+				}
+				if (!string.IsNullOrEmpty(cookie))
+				{
+					this.AddCookie(http, cookie);
+				}
+				if (!string.IsNullOrEmpty(userArgent))
+				{
+					http.UserAgent = userArgent;
+				}
+				else
+				{
+					http.UserAgent = this._userAgent;
+				}
+				result = http.Get(url, null).ToString();
+			}
+			catch
+			{
+				result = "";
+			}
+			return result;
+		}
+
+		private void AddCookie(HttpRequest http, string cookie)
+		{
+			string[] array = cookie.Split(new char[]
+			{
+				';'
+			});
+			for (int i = 0; i < array.Length; i++)
+			{
+				string[] array2 = array[i].Split(new char[]
+				{
+					'='
+				});
+				if (array2.Count<string>() > 1)
+				{
+					try
+					{
+						http.Cookies.Add(array2[0], array2[1]);
+					}
+					catch
+					{
+					}
+				}
+			}
+		}
+
+		// Token: 0x06000057 RID: 87 RVA: 0x00005A28 File Offset: 0x00003C28
+		private string PostData(HttpRequest http, string url, string data = null, string contentType = null, string userArgent = "", string cookie = null)
+		{
+			string result;
+			try
+			{
+				if (http == null)
+				{
+					http = new HttpRequest
+					{
+						Cookies = new CookieDictionary(false)
+					};
+				}
+				if (!string.IsNullOrEmpty(cookie))
+				{
+					this.AddCookie(http, cookie);
+				}
+				if (string.IsNullOrEmpty(userArgent))
+				{
+					http.UserAgent = this._userAgent;
+				}
+				else
+				{
+					http.UserAgent = userArgent;
+				}
+				result = http.Post(url, data, contentType).ToString();
+			}
+			catch
+			{
+				result = "";
+			}
+			return result;
+		}
+
+		public Task<bool> shareAds(string clone_uid, string clone_adsID, string clone_cookie)
+        {
+			try
+			{
+				this.log("Lấy thông tin ads...");
+				string text = clone_uid; // this.data_clone.Rows[index].Cells["clone_uid"].Value.ToString();
+				string text4 = clone_adsID; // this.data_clone.Rows[index].Cells["clone_adsID"].Value.ToString();
+				string text3 = clone_cookie; // this.data_clone.Rows[index].Cells["clone_cookie"].Value.ToString();
+
+				string url = "https://m.facebook.com/";
+				string data = this.GetData(null, url, text3, this._userAgent);
+				string value = Regex.Match(data, "\"token\":\"(.*?)\"").Groups[1].Value;
+				string value2 = Regex.Match(data, "\"token\":\"(.*?)\"").NextMatch().Groups[1].Value;
+
+				url = "https://www.facebook.com/ads/manager/account_settings/information";
+				if (!string.IsNullOrEmpty(text4))
+				{
+					url = "https://www.facebook.com/ads/manager/account_settings/information/?act=" + text4;
+				}
+				string data3 = this.GetData(null, url, text3, this._userAgent2);
+
+				string text6 = Regex.Match(data3, "accountID:\"(.*?)\",accountName:\"(.*?)\"").Groups[1].Value;
+				string value5 = Regex.Match(data3, "accountID:\"(.*?)\",accountName:\"(.*?)\"").Groups[2].Value;
+				string value6 = Regex.Match(data3, "access_token:\"(.*?)\"").Groups[1].Value;
+
+
+				this.log("Gửi lời mời...");
+				url = string.Concat(new string[]
+				{
+						"https://graph.facebook.com/v7.0/",
+						this.bm_id,
+						"/client_ad_accounts?access_token=",
+						this.bm_token,
+						"&__cppo=1"
+				});
+
+				string data2 = "_reqName=object%3Abrand%2Fclient_ad_accounts&_reqSrc=AdAccountActions.brands&access_type=AGENCY&adaccount_id=act_" + text6 + "&locale=vi_VN&method=post&permitted_roles=%5B%5D&permitted_tasks=%5B%22ADVERTISE%22%2C%22ANALYZE%22%2C%22DRAFT%22%2C%22MANAGE%22%5D&pretty=0&suppress_http_code=1&xref=f25bf97b92021a";
+				this.PostData(null, url, data2, this._contentType, this._userAgent, text3);
+
+				this.log("Chấp nhận lời mời...");
+				url = "https://www.facebook.com/ads/manager/agency_permission_requests_getter/?ad_account_id=" + text6;
+				data2 = string.Concat(new string[]
+				{
+						"__user=",
+						text,
+						"&__a=1&__dyn=7xeUmBz8aolJ28S2qq7E-8mA5FaDJ4WqwOwCwgEpyA4WCHxC49pEG48coG49UKbigC6UnGiidBxa7GzUK3G4Wxa6US2SaAUgS4UgwxAzUO486C6EC8yEScx60DUcEiyEjCx65EJ0Bxq22q3KUnyFEdUmKFpobQUTwMQmqEjwznBwRyXxK9z9p87zxil1ap12U98lwWxecAwTK6pox0g8lUScyobo43xu7o4q2ycwgHAhUuyUlxeawywWjy8gK4EG11DwFg94bxRoCiewzwAwRyUgyU-1iwnHxJxK48cohAy88rxiezUuxe1dx-q4VEhwbSi2-fzobEaUiwBxe3mbxu3ydDxG2G4UOcwzxG9GdxS48bE4q8w&__csr=&__req=e&__beoa=0&__pc=PHASED%3Apowereditor_pkg&dpr=1&__ccg=MODERATE&__rev=1003171746&__s=942s7c%3A1e99qr%3A0z43po&__hsi=6916515816308183139-0&__comet_req=0&fb_dtsg=",
+						value,
+						"&jazoest=22044&__spin_r=1003171746&__spin_b=trunk&__spin_t=1610376829"
+				});
+				string value7 = Regex.Match(this.PostData(null, url, data2, this._contentType, this._userAgent2, text3), "ad_market_id=(.*?)&").Groups[1].Value;
+				HttpRequest http = new HttpRequest
+				{
+					KeepAlive = true,
+					Cookies = new CookieDictionary(false)
+				};
+				url = string.Concat(new string[]
+				{
+						"https://www.facebook.com/adaccount/agency/accept_reject_dialog/?ad_market_id=",
+						value7,
+						"&agency_id=",
+						this.bm_id,
+						"&fb_dtsg_ag=",
+						value2,
+						"&__user=",
+						text,
+						"&__a=1&__dyn=7xeUmBz8aolJ28S2qq7E-8mA5FaDJ4WqwOwCwgEpyA4WCHxC49pEG48coG49UKbigC6UnGiidBxa7GzUK3G4Wxa6US2SaAUgS4UgwxAzUO486C6EC8yEScx60DUcEiyEjCx65EJ0Bxq22q3KUnyFEdUmKFpobQUTwMQmqEjwznBwRyXxK9z9p87zxil1ap12U98lwWxecAwTK6pox0g8lUScyobo43xu7o4q2ycwgHAhUuyUlxeawywWjy8gK4EG11DwFg94bxRoCiewzwAwRyUgyU-1iwnHxJxK48cohAy88rxiezUuxe1dx-q4VE3fAwLzUS2W2K4EqyEjwRyUnwUzpUqwGxecz88Uqyqzotx22W16y8&__csr=&__req=x&__beoa=0&__pc=PHASED%3Apowereditor_pkg&dpr=1&__ccg=EXCELLENT&__rev=1003171746&__s=3pdtbb%3Ai0fgh7%3Amzdffu&__hsi=6916524890961458823-0&__comet_req=0&jazoest=27654&__spin_r=1003171746&__spin_b=trunk&__spin_t=1610378942"
+				});
+				string data4 = this.GetData(http, url, text3, this._userAgent2);
+				string value8 = Regex.Match(data4, "ext=(.*?)&amp;hash=(.*?)\\\\").Groups[2].Value;
+				string value9 = Regex.Match(data4, "ext=(.*?)&amp;hash=(.*?)\\\\").Groups[1].Value;
+				url = string.Concat(new string[]
+				{
+						"https://www.facebook.com/adaccount/agency/request/accept_reject/?ad_market_id=",
+						value7,
+						"&agency_id=",
+						this.bm_id,
+						"&operation=0&ext=",
+						value9,
+						"&hash=",
+						value8,
+						"&fb_dtsg_ag=",
+						value2,
+						"&__user=",
+						text,
+						"&__a=1&__dyn=7xeUmBz8aolJ28S2qq7E-8mA5FaDJ4WqwOwCwgEpyA4WCHxC49pEG48coG49UKbigC6UnGiidBxa7GzUK3G4Wxa6US2SaAUgS4UgwxAzUO486C6EC8yEScx60DUcEiyEjCx65EJ0Bxq22q3KUnyFEdUmKFpobQUTwMQmqEjwznBwRyXxK9z9p87zxil1ap12U98lwWxecAwTK6pox0g8lUScyobo43xu7o4q2ycwgHAhUuyUlxeawywWjy8gK4EG11DwFg94bxRoCiewzwAwRyUgyU-1iwnHxJxK48cohAy88rxiezUuxe1dx-q4VEhwbSi2-fzobEaUiwBxe3mbxu3ydDxG2G4UOcwzxG9GdxS48bE4q8w&__csr=&__req=16&__beoa=0&__pc=PHASED%3Apowereditor_pkg&dpr=1&__ccg=MODERATE&__rev=1003171746&__s=0hndtg%3A1e99qr%3A0z43po&__hsi=6916515816308183139-0&__comet_req=0&jazoest=27566&__spin_r=1003171746&__spin_b=trunk&__spin_t=1610376829"
+				});
+				this.GetData(http, url, text3, this._userAgent2);
+				url = "https://graph.facebook.com/v7.0/" + this.bm_id + "/client_ad_accounts?fields=id&limit=9999&access_token=" + this.bm_token;
+				if (!Regex.Match(this.GetData(null, url, text3, this._userAgent), text6).Success)
+				{
+					url = string.Concat(new string[]
+					{
+							"https://graph.facebook.com/v7.0/",
+							this.bm_id,
+							"/adaccounts?access_token=",
+							this.bm_token,
+							"&__cppo=1"
+					});
+					data2 = "_reqName=object%3Abrand%2Fadaccounts&_reqSrc=AdAccountActions.brands&adaccount_id=act_" + text6 + "&locale=vi_VN&method=delete&pretty=0&suppress_http_code=1&xref=f124cfc137c91c8";
+					this.PostData(null, url, data2, this._contentType, this._userAgent, text3);
+					this.log("Share lỗi");
+					return Task.FromResult(false);
+				}
+				this.log("Share thành công");
+				return Task.FromResult(true);
+			}
+			catch (Exception ex)
+			{
+				this.log(ex);
+				return Task.FromResult(false);
+			}
 		}
 
 		private async Task<string> getSecurityCode()
