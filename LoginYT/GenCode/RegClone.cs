@@ -507,7 +507,9 @@ namespace GenCode
 				}
 
 				this.fillInput(_inputNewEmail, newmail);
-				WaitAjaxLoading(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[@type='submit']"), 3);
+
+				// Submit
+				WaitAjaxLoading(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[@type='submit']"));
 				Delay(1000);
 				ReadOnlyCollection<IWebElement> _btSubmitNewEmail = this._driver.FindElements(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[@type='submit']"));
 				if (_btSubmitNewEmail.Count > 0)
@@ -518,9 +520,32 @@ namespace GenCode
 						Delay(1000);
 					}
 				}
-				else
+
+				// <a class="autofocus _9l2h  layerCancel _4jy0 _4jy3 _4jy1 _51sy selected _42ft" action="cancel" role="button" href="#" tabindex="0">Schließen</a>
+				// Resupmit
+				string confirmTag = "//a[contains(@class, 'layerCancel') and contains(@class, 'selected') and @role='button' and @action='cancel']";
+				WaitAjaxLoading(By.XPath(confirmTag));
+				Delay(1000);
+				ReadOnlyCollection<IWebElement> _btSubmitConfirm = this._driver.FindElements(By.XPath(confirmTag));
+				if (_btSubmitConfirm.Count > 0)
 				{
-					return false;
+					if (this.isValid(_btSubmitConfirm[0]))
+					{
+						_btSubmitConfirm[0].Click();
+						Delay(1000);
+
+						WaitAjaxLoading(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[@type='submit']"));
+						Delay(1000);
+						_btSubmitNewEmail = this._driver.FindElements(By.XPath("//div[contains(@class, 'iOverlayFooter')]/button[@type='submit']"));
+						if (_btSubmitNewEmail.Count > 0)
+						{
+							if (this.isValid(_btSubmitNewEmail[0]))
+							{
+								_btSubmitNewEmail[0].Click();
+								Delay(1000);
+							}
+						}
+					}
 				}
 
 				return true;
