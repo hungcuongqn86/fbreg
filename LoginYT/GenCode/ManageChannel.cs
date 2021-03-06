@@ -855,10 +855,10 @@ namespace GenCode
 					regClone._logDelegate = (RegClone.LogDelegate)Delegate.Combine(regClone._logDelegate, new RegClone.LogDelegate(this.LogDelegate));
 					string chrome = DateTime.Now.ToString("MM_dd_yyyy_HH_mm_ss") + "_" + _reg._ThreadName;
 					initBrowse(chrome);
-					await _reg.regClone(chrome);
+					_reg.initChromePortable(chrome);
+					await _reg.RegFaceBook();
 				}).Start();
 			}
-			// this.log("All Done!");
 		}
 
 		private void initBrowse(string viaName)
