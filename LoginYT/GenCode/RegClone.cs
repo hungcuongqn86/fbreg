@@ -498,7 +498,7 @@ namespace GenCode
 					this.log("--------------------------------");
 					// this.initBrowserForCreateGmail();
 					this.initChromePortable(chrome);
-					this.log("Start load page");
+					// this.log("Start load page");
 					this._driver.Navigate().GoToUrl("https://facebook.com");
 					((IJavaScriptExecutor)this._driver).ExecuteScript("window.open();");
 					Delay(1000);
@@ -575,14 +575,14 @@ namespace GenCode
 							actions.Perform();
 							_regBt.Click();
 							
-							this.log("Generate Infomation");
+							// this.log("Generate Infomation");
 							HttpClient _client = new HttpClient();
 							string text = await _client.GetStringAsync("https://fake-it.ws/de/");
 							string _rs = text;
 							text = null;
 							string _tmpName = Regex.Match(_rs, "row..Name[<][/]th[>].{10,200}[/]span", RegexOptions.Singleline).ToString();
 							_tmpName = _tmpName.Replace("row\">Name</th>", "").Trim().Replace("<td class=\"copy\"><span data-toggle=\"tooltip\" data-placement=\"top\" title=\"Click To Copy\">", "").Replace("</span", "");
-							this.log("Name: " + _tmpName);
+							// this.log("Name: " + _tmpName);
 							string[] _tmpNameArr = _tmpName.Split(new char[]
 							{
 								' '
@@ -613,15 +613,14 @@ namespace GenCode
 							// this.log(_tmpDataAll);
 
 							WaitLoading();
-
-							this.log("Fill Name -- lan 1!");
+							// this.log("Fill Name -- lan 1!");
 							WaitAjaxLoading(By.CssSelector("input[name='firstname']"), 60);
 							Delay(1000);
 
 							IWebElement _fName = this.getElement(By.CssSelector("input[name='firstname']"));
 							if (!this.isValid(_fName))
 							{
-								this.log("Fill Name -- lan 2!");
+								// this.log("Fill Name -- lan 2!");
 								this._driver.Navigate().Refresh();
 								WaitLoading();
 								WaitAjaxLoading(By.CssSelector("input[name='firstname']"), 60);
@@ -795,8 +794,7 @@ namespace GenCode
 																					"; "
 															});
 														}
-														this.log(_tmpCoookie);
-
+														// this.log(_tmpCoookie);
 														bool flag5 = await this.createPage(_tmpCoookie, _tmpDataAll);
 														bool _rsCreatePage = flag5;
 														if (flag5)
@@ -804,13 +802,13 @@ namespace GenCode
 															await this.addBank();
 														}
 														string _tmpData = string.Concat(new string[]
-{
+														{
 																				_tmpDataAll,
 																				"\t",
 																				_tmpCoookie,
 																				"\tPageCreate: ",
 																				_rsCreatePage.ToString()
-});
+														});
 														this.log("Clone Data: ->\t" + _tmpData);
 														_status = 1;
 													}
