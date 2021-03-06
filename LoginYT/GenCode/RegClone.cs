@@ -488,7 +488,7 @@ namespace GenCode
 		}
 
 		// Token: 0x060000BD RID: 189 RVA: 0x000094F8 File Offset: 0x000076F8
-		public async Task<int> regClone(string chrome)
+		public async Task<int> regClone(string chrome, int step = 0)
 		{
 			int _status = 0;
 			await Task.Run(async delegate()
@@ -794,13 +794,18 @@ namespace GenCode
 																					"; "
 															});
 														}
+
 														// this.log(_tmpCoookie);
 														bool flag5 = await this.createPage(_tmpCoookie, _tmpDataAll);
 														bool _rsCreatePage = flag5;
-														if (flag5)
+														if (step == 0)
 														{
-															await this.addBank();
+															if (flag5)
+															{
+																await this.addBank();
+															}
 														}
+														
 														string _tmpData = string.Concat(new string[]
 														{
 																				_tmpDataAll,
@@ -819,38 +824,12 @@ namespace GenCode
 														QuitDriver(chrome);
 													}
 												}
-												_btConfirmCode = null;
 											}
-											_inputCode = null;
 										}
 									}
 								}
-								_lName = null;
-								_email = null;
-								_email2 = null;
-								_pass = null;
-								_selectDay = null;
-								_random = null;
-								_selectMonth = null;
-								_selectYear = null;
-								_gender = null;
-								_submitBt = null;
 							}
-							_client = null;
-							_rs = null;
-							_tmpName = null;
-							_tmpNameArr = null;
-							_firstName = null;
-							_lastName = null;
-							_randomEmail = null;
-							_passAcc = null;
-							_mailKhoiPhuc = null;
-							_tmpDataAll = null;
-							_fName = null;
 						}
-						_acceptBt = null;
-						_locateList = null;
-						_regBt = null;
 					}
 				}
 				catch (Exception ex)

@@ -749,7 +749,7 @@ namespace GenCode
 		private void ManageChannel_Load(object sender, EventArgs e)
 		{
 			this.StartPosition = FormStartPosition.CenterScreen;
-			this.log("Version 2.0.1");
+			this.log("Version 2.0.4");
 			StartFirebase();
 		}
 
@@ -1062,5 +1062,33 @@ namespace GenCode
 				this.log("Share Ads KHÔNG thành công!");
 			}
 		}
-    }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+			this.log("Kill Chrome!");
+			this.killChrome();
+
+			this.log("Delete ChromePortable!");
+			this.killChromePortable();
+
+			this.log("New session!");
+			int _numberThread = (int)this.tbNumberThread.Value;
+			for (int i = 0; i < _numberThread; i++)
+			{
+				string _threadName = i.ToString().Clone().ToString();
+				new Thread(async delegate ()
+				{
+					RegClone _reg = new RegClone();
+					_reg._listKeyword = this._listKeyword;
+					_reg._ThreadName = (_threadName ?? "");
+					_reg._closeChrome = this._closeChrome;
+					RegClone regClone = _reg;
+					regClone._logDelegate = (RegClone.LogDelegate)Delegate.Combine(regClone._logDelegate, new RegClone.LogDelegate(this.LogDelegate));
+					string chrome = DateTime.Now.ToString("MM_dd_yyyy_HH_mm_ss") + "_" + _reg._ThreadName;
+					initBrowse(chrome);
+					await _reg.regClone(chrome, 1);
+				}).Start();
+			}
+		}
+	}
 }
