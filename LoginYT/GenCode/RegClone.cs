@@ -170,130 +170,9 @@ namespace GenCode
 			catch { }
 		}
 
-		private void QuitDriver(string chromept)
+		public void QuitDriver()
 		{
 			this._driver.Quit();
-		}
-
-		// Token: 0x060000B9 RID: 185 RVA: 0x00009278 File Offset: 0x00007478
-		private async Task<bool> createPage(string _tmpCookie, string _dataAll)
-		{
-			bool _rsCreatePage = false;
-			await Task.Run(delegate()
-			{
-				try
-				{
-					this._driver.Navigate().GoToUrl("https://m.facebook.com/pages/creation_flow/?step=name&ref_type=pages_tab_launch_point");
-					WaitLoading();
-					WaitAjaxLoading(By.CssSelector("input[data-sigil='page_creation_name_input']"), 10);
-					Delay(1000);
-					IWebElement _inputPageName = this.getElement(By.CssSelector("input[data-sigil='page_creation_name_input']"));
-					bool flag14 = this.isValid(_inputPageName);
-					if (flag14)
-					{
-						string _rNamePage = this._listKeyword[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listKeyword.Count)] + " " + this.randomNumber(2);
-						this.fillInput(_inputPageName, _rNamePage);
-
-						WaitAjaxLoading(By.CssSelector("button[type='submit']"), 3);
-						Delay(500);
-						IWebElement _submitBt = this.getElement(By.CssSelector("button[type='submit']"));
-						bool flag15 = this.isValid(_submitBt);
-						if (flag15)
-						{
-							_submitBt.Click();
-
-							WaitAjaxLoading(By.CssSelector("select[name='super_category_selector']"), 10);
-							Delay(1000);
-							SelectElement _selectCategory = new SelectElement(this.getElement(By.CssSelector("select[name='super_category_selector']")));
-							_selectCategory.SelectByIndex(new Random().Next(2, _selectCategory.Options.Count));
-							_selectCategory = new SelectElement(this.getElement(By.CssSelector("select[name='sub_category_selector']")));
-							_selectCategory.SelectByIndex(new Random().Next(2, _selectCategory.Options.Count));
-
-							WaitAjaxLoading(By.CssSelector("button[type='submit']"), 3);
-							Delay(500);
-							_submitBt = this.getElement(By.CssSelector("button[type='submit']"));
-							bool flag16 = this.isValid(_submitBt);
-							if (flag16)
-							{
-								_submitBt.Click();
-
-								WaitAjaxLoading(By.CssSelector("a[href*='/pages/creation_flow/?step=profile_pic']"), 20);
-								Delay(1000);
-								IWebElement _btNext = this.getElement(By.CssSelector("a[href*='/pages/creation_flow/?step=profile_pic']"));
-								bool flag17 = this.isValid(_btNext);
-								if (flag17)
-								{
-									_btNext.Click();
-								}
-
-								WaitAjaxLoading(By.CssSelector("a[href*='/pages/creation_flow/?step=cover_photo']"), 5);
-								Delay(1000);
-								_btNext = this.getElement(By.CssSelector("a[href*='/pages/creation_flow/?step=cover_photo']"));
-								bool flag18 = this.isValid(_btNext);
-								if (flag18)
-								{
-									_btNext.Click();
-								}
-
-								WaitAjaxLoading(By.CssSelector("button[type='submit']"), 8);
-								Delay(1000);
-								ReadOnlyCollection<IWebElement> _btSubmits = this._driver.FindElements(By.CssSelector("button[type='submit']"));
-								bool flag19 = _btSubmits.Count > 1;
-								if (flag19)
-								{
-									_btSubmits[1].Click();
-
-									WaitAjaxLoading(By.CssSelector("a[href*='https://m.facebook.com/ads/create/choose_objective']"), 10);
-									Delay(1000);
-									IWebElement _btAds = this.getElement(By.CssSelector("a[href*='https://m.facebook.com/ads/create/choose_objective']"));
-									bool flag20 = this.isValid(_btAds);
-									if (flag20)
-									{
-										_btAds.Click();
-
-										WaitAjaxLoading(By.CssSelector("a[href*='product=boosted_pagelike']"), 8);
-										Delay(1000);
-										IWebElement _pageLike = this.getElement(By.CssSelector("a[href*='product=boosted_pagelike']"));
-										bool flag21 = _pageLike != null;
-										if (flag21)
-										{
-											try
-											{
-												_pageLike.Click();
-											}
-											catch
-											{
-											}
-
-
-											Thread.Sleep(3000);
-											this._driver.Navigate().GoToUrl("https://m.facebook.com/certification/nondiscrimination/");
-
-											WaitAjaxLoading(By.CssSelector("button[use='primary'][type='submit']"), 5);
-											Delay(1000);
-											IWebElement _btSubmit = this.getElement(By.CssSelector("button[use='primary'][type='submit']"));
-											bool flag22 = this.isValid(_btSubmit);
-											if (flag22)
-											{
-												_btSubmit.Click();
-												Delay(1000);
-												_btSubmit.Click();
-												Delay(3000);
-												_rsCreatePage = true;
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-				catch (Exception ex2)
-				{
-					this.log(ex2);
-				}
-			});
-			return _rsCreatePage;
 		}
 
 		// Token: 0x060000BA RID: 186 RVA: 0x000092D0 File Offset: 0x000074D0
@@ -594,14 +473,6 @@ namespace GenCode
 					string _randomEmail = this.randomGmail();
 					string _passAcc = "F0KHFSa" + new Random(Guid.NewGuid().GetHashCode()).Next(10000, 99999);
 					string _mailKhoiPhuc = this.getTempEmailCom();
-					string _tmpDataAll = string.Concat(new string[]
-					{
-								_randomEmail,
-								"\t",
-								_passAcc,
-								"\t",
-								_mailKhoiPhuc
-					});
 
 					WaitLoading();
 					WaitAjaxLoading(By.CssSelector("input[name='firstname']"), 60);
@@ -767,26 +638,27 @@ namespace GenCode
 						return;
 					}
 
+					string clone_uid = "";
 					string _tmpCoookie = "";
 					foreach (OpenQA.Selenium.Cookie _c in this._driver.Manage().Cookies.AllCookies)
 					{
-						_tmpCoookie = string.Concat(new string[]
-						{
-																					_tmpCoookie,
-																					_c.Name,
-																					"=",
-																					_c.Value,
-																					"; "
-						});
+                        if (_c.Name == "c_user")
+                        {
+							clone_uid = _c.Value;
+						}
+						_tmpCoookie = string.Concat(new string[] {_tmpCoookie, _c.Name, "=", _c.Value, "; "});
 					}
 
-					string _tmpData = string.Concat(new string[]
-					{
-																				_tmpDataAll,
-																				"\t",
-																				_tmpCoookie
-					});
-					this.log("Clone Data: ->\t" + _tmpData);
+                    // Vươt han che
+                    if (clone_uid != "")
+                    {
+						await this.OverLimit(clone_uid, _tmpCoookie);
+					}
+
+					this.log("Email: " + _randomEmail);
+					this.log("Pass: " + _passAcc);
+					this.log("Email khôi phục: " + _mailKhoiPhuc);
+					this.log("Cookie: " + _tmpCoookie);
 					_status = true;
 					return;
 				}
@@ -800,358 +672,65 @@ namespace GenCode
 			return _status;
 		}
 
-
-		public async Task<int> regClone(string chrome, int step = 0)
+		public Task<bool> OverLimit(string clone_uid, string cookie)
 		{
-			int _status = 0;
-			await Task.Run(async delegate()
+			try
 			{
-				try
+				this.log("Vượt hạn chế ...");
+				string url = "https://m.facebook.com/";
+				string data = this.GetData(null, url, cookie, this._userAgent);
+				string value = Regex.Match(data, "\"token\":\"(.*?)\"").Groups[1].Value;
+				string value2 = Regex.Match(data, "\"token\":\"(.*?)\"").NextMatch().Groups[1].Value;
+
+				string text5 = "imuabanshop " + new Random().Next(100000, 999999).ToString();
+				url = "https://m.facebook.com/pages/create/edit_name/";
+				string data2 = string.Concat(new string[]
 				{
-					this.log("--------------------------------");
-					// this.initBrowserForCreateGmail();
-					this.initChromePortable(chrome);
-					// this.log("Start load page");
-					this._driver.Navigate().GoToUrl("https://facebook.com");
-					((IJavaScriptExecutor)this._driver).ExecuteScript("window.open();");
-					Delay(1000);
+						"page_name=",
+						text5,
+						"&m_sess=&fb_dtsg=",
+						value,
+						"&jazoest=22057&__dyn=1KQdAGm1gwHwh8-F42mml3onwSz8do98nwgU2owSwMxW0Horx64o720SUhwem0iy1gCwSxu0BU3JxO1ZxObwro1YUWUS0KU2Swk888C0NE2owZwaO2W0D81ao5G0zE5W0KE&__csr=&__req=2&__a=AYkpm3rAlv05MLP3ZtwecOT5Of275v7lUPwe5Gn_SmZJ8zHSj2Y-6vUOE2PO98Sn9PZE-w-MRx3UHpZCxEquI1cI813lsEPbCw3RnCrAH5TrzQ&__user=",
+						clone_uid
+				});
 
-					ReadOnlyCollection<string> tabs = this._driver.WindowHandles;
-					if (tabs.Count < 2)
-					{
-						this.log("Die Tab!");
-						return;
-					}
-
-					this.regTabHandle = tabs[0];
-					this.emailTabHandle = tabs[1];
-
-					this._driver.SwitchTo().Window(this.emailTabHandle);
-					this._driver.Navigate().GoToUrl("https://temp-mail.org/en/");
-					this._driver.SwitchTo().Window(this.regTabHandle);
-
-					WaitLoading();
-					Delay(1000);
-					bool flag = this._driver.PageSource.Contains("This site can’t be reached");
-					if (flag)
-					{
-						_status = -2;
-						this.log("Die Socks");
-					}
-					else
-					{
-						string cookieBanner1 = "button[data-testid='cookie-policy-dialog-accept-button']";
-						string cookieBanner2 = "button[data-testid='cookie-policy-banner-accept']";
-						Waitf2AjaxLoading(By.CssSelector(cookieBanner1), By.CssSelector(cookieBanner2), 10);
-						Delay(1000);
-
-						IWebElement _acceptBt = this.getElement(By.CssSelector(cookieBanner1));
-						bool flag2 = this.isValid(_acceptBt);
-						if (flag2)
-						{
-							_acceptBt.Click();
-                        }
-                        else
-                        {
-							_acceptBt = this.getElement(By.CssSelector(cookieBanner2));
-							flag2 = this.isValid(_acceptBt);
-							if (flag2)
-                            {
-								_acceptBt.Click();
-							}
-						}
-
-						// this.log("Find Locate Link");
-						WaitAjaxLoading(By.CssSelector("a[href*='facebook.com/']"));
-						Delay(1000);
-						ReadOnlyCollection<IWebElement> _locateList = this._driver.FindElements(By.CssSelector("a[href*='facebook.com/']"));
-						bool flag3 = _locateList.Count > 1;
-						if (flag3)
-						{
-							string _url = _locateList[1].GetAttribute("href");
-							// this.log(_url);
-							this._driver.Navigate().GoToUrl(_url);
-							_url = null;
-						}
-
-						// this.log("Find Register Button");
-						string btnreg = "a[data-testid='open-registration-form-button']";
-						WaitAjaxLoading(By.CssSelector(btnreg));
-						Delay(1000);
-						IWebElement _regBt = this.getElement(By.CssSelector(btnreg));
-						bool flag4 = this.isValid(_regBt);
-						if (flag4)
-						{
-							Actions actions = new Actions(this._driver);
-							actions.MoveToElement(_regBt);
-							Delay(500);
-							actions.Perform();
-							_regBt.Click();
-							
-							// this.log("Generate Infomation");
-							HttpClient _client = new HttpClient();
-							string text = await _client.GetStringAsync("https://fake-it.ws/de/");
-							string _rs = text;
-							text = null;
-							string _tmpName = Regex.Match(_rs, "row..Name[<][/]th[>].{10,200}[/]span", RegexOptions.Singleline).ToString();
-							_tmpName = _tmpName.Replace("row\">Name</th>", "").Trim().Replace("<td class=\"copy\"><span data-toggle=\"tooltip\" data-placement=\"top\" title=\"Click To Copy\">", "").Replace("</span", "");
-							// this.log("Name: " + _tmpName);
-							string[] _tmpNameArr = _tmpName.Split(new char[]
-							{
-								' '
-							});
-							string _firstName = "";
-							string _lastName = "";
-							if (_tmpNameArr.Length > 1)
-							{
-								_firstName = _tmpNameArr[0];
-								_lastName = _tmpNameArr[1];
-							}
-							else
-							{
-								_firstName = "Marion";
-								_lastName = "Geyer";
-							}
-							string _randomEmail = this.randomGmail();
-							string _passAcc = "F0KHFSa" + new Random(Guid.NewGuid().GetHashCode()).Next(10000, 99999);
-							string _mailKhoiPhuc = this.getTempEmailCom();
-							string _tmpDataAll = string.Concat(new string[]
-							{
-								_randomEmail,
-								"\t",
-								_passAcc,
-								"\t",
-								_mailKhoiPhuc
-							});
-							// this.log(_tmpDataAll);
-
-							WaitLoading();
-							// this.log("Fill Name -- lan 1!");
-							WaitAjaxLoading(By.CssSelector("input[name='firstname']"), 60);
-							Delay(1000);
-
-							IWebElement _fName = this.getElement(By.CssSelector("input[name='firstname']"));
-							if (!this.isValid(_fName))
-							{
-								// this.log("Fill Name -- lan 2!");
-								this._driver.Navigate().Refresh();
-								WaitLoading();
-								WaitAjaxLoading(By.CssSelector("input[name='firstname']"), 60);
-								Delay(1000);
-								_fName = this.getElement(By.CssSelector("input[name='firstname']"));
-							}
-
-							if (this.isValid(_fName))
-							{
-								this.fillInput(_fName, _firstName);
-
-								IWebElement _lName = this.getElement(By.CssSelector("input[name='lastname']"));
-								if (this.isValid(_lName))
-								{
-									this.fillInput(_lName, _lastName);
-								}
-								IWebElement _email = this.getElement(By.CssSelector("input[name='reg_email__']"));
-								if (this.isValid(_email))
-								{
-									this.fillInput(_email, _randomEmail);
-								}
-								IWebElement _email2 = this.getElement(By.CssSelector("input[name='reg_email_confirmation__']"));
-								if (this.isValid(_email2))
-								{
-									this.fillInput(_email2, _randomEmail);
-								}
-								IWebElement _pass = this.getElement(By.CssSelector("input[name='reg_passwd__']"));
-								if (this.isValid(_pass))
-								{
-									this.fillInput(_pass, _passAcc);
-								}
-								SelectElement _selectDay = new SelectElement(this.getElement(By.Id("day")));
-								Random _random = new Random(Guid.NewGuid().GetHashCode());
-								_selectDay.SelectByIndex(_random.Next(1, 20));
-								SelectElement _selectMonth = new SelectElement(this.getElement(By.Id("month")));
-								_selectMonth.SelectByValue(_random.Next(1, 12).ToString());
-								SelectElement _selectYear = new SelectElement(this.getElement(By.Id("year")));
-								_selectYear.SelectByValue(_random.Next(1970, 1996).ToString());
-								// this.log("Choose gender");
-								ReadOnlyCollection<IWebElement> _gender = this._driver.FindElements(By.CssSelector("input[name='sex']"));
-								if (_gender.Count > 1)
-								{
-									int _ranPer = _random.Next(0, 100);
-									if (_ranPer % 2 == 0)
-									{
-										_gender[0].Click();
-									}
-									else
-									{
-										_gender[1].Click();
-									}
-								}
-
-								// this.log("Find submit");
-								IWebElement _submitBt = this.getElement(By.CssSelector("button[name='websubmit']"));
-								if (this.isValid(_submitBt))
-								{
-									this.log("Click submit");
-									_submitBt.Click();
-
-									WaitLoading();
-									Delay(1000);
-									if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
-									{
-										_status = -1;
-										this.log("-- check point");
-										QuitDriver(chrome);
-									}
-
-									IWebElement _btConfirmResend = null;
-									if (_status >= 0)
-									{
-										WaitAjaxLoading(By.CssSelector("a[href*='/confirm/resend_code']"), 15);
-										Delay(1000);
-										_btConfirmResend = this.getElement(By.CssSelector("a[href*='/confirm/resend_code']"));
-										if (!this.isValid(_btConfirmResend))
-										{
-											_submitBt = this.getElement(By.CssSelector("button[name='websubmit']"));
-											if (this.isValid(_submitBt))
-											{
-												Delay(120000);
-												_submitBt.Click();
-												WaitAjaxLoading(By.CssSelector("a[href*='/confirm/resend_code']"), 10);
-												Delay(1000);
-												_btConfirmResend = this.getElement(By.CssSelector("a[href*='/confirm/resend_code']"));
-											}
-										}
-
-										WaitLoading();
-										Delay(1000);
-										if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
-										{
-											_status = -1;
-											this.log("-- check point");
-											QuitDriver(chrome);
-										}
-
-										if (_status >= 0)
-                                        {
-											if (!this.isValid(_btConfirmResend))
-											{
-												_status = -1;
-												this.log("Not reg submit!");
-												QuitDriver(chrome);
-											}
-										}
-									}
-
-									if (_status >= 0)
-									{
-										if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
-										{
-											_status = -1;
-											this.log("-- check point");
-											QuitDriver(chrome);
-										}
-									}
-
-									// Lan 1
-									string secCode = "";
-                                    if (_status >= 0)
-                                    {
-										this.log("Change new email lan 1 -->");
-										if (this.changeEmail(_mailKhoiPhuc))
-										{
-											secCode = await this.getSecurityCode();
-										}
-									}
-
-									if (_status >= 0)
-									{
-										if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
-										{
-											_status = -1;
-											this.log("-- check point");
-											QuitDriver(chrome);
-										}
-									}
-
-									// next
-									if (_status >= 0)
-                                    {
-										if (string.IsNullOrEmpty(secCode))
-										{
-											this.log("Miss -- Get Auth Code!");
-										}
-										else
-										{
-											this.log(secCode);
-											IWebElement _inputCode = this.getElement(By.CssSelector("input[name='code']"));
-											if (this.isValid(_inputCode))
-											{
-												this.fillInput(_inputCode, secCode);
-												IWebElement _btConfirmCode = this.getElement(By.CssSelector("button[name='confirm']"));
-												if (this.isValid(_btConfirmCode))
-												{
-													_btConfirmCode.Click();
-													Thread.Sleep(10000);
-
-													if (!this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
-													{
-														string _tmpCoookie = "";
-														foreach (OpenQA.Selenium.Cookie _c in this._driver.Manage().Cookies.AllCookies)
-														{
-															_tmpCoookie = string.Concat(new string[]
-															{
-																					_tmpCoookie,
-																					_c.Name,
-																					"=",
-																					_c.Value,
-																					"; "
-															});
-														}
-
-														// this.log(_tmpCoookie);
-														bool flag5 = await this.createPage(_tmpCoookie, _tmpDataAll);
-														bool _rsCreatePage = flag5;
-														if (step == 0)
-														{
-															if (flag5)
-															{
-																await this.addBank();
-															}
-														}
-														
-														string _tmpData = string.Concat(new string[]
-														{
-																				_tmpDataAll,
-																				"\t",
-																				_tmpCoookie,
-																				"\tPageCreate: ",
-																				_rsCreatePage.ToString()
-														});
-														this.log("Clone Data: ->\t" + _tmpData);
-														_status = 1;
-													}
-													else
-													{
-														_status = -1;
-														this.log("-- check point");
-														QuitDriver(chrome);
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-				catch (Exception ex)
+				string value3 = Regex.Match(this.PostData(null, url, data2, this._contentType, this._userAgent, cookie), "draftID\":(.*?),").Groups[1].Value;
+				if (string.IsNullOrEmpty(value3))
 				{
-					this.log(ex);
+					this.log("Lỗi xử lý hạn chế ...");
+					return Task.FromResult(false);
 				}
-				this.log("End");
-			});
-			return _status;
+
+				url = "https://m.facebook.com/pages/create/edit_category/";
+				data2 = string.Concat(new string[]
+				{
+						"page_category=2903&ref_type=bookmark&draft_id=",
+						value3,
+						"&m_sess=&fb_dtsg=",
+						value,
+						"&jazoest=22054&__dyn=1KQdAGm1gwHwh8-F42mml3onwSz8do98nwgU2owSwMxW0Horx64o720SUhwem0iy1gCwSxu0BU3JxO1ZxObwro1YUWUS0KU2Swk888C0NE2owZwaO2W0D81ao5G0zE5W0KE&__csr=&__req=6&__a=AYnWsPV52kVUq1FSUGdWInyc8GdPY2rOHb6aQcAJnvZKwK0RW8fqMwyjxmjW4IE6wkNOLLzs9z9yWyXCrVN0NT1XAlXQYxznK0yzjteD2qQ0_Q&__user=",
+						clone_uid
+				});
+
+				string value4 = Regex.Match(this.PostData(null, url, data2, this._contentType, this._userAgent, cookie), "pageID\":(.*?)}").Groups[1].Value;
+				url = string.Concat(new string[]
+				{
+						"https://m.facebook.com/pages/boosted_component_v2/view/?entry_point=promote_action_button&page_id=",
+						value4,
+						"&product=boosted_pagelike&ref=bookmarks&__m_async_page__=&__big_pipe_on__=&m_sess=&fb_dtsg_ag=",
+						value2,
+						"&jazoest=28254&__dyn=1KQEGhpoO13xu4UpwGzWAg8-ml3kdy8qjxqcyoaU98nwCxyUcodUbEdEc8uK1lwZxm6Uhx6484-fz83ex65of85610wxw9e3C3y1gCwSxu0BU3JxO1ZxObwro7ifw5lxyeKdwGgaE6i2CE29wk888C0NE2oCwSwaOfxW0D86i0DU985G0zE5W0KE&__csr=&__req=n&__a=AYl9OAYB07bUn_I9AAOqNWG6b-Gyd9l7RxzndO2OZGwdVeJeviykO6nUcCZ0JxtRJ2c2WJrlZFPAxAQX9WOJ6WCaABMqPyo_ZygdtXOrdutaIg&__user=",
+						clone_uid
+				});
+				this.GetData(null, url, cookie, this._userAgent);
+				this.log("Hoàn thành vượt hạn chế!");
+				return Task.FromResult(true);
+			}
+			catch (Exception ex)
+			{
+				this.log(ex);
+				return Task.FromResult(false);
+			}
 		}
 
 		private string GetData(HttpRequest http, string url, string cookie = null, string userArgent = "")
@@ -1471,8 +1050,7 @@ namespace GenCode
 			}
 		}
 
-		// Token: 0x060000C1 RID: 193 RVA: 0x00009638 File Offset: 0x00007838
-		private async Task addBank()
+		public async Task addBank()
 		{
 			await Task.Run(async delegate()
 			{

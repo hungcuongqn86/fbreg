@@ -856,7 +856,15 @@ namespace GenCode
 					string chrome = DateTime.Now.ToString("MM_dd_yyyy_HH_mm_ss") + "_" + _reg._ThreadName;
 					initBrowse(chrome);
 					_reg.initChromePortable(chrome);
-					await _reg.RegFaceBook();
+					bool regres = await _reg.RegFaceBook();
+                    if (regres)
+                    {
+                        await _reg.addBank();
+                    }
+                    else
+                    {
+						_reg.QuitDriver();
+					}
 				}).Start();
 			}
 		}
@@ -1086,7 +1094,8 @@ namespace GenCode
 					regClone._logDelegate = (RegClone.LogDelegate)Delegate.Combine(regClone._logDelegate, new RegClone.LogDelegate(this.LogDelegate));
 					string chrome = DateTime.Now.ToString("MM_dd_yyyy_HH_mm_ss") + "_" + _reg._ThreadName;
 					initBrowse(chrome);
-					await _reg.regClone(chrome, 1);
+					_reg.initChromePortable(chrome);
+					await _reg.RegFaceBook();
 				}).Start();
 			}
 		}
