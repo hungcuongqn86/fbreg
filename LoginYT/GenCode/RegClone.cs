@@ -654,11 +654,12 @@ namespace GenCode
                     {
 						await this.OverLimit(clone_uid, _tmpCoookie);
 					}
-
+					this.log("=====================================");
 					this.log("Email: " + _randomEmail);
 					this.log("Pass: " + _passAcc);
 					this.log("Email khôi phục: " + _mailKhoiPhuc);
 					this.log("Cookie: " + _tmpCoookie);
+					this.log("====================================");
 					_status = true;
 					return;
 				}
@@ -713,6 +714,7 @@ namespace GenCode
 				});
 
 				string value4 = Regex.Match(this.PostData(null, url, data2, this._contentType, this._userAgent, cookie), "pageID\":(.*?)}").Groups[1].Value;
+				
 				url = string.Concat(new string[]
 				{
 						"https://m.facebook.com/pages/boosted_component_v2/view/?entry_point=promote_action_button&page_id=",
@@ -722,7 +724,9 @@ namespace GenCode
 						"&jazoest=28254&__dyn=1KQEGhpoO13xu4UpwGzWAg8-ml3kdy8qjxqcyoaU98nwCxyUcodUbEdEc8uK1lwZxm6Uhx6484-fz83ex65of85610wxw9e3C3y1gCwSxu0BU3JxO1ZxObwro7ifw5lxyeKdwGgaE6i2CE29wk888C0NE2oCwSwaOfxW0D86i0DU985G0zE5W0KE&__csr=&__req=n&__a=AYl9OAYB07bUn_I9AAOqNWG6b-Gyd9l7RxzndO2OZGwdVeJeviykO6nUcCZ0JxtRJ2c2WJrlZFPAxAQX9WOJ6WCaABMqPyo_ZygdtXOrdutaIg&__user=",
 						clone_uid
 				});
-				this.GetData(null, url, cookie, this._userAgent);
+				// this.GetData(null, url, cookie, this._userAgent);
+				this._driver.Navigate().GoToUrl(url);
+				WaitLoading();
 				this.log("Hoàn thành vượt hạn chế!");
 				return Task.FromResult(true);
 			}

@@ -865,6 +865,7 @@ namespace GenCode
                     {
 						_reg.QuitDriver();
 					}
+					this.log("End!");
 				}).Start();
 			}
 		}
