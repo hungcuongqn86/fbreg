@@ -616,6 +616,14 @@ namespace GenCode
 					this.log("Change email---");
 					if (this.changeEmail(_mailKhoiPhuc))
 					{
+						Delay(1000);
+						WaitLoading();
+						if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
+						{
+							this.log("Check point!");
+							this.log("End!");
+							return;
+						}
 						secCode = await this.getSecurityCode();
 					}
 
