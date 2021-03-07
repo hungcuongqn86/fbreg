@@ -1168,6 +1168,16 @@ namespace GenCode
 					{
 						this.log("Delay Banking Option Valid...!");
 						Delay(3000);
+						if (!this.isValid(bankingopt))
+						{
+							this.log("Delay Banking Option Valid...!");
+							Delay(3000);
+							if (!this.isValid(bankingopt))
+							{
+								this.log("Delay Banking Option Valid...!");
+								Delay(3000);
+							}
+						}
 					}
 					if (!this.isValid(bankingopt))
 					{
@@ -1258,23 +1268,24 @@ namespace GenCode
 					Waitf2AjaxLoading(By.CssSelector("button[type='button'][aria-disabled='true']"), By.CssSelector("div[role='button'][aria-disabled='true']"), 60);
 					Delay(1000);
 
-					IWebElement _btCheck = this.getElement(By.CssSelector("button[type='button'][aria-disabled='true']"));
-					if (_btCheck is null)
-					{
-						_btCheck = this.getElement(By.CssSelector("div[role='button'][aria-disabled='true']"));
+					// check res
+					string resCheck = "//div[contains(@class, 'o1teu6h')]/div/div/span[contains(@class, '66pz984')]";
+					WaitAjaxLoading(By.XPath(resCheck), 8);
+					ReadOnlyCollection<IWebElement> _btCheck = this._driver.FindElements(By.XPath(resCheck));
+                    if (_btCheck.Count > 0)
+                    {
+						string bankIcon = "//i[contains(@class, 'x_18fa0a')]";
+						WaitAjaxLoading(By.XPath(bankIcon));
+						Delay(1000);
+						ReadOnlyCollection<IWebElement> _bankIcon = this._driver.FindElements(By.XPath(bankIcon));
+						if (_bankIcon.Count > 0)
+						{
+							this.log("BANK OK!");
+							res = true;
+							return;
+						}
 					}
-
-					if (_btCheck != null)
-					{
-						this.log("BANK NOT OK!");
-						return;
-					}
-					else
-					{
-						this.log("BANK OK!");
-						res = true;
-						return;
-					}
+					return;
 				}
 				catch (Exception ex2)
 				{
