@@ -172,7 +172,14 @@ namespace GenCode
 
 		public void QuitDriver()
 		{
-			this._driver.Quit();
+			try
+			{
+				this._driver.Quit();
+			}
+			catch (Exception ex)
+			{
+				this.log(ex);
+			}
 		}
 
 		// Token: 0x060000BA RID: 186 RVA: 0x000092D0 File Offset: 0x000074D0
@@ -404,6 +411,7 @@ namespace GenCode
 					if (tabs.Count < 2)
 					{
 						this.log("Die Tab!");
+						this.log("End!");
 						return;
 					}
 
@@ -420,6 +428,7 @@ namespace GenCode
 					if (flag)
 					{
 						this.log("Die Socks");
+						this.log("End!");
 						return;
 					}
 
@@ -441,6 +450,7 @@ namespace GenCode
                     if (_locateList.Count < 1)
                     {
 						this.log("Find Locate Link --- False!");
+						this.log("End!");
 						return;
 					}
 					string _url = _locateList[1].GetAttribute("href");
@@ -454,6 +464,7 @@ namespace GenCode
 					if (!this.isValid(_regBt))
 					{
 						this.log("Find registration button --- False!");
+						this.log("End!");
 						return;
 					}
 					Actions actions = new Actions(this._driver);
@@ -467,6 +478,7 @@ namespace GenCode
                     if (_tmpNameArr is null)
                     {
 						this.log("Gen Fake Info --- False!");
+						this.log("End!");
 						return;
 					}
 
@@ -491,6 +503,7 @@ namespace GenCode
 					if (!this.isValid(_fName))
                     {
 						this.log("Firstname --- False!");
+						this.log("End!");
 						return;
 					}
 
@@ -543,6 +556,7 @@ namespace GenCode
 					if (!this.isValid(_submitBt))
                     {
 						this.log("Find submit --- False!");
+						this.log("End!");
 						return;
 					}
 					_submitBt.Click();
@@ -552,6 +566,7 @@ namespace GenCode
 					if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 					{
 						this.log("Check point!");
+						this.log("End!");
 						return;
 					}
 
@@ -577,12 +592,14 @@ namespace GenCode
 					if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 					{
 						this.log("Check point!");
+						this.log("End!");
 						return;
 					}
 
 					if (!this.isValid(_btConfirmResend))
 					{
 						this.log("Not reg submit!");
+						this.log("End!");
 						return;
 					}
 
@@ -591,6 +608,7 @@ namespace GenCode
 					if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 					{
 						this.log("Check point!");
+						this.log("End!");
 						return;
 					}
 
@@ -606,12 +624,14 @@ namespace GenCode
 					if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 					{
 						this.log("Check point!");
+						this.log("End!");
 						return;
 					}
 
 					if (string.IsNullOrEmpty(secCode))
 					{
 						this.log("Get Auth Code ---- false!");
+						this.log("End!");
 						return;
 					}
 
@@ -619,6 +639,7 @@ namespace GenCode
 					if (!this.isValid(_inputCode))
                     {
 						this.log("Find input code ---- false!");
+						this.log("End!");
 						return;
 					}
 
@@ -627,6 +648,7 @@ namespace GenCode
 					if (!this.isValid(_btConfirmCode))
 					{
 						this.log("Find Btn Confirm Code ---- false!");
+						this.log("End!");
 						return;
 					}
 
@@ -635,6 +657,7 @@ namespace GenCode
 					if (this._driver.Url.Contains("https://www.facebook.com/checkpoint"))
 					{
 						this.log("Check point!");
+						this.log("End!");
 						return;
 					}
 
@@ -655,19 +678,22 @@ namespace GenCode
 						await this.OverLimit(clone_uid, _tmpCoookie);
 					}
 					this.log("=====================================");
+					this.log("-------------------------------------");
 					this.log("Email: " + _randomEmail);
 					this.log("Pass: " + _passAcc);
 					this.log("Email khôi phục: " + _mailKhoiPhuc);
 					this.log("Cookie: " + _tmpCoookie);
-					this.log("====================================");
+					this.log("-------------------------------------");
+					this.log("=====================================");
 					_status = true;
 					return;
 				}
 				catch (Exception ex)
 				{
 					this.log(ex);
+					this.log("End!");
+					return;
 				}
-				this.log("End");
 			});
 
 			return _status;
@@ -1253,11 +1279,11 @@ namespace GenCode
 				catch (Exception ex2)
 				{
 					this.log(ex2);
+					return;
 				}
-
-				this.log("End banking!");
 			});
 
+			this.log("End banking!");
 			return res;
 		}
 
@@ -1333,32 +1359,39 @@ namespace GenCode
 
 		public void initChromePortable(string chrome)
 		{
-			bool flag = this._driver != null;
-			if (flag)
+			try
 			{
-				this._driver.Quit();
+				bool flag = this._driver != null;
+				if (flag)
+				{
+					this._driver.Quit();
+				}
+
+				string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+				string folderPath = m_exePath + "\\via";
+				string viaPath = folderPath + "\\" + chrome + "\\GoogleChromePortable";
+
+
+				var options = new ChromeOptions();
+				options.BinaryLocation = viaPath + "\\App\\Chrome-bin\\chrome.exe";
+				StringBuilder builder = new StringBuilder(viaPath);
+				builder.Replace("\\", "/");
+				options.AddArgument("--user-data-dir=" + builder.ToString() + "/Data/profile");
+				options.AddArgument("profile-directory=Default");
+				// options.AddArgument("--no-sandbox");
+				// options.AddArgument("--start-maximized");
+				// options.AddArgument("--headless");
+
+				var driverService = ChromeDriverService.CreateDefaultService();
+				driverService.HideCommandPromptWindow = true;
+
+				this._driver = new ChromeDriver(driverService, options, TimeSpan.FromMinutes(15.0));
+				this._driver.Manage().Window.Size = new Size(600, 600);
 			}
-
-			string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string folderPath = m_exePath + "\\via";
-			string viaPath = folderPath + "\\" + chrome + "\\GoogleChromePortable";
-
-
-			var options = new ChromeOptions();
-			options.BinaryLocation = viaPath + "\\App\\Chrome-bin\\chrome.exe";
-			StringBuilder builder = new StringBuilder(viaPath);
-			builder.Replace("\\", "/");
-			options.AddArgument("--user-data-dir=" + builder.ToString() + "/Data/profile");
-			options.AddArgument("profile-directory=Default");
-			// options.AddArgument("--no-sandbox");
-			// options.AddArgument("--start-maximized");
-			// options.AddArgument("--headless");
-
-			var driverService = ChromeDriverService.CreateDefaultService();
-			driverService.HideCommandPromptWindow = true;
-
-			this._driver = new ChromeDriver(driverService, options, TimeSpan.FromMinutes(15.0));
-			this._driver.Manage().Window.Size = new Size(600, 600);
+			catch
+			{
+				this.log("initChromePortable --- False!");
+			}
 		}
 
 		// Token: 0x060000C7 RID: 199 RVA: 0x0000977C File Offset: 0x0000797C

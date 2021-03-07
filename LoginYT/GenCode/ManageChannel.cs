@@ -862,7 +862,6 @@ namespace GenCode
 						bool bank = await _reg.addBank();
                         if (bank)
                         {
-							//
 							this.log("Share to VIA!");
 						}
                     }
@@ -870,7 +869,6 @@ namespace GenCode
                     {
 						_reg.QuitDriver();
 					}
-					this.log("End!");
 				}).Start();
 			}
 		}
