@@ -1215,6 +1215,27 @@ namespace GenCode
 			}
 		}
 
+		public async Task<bool> agreeFriends()
+		{
+			bool res = false;
+			await Task.Run(async delegate()
+			{
+				try
+				{
+					
+					return;
+				}
+				catch (Exception ex2)
+				{
+					this.log(ex2);
+					return;
+				}
+			});
+
+			this.log("Agree to make friends!");
+			return res;
+		}
+		
 		public async Task<bool> addBank()
 		{
 			bool res = false;

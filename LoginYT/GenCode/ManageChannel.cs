@@ -41,6 +41,7 @@ namespace GenCode
 
 		private FirebaseClient firebase;
 		private bool useapi = false;
+		private bool autosharetovia = false;
 
 		// Token: 0x06000009 RID: 9 RVA: 0x00002194 File Offset: 0x00000394
 		public ManageChannel()
@@ -843,6 +844,7 @@ namespace GenCode
 
 			this.log("New session!");
 			useapi = this.checkBox1.Checked;
+			autosharetovia = this.checkBox2.Checked;
 			int _numberThread = (int)this.tbNumberThread.Value;
 			for (int i = 0; i < _numberThread; i++)
 			{
@@ -864,15 +866,19 @@ namespace GenCode
 						bool bank = await _reg.addBank();
                         if (bank)
                         {
-                            if (!String.IsNullOrEmpty(_reg._clone_uid))
+                            if (autosharetovia)
                             {
-								string viaLink = "https://www.facebook.com/" + _reg._clone_uid;
-								bool addfriendrq = await friendRequestAsync(viaLink);
-                                if (addfriendrq)
-                                {
-									// Wait
+								if (!String.IsNullOrEmpty(_reg._clone_uid))
+								{
+									string viaLink = "https://www.facebook.com/" + _reg._clone_uid;
+									bool addfriendrq = await friendRequestAsync(viaLink);
+									if (addfriendrq)
+									{
+										bool agreeF = await _reg.agreeFriends();
+										// share to via
 
-                                }
+									}
+								}
 							}
 						}
                     }

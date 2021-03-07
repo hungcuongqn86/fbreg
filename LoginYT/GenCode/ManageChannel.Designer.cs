@@ -37,6 +37,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.tbNumberThread)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,9 +51,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(340, 12);
+            this.button3.Location = new System.Drawing.Point(372, 12);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(78, 23);
+            this.button3.Size = new System.Drawing.Size(46, 23);
             this.button3.TabIndex = 73;
             this.button3.Text = "Run";
             this.button3.UseVisualStyleBackColor = true;
@@ -196,9 +197,9 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(256, 12);
+            this.button5.Location = new System.Drawing.Point(320, 12);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(78, 23);
+            this.button5.Size = new System.Drawing.Size(49, 23);
             this.button5.TabIndex = 99;
             this.button5.Text = "Reg";
             this.button5.UseVisualStyleBackColor = true;
@@ -214,11 +215,24 @@
             this.checkBox1.Text = "API";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Location = new System.Drawing.Point(187, 19);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(72, 17);
+            this.checkBox2.TabIndex = 101;
+            this.checkBox2.Text = "ShareAds";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
             // ManageChannel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 569);
+            this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button2);
@@ -282,5 +296,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
     }
 }
