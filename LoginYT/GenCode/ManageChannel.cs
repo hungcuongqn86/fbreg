@@ -864,12 +864,13 @@ namespace GenCode
 						bool bank = await _reg.addBank();
                         if (bank)
                         {
-                            if (String.IsNullOrEmpty(_reg._clone_uid))
+                            if (!String.IsNullOrEmpty(_reg._clone_uid))
                             {
 								string viaLink = "https://www.facebook.com/" + _reg._clone_uid;
 								bool addfriendrq = await friendRequestAsync(viaLink);
                                 if (addfriendrq)
                                 {
+									// Wait
 
                                 }
 							}
