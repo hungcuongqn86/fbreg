@@ -397,7 +397,7 @@ namespace GenCode
 			}
 		}
 
-		public async Task<bool> RegFaceBook()
+		public async Task<bool> RegFaceBook(bool useapi = false)
 		{
 			bool _status = false;
 			await Task.Run(async delegate ()
@@ -683,7 +683,14 @@ namespace GenCode
                     // Vươt han che
                     if (_clone_uid != "")
                     {
-						await this.OverLimit(_clone_uid, _tmpCoookie);
+                        if (useapi)
+                        {
+							await this.OverLimit(_clone_uid, _tmpCoookie);
+                        }
+                        else
+                        {
+							await this.OverLimitHandle();
+						}
 					}
 					this.log("=====================================");
 					this.log("-------------------------------------");
@@ -769,6 +776,126 @@ namespace GenCode
 				this.log(ex);
 				return Task.FromResult(false);
 			}
+		}
+
+		private async Task<bool> OverLimitHandle()
+		{
+			bool _rsCreatePage = false;
+			await Task.Run(delegate ()
+			{
+				try
+				{
+					this._driver.Navigate().GoToUrl("https://m.facebook.com/pages/creation_flow/?step=name&ref_type=pages_tab_launch_point");
+					WaitLoading();
+					WaitAjaxLoading(By.CssSelector("input[data-sigil='page_creation_name_input']"), 10);
+					Delay(1000);
+					IWebElement _inputPageName = this.getElement(By.CssSelector("input[data-sigil='page_creation_name_input']"));
+					bool flag14 = this.isValid(_inputPageName);
+					if (flag14)
+					{
+						// string _rNamePage = this._listKeyword[new Random(Guid.NewGuid().GetHashCode()).Next(0, this._listKeyword.Count)] + " " + this.randomNumber(2);
+						string _rNamePage = "HTCFunny " + new Random().Next(100000, 999999).ToString();
+						this.fillInput(_inputPageName, _rNamePage);
+
+						WaitAjaxLoading(By.CssSelector("button[type='submit']"), 3);
+						Delay(500);
+						IWebElement _submitBt = this.getElement(By.CssSelector("button[type='submit']"));
+						bool flag15 = this.isValid(_submitBt);
+						if (flag15)
+						{
+							_submitBt.Click();
+
+							WaitAjaxLoading(By.CssSelector("select[name='super_category_selector']"), 10);
+							Delay(1000);
+							SelectElement _selectCategory = new SelectElement(this.getElement(By.CssSelector("select[name='super_category_selector']")));
+							_selectCategory.SelectByIndex(new Random().Next(2, _selectCategory.Options.Count));
+							_selectCategory = new SelectElement(this.getElement(By.CssSelector("select[name='sub_category_selector']")));
+							_selectCategory.SelectByIndex(new Random().Next(2, _selectCategory.Options.Count));
+
+							WaitAjaxLoading(By.CssSelector("button[type='submit']"), 3);
+							Delay(500);
+							_submitBt = this.getElement(By.CssSelector("button[type='submit']"));
+							bool flag16 = this.isValid(_submitBt);
+							if (flag16)
+							{
+								_submitBt.Click();
+
+								WaitAjaxLoading(By.CssSelector("a[href*='/pages/creation_flow/?step=profile_pic']"), 20);
+								Delay(1000);
+								IWebElement _btNext = this.getElement(By.CssSelector("a[href*='/pages/creation_flow/?step=profile_pic']"));
+								bool flag17 = this.isValid(_btNext);
+								if (flag17)
+								{
+									_btNext.Click();
+								}
+
+								WaitAjaxLoading(By.CssSelector("a[href*='/pages/creation_flow/?step=cover_photo']"), 5);
+								Delay(1000);
+								_btNext = this.getElement(By.CssSelector("a[href*='/pages/creation_flow/?step=cover_photo']"));
+								bool flag18 = this.isValid(_btNext);
+								if (flag18)
+								{
+									_btNext.Click();
+								}
+
+								WaitAjaxLoading(By.CssSelector("button[type='submit']"), 8);
+								Delay(1000);
+								ReadOnlyCollection<IWebElement> _btSubmits = this._driver.FindElements(By.CssSelector("button[type='submit']"));
+								bool flag19 = _btSubmits.Count > 1;
+								if (flag19)
+								{
+									_btSubmits[1].Click();
+
+									WaitAjaxLoading(By.CssSelector("a[href*='https://m.facebook.com/ads/create/choose_objective']"), 10);
+									Delay(1000);
+									IWebElement _btAds = this.getElement(By.CssSelector("a[href*='https://m.facebook.com/ads/create/choose_objective']"));
+									bool flag20 = this.isValid(_btAds);
+									if (flag20)
+									{
+										_btAds.Click();
+
+										WaitAjaxLoading(By.CssSelector("a[href*='product=boosted_pagelike']"), 8);
+										Delay(1000);
+										IWebElement _pageLike = this.getElement(By.CssSelector("a[href*='product=boosted_pagelike']"));
+										bool flag21 = _pageLike != null;
+										if (flag21)
+										{
+											try
+											{
+												_pageLike.Click();
+											}
+											catch
+											{
+											}
+
+											Thread.Sleep(3000);
+											this._driver.Navigate().GoToUrl("https://m.facebook.com/certification/nondiscrimination/");
+
+											WaitAjaxLoading(By.CssSelector("button[use='primary'][type='submit']"), 5);
+											Delay(1000);
+											IWebElement _btSubmit = this.getElement(By.CssSelector("button[use='primary'][type='submit']"));
+											bool flag22 = this.isValid(_btSubmit);
+											if (flag22)
+											{
+												_btSubmit.Click();
+												Delay(1000);
+												_btSubmit.Click();
+												Delay(3000);
+												_rsCreatePage = true;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				catch (Exception ex2)
+				{
+					this.log(ex2);
+				}
+			});
+			return _rsCreatePage;
 		}
 
 		private string GetData(HttpRequest http, string url, string cookie = null, string userArgent = "")

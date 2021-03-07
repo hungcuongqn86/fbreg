@@ -40,6 +40,7 @@ namespace GenCode
 		public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
 		private FirebaseClient firebase;
+		private bool useapi = false;
 
 		// Token: 0x06000009 RID: 9 RVA: 0x00002194 File Offset: 0x00000394
 		public ManageChannel()
@@ -749,7 +750,7 @@ namespace GenCode
 		private void ManageChannel_Load(object sender, EventArgs e)
 		{
 			this.StartPosition = FormStartPosition.CenterScreen;
-			this.log("Version 2.0.6");
+			this.log("Version 2.0.8");
 			StartFirebase();
 		}
 
@@ -841,6 +842,7 @@ namespace GenCode
 			this.killChromePortable();
 
 			this.log("New session!");
+			useapi = this.checkBox1.Checked;
 			int _numberThread = (int)this.tbNumberThread.Value;
 			for (int i = 0; i < _numberThread; i++)
 			{
@@ -1102,6 +1104,7 @@ namespace GenCode
 			this.killChromePortable();
 
 			this.log("New session!");
+			useapi = this.checkBox1.Checked;
 			int _numberThread = (int)this.tbNumberThread.Value;
 			for (int i = 0; i < _numberThread; i++)
 			{
@@ -1117,7 +1120,7 @@ namespace GenCode
 					string chrome = DateTime.Now.ToString("MM_dd_yyyy_HH_mm_ss") + "_" + _reg._ThreadName;
 					initBrowse(chrome);
 					_reg.initChromePortable(chrome);
-					await _reg.RegFaceBook();
+					await _reg.RegFaceBook(useapi);
 				}).Start();
 			}
 		}

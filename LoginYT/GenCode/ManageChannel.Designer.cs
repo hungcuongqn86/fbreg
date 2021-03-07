@@ -36,6 +36,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.tbNumberThread)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,7 +50,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(340, 13);
+            this.button3.Location = new System.Drawing.Point(340, 12);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(78, 23);
             this.button3.TabIndex = 73;
@@ -203,11 +204,22 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(138, 19);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(43, 17);
+            this.checkBox1.TabIndex = 100;
+            this.checkBox1.Text = "API";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // ManageChannel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 569);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -269,5 +281,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
