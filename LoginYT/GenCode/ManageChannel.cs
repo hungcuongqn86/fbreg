@@ -862,7 +862,15 @@ namespace GenCode
 						bool bank = await _reg.addBank();
                         if (bank)
                         {
-							this.log("Share to VIA!");
+                            if (String.IsNullOrEmpty(_reg._clone_uid))
+                            {
+								string viaLink = "https://www.facebook.com/" + _reg._clone_uid;
+								bool addfriendrq = await friendRequestAsync(viaLink);
+                                if (addfriendrq)
+                                {
+
+                                }
+							}
 						}
                     }
                     else
@@ -873,6 +881,27 @@ namespace GenCode
 			}
 		}
 
+		private async Task<bool> friendRequestAsync(string viaLink)
+		{
+			try
+			{
+				this.log("Yêu cầu kết bạn: " + viaLink);
+				FireBaseMessage message = new FireBaseMessage();
+				int Timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+				message.Id = Timestamp.ToString();
+				message.Profile = viaLink;
+				message.Type = 1;
+				await firebase.Child("share/vps1").Child(message.Id).PutAsync(message);
+				this.log("Gửi yêu cầu kết bạn thành công!");
+				return true;
+			}
+			catch (Exception error)
+			{
+				this.log(error);
+				return false;
+			}
+		}
+		
 		private void initBrowse(string viaName)
 		{
 			try
@@ -1030,20 +1059,9 @@ namespace GenCode
 				return;
 			}
 
-			try
-			{
-				this.log("Yêu cầu kết bạn: " + this.textBox1.Text.Trim());
-				FireBaseMessage message = new FireBaseMessage();
-				int Timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-				message.Id = Timestamp.ToString();
-				message.Profile = this.textBox1.Text.Trim();
-				message.Type = 1;
-				await firebase.Child("share/vps1").Child(message.Id).PutAsync(message);
-				this.log("Gửi yêu cầu kết bạn thành công!");
-			}
-			catch (Exception error)
-			{
-				this.log(error);
+			bool addfriendrq = await friendRequestAsync(this.textBox1.Text.Trim());
+            if (!addfriendrq)
+            {
 				this.log("Gửi yêu cầu kết bạn KHÔNG thành công!");
 			}
 		}

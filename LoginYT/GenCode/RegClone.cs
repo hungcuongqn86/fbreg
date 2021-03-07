@@ -42,6 +42,7 @@ namespace GenCode
 		// (get) Token: 0x060000B6 RID: 182 RVA: 0x00009206 File Offset: 0x00007406
 		// (set) Token: 0x060000B7 RID: 183 RVA: 0x0000920E File Offset: 0x0000740E
 		public string _ThreadName { get; set; }
+		public string _clone_uid { get; set; }
 
 		// Token: 0x060000B8 RID: 184 RVA: 0x00009218 File Offset: 0x00007418
 		private string randomNumber(int length)
@@ -669,21 +670,20 @@ namespace GenCode
 						return;
 					}
 
-					string clone_uid = "";
 					string _tmpCoookie = "";
 					foreach (OpenQA.Selenium.Cookie _c in this._driver.Manage().Cookies.AllCookies)
 					{
                         if (_c.Name == "c_user")
                         {
-							clone_uid = _c.Value;
+							_clone_uid = _c.Value;
 						}
 						_tmpCoookie = string.Concat(new string[] {_tmpCoookie, _c.Name, "=", _c.Value, "; "});
 					}
 
                     // Vươt han che
-                    if (clone_uid != "")
+                    if (_clone_uid != "")
                     {
-						await this.OverLimit(clone_uid, _tmpCoookie);
+						await this.OverLimit(_clone_uid, _tmpCoookie);
 					}
 					this.log("=====================================");
 					this.log("-------------------------------------");
