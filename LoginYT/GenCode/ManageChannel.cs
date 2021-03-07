@@ -749,7 +749,7 @@ namespace GenCode
 		private void ManageChannel_Load(object sender, EventArgs e)
 		{
 			this.StartPosition = FormStartPosition.CenterScreen;
-			this.log("Version 2.0.5");
+			this.log("Version 2.0.6");
 			StartFirebase();
 		}
 
