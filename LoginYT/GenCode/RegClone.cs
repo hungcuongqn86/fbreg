@@ -717,7 +717,7 @@ namespace GenCode
 				string value = Regex.Match(data, "\"token\":\"(.*?)\"").Groups[1].Value;
 				string value2 = Regex.Match(data, "\"token\":\"(.*?)\"").NextMatch().Groups[1].Value;
 
-				string text5 = "imuabanshop " + new Random().Next(100000, 999999).ToString();
+				string text5 = "HTCFunny " + new Random().Next(100000, 999999).ToString();
 				url = "https://m.facebook.com/pages/create/edit_name/";
 				string data2 = string.Concat(new string[]
 				{
