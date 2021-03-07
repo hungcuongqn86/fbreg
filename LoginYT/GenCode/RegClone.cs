@@ -1054,8 +1054,9 @@ namespace GenCode
 			}
 		}
 
-		public async Task addBank()
+		public async Task<bool> addBank()
 		{
+			bool res = false;
 			await Task.Run(async delegate()
 			{
 				try
@@ -1094,189 +1095,149 @@ namespace GenCode
 						Delay(1000);
 					}
 					WaitLoading();
-
-					string addPaymentDivName = "//div[contains(@class, '48j0')]/div/button[contains(@class, '271k')]";
-					string addPaymentDivName1 = "//div[@role='button']/div/div/span[contains(@class, '66pz984')]";
-					Waitf2AjaxLoading(By.XPath(addPaymentDivName), By.XPath(addPaymentDivName1), 300);
+					string addPaymentDivName = "//div[@role='button']/div/div/span[contains(@class, '66pz984')]";
+					WaitAjaxLoading(By.XPath(addPaymentDivName), 300);
 					Delay(1000);
 
 					IWebElement addPamt = null;
 					ReadOnlyCollection<IWebElement> addPaymentDev = this._driver.FindElements(By.XPath(addPaymentDivName));
 					if (addPaymentDev.Count < 1)
-                    {
-						addPaymentDev = this._driver.FindElements(By.XPath(addPaymentDivName1));
-                        if (addPaymentDev.Count > 0)
-                        {
-							this.log("New banking form --- AAA");
-							addPamt = addPaymentDev[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+					{
+						this.log("Not Add Payment button!");
+						return;
+					}
 
-						}
+					addPamt = addPaymentDev[0];
+					if (!this.isValid(addPamt))
+					{
+						this.log("Add Payment Btn Valid!");
+						return;
+					}
+
+					addPamt.Click();
+					Delay(1000);
+					WaitLoading();
+					string addPaymentRadName = "//div[@role='button']/div/div/div/div/i[contains(@class, 'x_18fa0a')]";
+					WaitAjaxLoading(By.XPath(addPaymentRadName), 30);
+					Delay(1000);
+					ReadOnlyCollection<IWebElement> _listRadio = this._driver.FindElements(By.XPath(addPaymentRadName));
+					if (_listRadio.Count < 1)
+                    {
+						this.log("Not Banking Option!");
+						return;
+					}
+
+					_listRadio[0].FindElement(By.XPath("..")).FindElement(By.XPath(".."))
+							.FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
+
+					string btnNext1Name = "//div[@role='button' and contains(@class, 's1i5eluu')]/div/div/span[contains(@class, 'bwm1u5wc')]";
+					WaitAjaxLoading(By.XPath(btnNext1Name));
+					Delay(1000);
+					ReadOnlyCollection<IWebElement> _listButtons = this._driver.FindElements(By.XPath(btnNext1Name));
+					if (_listButtons.Count < 1)
+                    {
+						this.log("Not Banking Option Submit!");
+						return;
+					}
+					_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
+
+					Delay(1000);
+					WaitLoading();
+					string inputTagName = "//input[@type='text']";
+					WaitAjaxLoading(By.XPath(inputTagName));
+					ReadOnlyCollection<IWebElement> inputs = this._driver.FindElements(By.XPath(inputTagName));
+					if (inputs.Count > 5)
+					{
+						inputs[0].Click();
+						inputs[0].SendKeys(_tmpName);
+						Delay(500);
+						inputs[1].Click();
+						inputs[1].SendKeys(_iban);
+						Delay(500);
+						inputs[2].Click();
+						inputs[2].SendKeys(_BIC);
+						Delay(500);
+						inputs[3].Click();
+						inputs[3].SendKeys(_address);
+						Delay(500);
+						inputs[4].Click();
+						inputs[4].SendKeys(_city);
+						Delay(500);
+						inputs[5].Click();
+						inputs[5].SendKeys(_postCode);
+						Delay(500);
+						// checkbox
+						string inputAccountName = "//input[@type='checkbox']";
+						WaitAjaxLoading(By.XPath(inputAccountName));
+						Delay(500);
+						IWebElement input = this._driver.FindElement(By.XPath(inputAccountName));
+						input.Click();
                     }
                     else
                     {
-						addPamt = addPaymentDev[0];
-
+						this.log("Not Banking Form!");
+						return;
 					}
 
-					if (this.isValid(addPamt))
+					string btnNext2Name = btnNext1Name;
+					WaitAjaxLoading(By.XPath(btnNext2Name));
+					Delay(500);
+					_listButtons = this._driver.FindElements(By.XPath(btnNext2Name));
+					if (_listButtons.Count < 1)
 					{
-						addPamt.Click();
-						Delay(5000);
-						WaitLoading();
+						this.log("Not Banking Form Submit!");
+						return;
+					}
 
-						string addPaymentRadName = "//div[@role='button']/div/div/div/div/i[contains(@class, 'x_18fa0a')]";
-						WaitAjaxLoading(By.XPath(addPaymentRadName), 20);
-						Delay(3000);
-						ReadOnlyCollection<IWebElement> _listRadio = this._driver.FindElements(By.XPath(addPaymentRadName));
-						if (_listRadio.Count < 1)
-                        {
-							WaitAjaxLoading(By.XPath(addPaymentRadName), 10);
-							Delay(3000);
-							_listRadio = this._driver.FindElements(By.XPath(addPaymentRadName));
-						}
+					if (!this.isValid(_listButtons[0]))
+                    {
+						this.log("Banking Form Submit Btn Valid!");
+						return;
+					}
 
-						if (_listRadio.Count > 0)
-						{
-							_listRadio[0].FindElement(By.XPath("..")).FindElement(By.XPath(".."))
-							.FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
+					_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
 
-							string btnNext1Name = "//div[@role='button' and contains(@class, 's1i5eluu')]/div/div/span[contains(@class, 'bwm1u5wc')]";
-							WaitAjaxLoading(By.XPath(btnNext1Name));
-							Delay(1000);
-							ReadOnlyCollection<IWebElement> _listButtons = this._driver.FindElements(By.XPath(btnNext1Name));
-							if (_listButtons.Count > 0)
-							{
-								if (this.isValid(_listButtons[0]))
-								{
-									_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
+					// if hrsnp83r
+					string errorAlert = "//div[contains(@class, 'hrsnp83r')]";
+					WaitAjaxLoading(By.XPath(errorAlert), 5);
+					ReadOnlyCollection<IWebElement> _listAlerts = this._driver.FindElements(By.XPath(errorAlert));
+					if (_listAlerts.Count > 0)
+					{
+						inputs[5].Click();
+						clearWebField(inputs[5]);
+						inputs[5].SendKeys("1111");
+						Delay(500);
+						_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
+					}
 
-									Delay(1000);
-									WaitLoading();
-									string inputTagName = "//input[@type='text']";
-									WaitAjaxLoading(By.XPath(inputTagName));
-									ReadOnlyCollection<IWebElement> inputs = this._driver.FindElements(By.XPath(inputTagName));
-									if (inputs.Count > 5)
-									{
-										inputs[0].Click();
-										inputs[0].SendKeys(_tmpName);
-										Delay(500);
-										inputs[1].Click();
-										inputs[1].SendKeys(_iban);
-										Delay(500);
-										inputs[2].Click();
-										inputs[2].SendKeys(_BIC);
-										Delay(500);
-										inputs[3].Click();
-										inputs[3].SendKeys(_address);
-										Delay(500);
-										inputs[4].Click();
-										inputs[4].SendKeys(_city);
-										Delay(500);
-										inputs[5].Click();
-										inputs[5].SendKeys(_postCode);
-										Delay(500);
-										// checkbox
-										string inputAccountName = "//input[@type='checkbox']";
-										WaitAjaxLoading(By.XPath(inputAccountName));
-										Delay(500);
-										IWebElement input = this._driver.FindElement(By.XPath(inputAccountName));
-										input.Click();
-									}
+					// Check complate
+					string cplAlert = "//i[contains(@class, 'p_79DaOjpeIbN')]";
+					WaitAjaxLoading(By.XPath(cplAlert), 20);
+					ReadOnlyCollection<IWebElement> _cplAlert = this._driver.FindElements(By.XPath(cplAlert));
+					Delay(1000);
+					WaitLoading();
+					this._driver.Navigate().Refresh();
+					WaitLoading();
+					Waitf2AjaxLoading(By.CssSelector("button[type='button'][aria-disabled='true']"), By.CssSelector("div[role='button'][aria-disabled='true']"), 60);
+					Delay(1000);
 
-									string btnNext2Name = btnNext1Name;
-									WaitAjaxLoading(By.XPath(btnNext2Name));
-									Delay(500);
-									_listButtons = this._driver.FindElements(By.XPath(btnNext2Name));
-									if (_listButtons.Count > 0)
-									{
-										if (this.isValid(_listButtons[0]))
-										{
-											_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
-											// if hrsnp83r
-											string errorAlert = "//div[contains(@class, 'hrsnp83r')]";
-											WaitAjaxLoading(By.XPath(errorAlert), 5);
-											ReadOnlyCollection<IWebElement> _listAlerts = this._driver.FindElements(By.XPath(errorAlert));
-											if (_listAlerts.Count > 0)
-                                            {
-												inputs[5].Click();
-												clearWebField(inputs[5]);
-												inputs[5].SendKeys("1111");
-												Delay(500);
-												_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
-											}
+					IWebElement _btCheck = this.getElement(By.CssSelector("button[type='button'][aria-disabled='true']"));
+					if (_btCheck is null)
+					{
+						_btCheck = this.getElement(By.CssSelector("div[role='button'][aria-disabled='true']"));
+					}
 
-											Delay(8000);
-											WaitAjaxLoading(By.XPath(btnNext2Name), 10);
-											Delay(1000);
-											_listButtons = this._driver.FindElements(By.XPath(btnNext2Name));
-											if (_listButtons.Count > 0)
-											{
-												if (this.isValid(_listButtons[0]))
-												{
-													_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
-
-													Delay(5000);
-													this._driver.Navigate().Refresh();
-													Waitf2AjaxLoading(By.CssSelector("button[type='button'][aria-disabled='true']"), By.CssSelector("div[role='button'][aria-disabled='true']"), 60);
-													Delay(1000);
-													IWebElement _btCheck = this.getElement(By.CssSelector("button[type='button'][aria-disabled='true']"));
-													if (_btCheck is null)
-													{
-														_btCheck = this.getElement(By.CssSelector("div[role='button'][aria-disabled='true']"));
-													}
-
-													if (_btCheck != null)
-													{
-														this.log("BANK NOT OK!");
-													}
-													else
-													{
-														this.log("BANK OK!");
-													}
-													_btCheck = null;
-												}
-											}
-										}
-										else
-										{
-											this.log("Not Next button - 2!");
-										}
-									}
-									else
-									{
-										this.log("Not Next button - 2!");
-									}
-								}
-								else
-								{
-									this.log("Not Next button - 1!");
-								}
-							}
-							else
-							{
-								this.log("Not Next button - 1!");
-							}
-							_listButtons = null;
-                        }
-                        else
-                        {
-							this.log("Not banking radio!");
-						}
-						_listRadio = null;
+					if (_btCheck != null)
+					{
+						this.log("BANK NOT OK!");
+						return;
 					}
 					else
 					{
-						this.log("Not Add Payment button!");
+						this.log("BANK OK!");
+						res = true;
+						return;
 					}
-					_client = null;
-					_rs = null;
-					_tmpName = null;
-					_address = null;
-					_city = null;
-					_postCode = null;
-					_iban = null;
-					_BIC = null;
-					addPaymentDev = null;
 				}
 				catch (Exception ex2)
 				{
@@ -1285,6 +1246,8 @@ namespace GenCode
 
 				this.log("End banking!");
 			});
+
+			return res;
 		}
 
 		// Token: 0x060000C2 RID: 194 RVA: 0x00009690 File Offset: 0x00007890

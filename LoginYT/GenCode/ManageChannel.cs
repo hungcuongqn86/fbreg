@@ -859,7 +859,12 @@ namespace GenCode
 					bool regres = await _reg.RegFaceBook();
                     if (regres)
                     {
-                        await _reg.addBank();
+						bool bank = await _reg.addBank();
+                        if (bank)
+                        {
+							//
+							this.log("Share to VIA!");
+						}
                     }
                     else
                     {
