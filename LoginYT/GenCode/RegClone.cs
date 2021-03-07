@@ -1127,9 +1127,6 @@ namespace GenCode
 						return;
 					}
 
-					_listRadio[0].FindElement(By.XPath("..")).FindElement(By.XPath(".."))
-							.FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
-
 					string btnNext1Name = "//div[@role='button' and contains(@class, 's1i5eluu')]/div/div/span[contains(@class, 'bwm1u5wc')]";
 					WaitAjaxLoading(By.XPath(btnNext1Name));
 					Delay(1000);
@@ -1139,6 +1136,20 @@ namespace GenCode
 						this.log("Not Banking Option Submit!");
 						return;
 					}
+
+					IWebElement bankingopt = _listRadio[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+					if (!this.isValid(bankingopt))
+					{
+						this.log("Delay Banking Option Valid...!");
+						Delay(3000);
+					}
+					if (!this.isValid(bankingopt))
+					{
+						this.log("Banking Option Valid!");
+						return;
+					}
+					bankingopt.Click();
+					Delay(1000);
 					_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
 
 					Delay(1000);
