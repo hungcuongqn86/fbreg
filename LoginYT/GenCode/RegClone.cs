@@ -998,7 +998,7 @@ namespace GenCode
 					}
 
 					_count++;
-					if (_count >= 10)
+					if (_count >= 5)
 					{
 						goto Block_3;
 					}
