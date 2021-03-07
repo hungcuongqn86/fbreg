@@ -990,6 +990,55 @@ namespace GenCode
 			return result;
 		}
 
+		public Task<bool> shareAdsToVia(string clone_uid, string clone_adsID, string clone_cookie)
+		{
+			try
+			{
+				this.log("Lấy thông tin ads...");
+				string text = clone_uid; // this.data_clone.Rows[index].Cells["clone_uid"].Value.ToString();
+				string text4 = clone_adsID; // this.data_clone.Rows[index].Cells["clone_adsID"].Value.ToString();
+				string text3 = clone_cookie; // this.data_clone.Rows[index].Cells["clone_cookie"].Value.ToString();
+
+				string url = "https://m.facebook.com/";
+				string data = this.GetData(null, url, text3, this._userAgent);
+				string value = Regex.Match(data, "\"token\":\"(.*?)\"").Groups[1].Value;
+				string value2 = Regex.Match(data, "\"token\":\"(.*?)\"").NextMatch().Groups[1].Value;
+
+				url = "https://www.facebook.com/ads/manager/account_settings/information";
+				if (!string.IsNullOrEmpty(text4))
+				{
+					url = "https://www.facebook.com/ads/manager/account_settings/information/?act=" + text4;
+				}
+				string data3 = this.GetData(null, url, text3, this._userAgent2);
+
+				string text6 = Regex.Match(data3, "accountID:\"(.*?)\",accountName:\"(.*?)\"").Groups[1].Value;
+				string value5 = Regex.Match(data3, "accountID:\"(.*?)\",accountName:\"(.*?)\"").Groups[2].Value;
+				string value6 = Regex.Match(data3, "access_token:\"(.*?)\"").Groups[1].Value;
+
+
+				this.log("Gửi lời mời...");
+				url = string.Concat(new string[]
+				{
+						"https://graph.facebook.com/v7.0/",
+						this.bm_id,
+						"/client_ad_accounts?access_token=",
+						this.bm_token,
+						"&__cppo=1"
+				});
+
+				string data2 = "_reqName=object%3Abrand%2Fclient_ad_accounts&_reqSrc=AdAccountActions.brands&access_type=AGENCY&adaccount_id=act_" + text6 + "&locale=vi_VN&method=post&permitted_roles=%5B%5D&permitted_tasks=%5B%22ADVERTISE%22%2C%22ANALYZE%22%2C%22DRAFT%22%2C%22MANAGE%22%5D&pretty=0&suppress_http_code=1&xref=f25bf97b92021a";
+				this.PostData(null, url, data2, this._contentType, this._userAgent, text3);
+
+				this.log("Share thành công");
+				return Task.FromResult(true);
+			}
+			catch (Exception ex)
+			{
+				this.log(ex);
+				return Task.FromResult(false);
+			}
+		}
+
 		public Task<bool> shareAds(string clone_uid, string clone_adsID, string clone_cookie)
         {
 			try
