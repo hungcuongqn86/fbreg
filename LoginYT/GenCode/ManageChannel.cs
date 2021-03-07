@@ -878,8 +878,7 @@ namespace GenCode
                                         if (agreeF)
                                         {
 											// share to via
-
-
+											this.log("share to via!");
 										}
 									}
 								}

@@ -1225,31 +1225,34 @@ namespace GenCode
 					this._driver.Navigate().GoToUrl("https://www.facebook.com/friends");
 					WaitLoading();
 					Delay(1000);
-
 					string agreeTag = "//div[@role='button' and contains(@class, 's1i5eluu')]";
-					WaitAjaxLoading(By.XPath(agreeTag), 300);
-					Delay(1000);
-					ReadOnlyCollection<IWebElement> agreeFriendBtns = this._driver.FindElements(By.XPath(agreeTag));
-					if (agreeFriendBtns.Count < 1)
-					{
 
+					int _count = 0;
+					for (; ; )
+					{
+						Delay(5000);
+						WaitAjaxLoading(By.XPath(agreeTag),10);
+						Delay(1000);
+						ReadOnlyCollection<IWebElement> agreeFriendBtns = this._driver.FindElements(By.XPath(agreeTag));
+						if (agreeFriendBtns.Count > 0)
+						{
+							IWebElement agreeFriendBtn = agreeFriendBtns[0];
+							if (this.isValid(agreeFriendBtn))
+							{
+								agreeFriendBtn.Click();
+								res = true;
+								this.log("Agree to make friends!");
+								break;
+							}
+						}
+						_count++;
+						if (_count >= 5)
+						{
+							goto Block_3;
+						}
 					}
 
-					if (agreeFriendBtns.Count < 1)
-					{
-						this.log("Friends Btn Valid!");
-						return;
-					}
-
-					IWebElement agreeFriendBtn = agreeFriendBtns[0];
-					if (!this.isValid(agreeFriendBtn))
-					{
-						this.log("Agree Friends Btn Valid!");
-						return;
-					}
-
-					agreeFriendBtn.Click();
-					res = true;
+					Block_3:
 					return;
 				}
 				catch (Exception ex2)
@@ -1258,8 +1261,6 @@ namespace GenCode
 					return;
 				}
 			});
-
-			this.log("Agree to make friends!");
 			return res;
 		}
 		
