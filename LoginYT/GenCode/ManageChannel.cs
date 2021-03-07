@@ -875,8 +875,12 @@ namespace GenCode
 									if (addfriendrq)
 									{
 										bool agreeF = await _reg.agreeFriends();
-										// share to via
+                                        if (agreeF)
+                                        {
+											// share to via
 
+
+										}
 									}
 								}
 							}

@@ -1222,7 +1222,34 @@ namespace GenCode
 			{
 				try
 				{
-					
+					this._driver.Navigate().GoToUrl("https://www.facebook.com/friends");
+					WaitLoading();
+					Delay(1000);
+
+					string agreeTag = "//div[@role='button' and contains(@class, 's1i5eluu')]";
+					WaitAjaxLoading(By.XPath(agreeTag), 300);
+					Delay(1000);
+					ReadOnlyCollection<IWebElement> agreeFriendBtns = this._driver.FindElements(By.XPath(agreeTag));
+					if (agreeFriendBtns.Count < 1)
+					{
+
+					}
+
+					if (agreeFriendBtns.Count < 1)
+					{
+						this.log("Friends Btn Valid!");
+						return;
+					}
+
+					IWebElement agreeFriendBtn = agreeFriendBtns[0];
+					if (!this.isValid(agreeFriendBtn))
+					{
+						this.log("Agree Friends Btn Valid!");
+						return;
+					}
+
+					agreeFriendBtn.Click();
+					res = true;
 					return;
 				}
 				catch (Exception ex2)
