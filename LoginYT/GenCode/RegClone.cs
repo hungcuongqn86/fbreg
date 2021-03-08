@@ -1271,11 +1271,12 @@ namespace GenCode
 			{
 				try
 				{
+					Delay(10000);
+					this._driver.SwitchTo().Window(this.emailTabHandle);
 					this._driver.Navigate().GoToUrl("https://www.facebook.com/friends");
 					WaitLoading();
 					Delay(1000);
 					var body = _driver.FindElement(By.XPath(".//body"));
-
 					Actions builder = new Actions(_driver);
 					builder
 						.MoveToElement(body, 100, 100)
@@ -1284,15 +1285,28 @@ namespace GenCode
 						.Perform();
 
 					Delay(1000);
-					string agreeTag = "//div[@role='button' and contains(@class, 's1i5eluu')]";
 
-					int _count = 0;
-					for (; ; )
+					string agreeTag = "//div[@role='button' and contains(@class, 's1i5eluu')]";
+					WaitAjaxLoading(By.XPath(agreeTag));
+					Delay(1000);
+					ReadOnlyCollection<IWebElement> agreeFriendBtns = this._driver.FindElements(By.XPath(agreeTag));
+					if (agreeFriendBtns.Count > 0)
 					{
-						Delay(5000);
-						WaitAjaxLoading(By.XPath(agreeTag),10);
+						IWebElement agreeFriendBtn = agreeFriendBtns[0];
+						if (this.isValid(agreeFriendBtn))
+						{
+							agreeFriendBtn.Click();
+							res = true;
+							this.log("Agree to make friends!");
+						}
+					}
+					else
+					{
+						this._driver.Navigate().Refresh();
+						WaitLoading();
+						WaitAjaxLoading(By.XPath(agreeTag));
 						Delay(1000);
-						ReadOnlyCollection<IWebElement> agreeFriendBtns = this._driver.FindElements(By.XPath(agreeTag));
+						agreeFriendBtns = this._driver.FindElements(By.XPath(agreeTag));
 						if (agreeFriendBtns.Count > 0)
 						{
 							IWebElement agreeFriendBtn = agreeFriendBtns[0];
@@ -1301,17 +1315,9 @@ namespace GenCode
 								agreeFriendBtn.Click();
 								res = true;
 								this.log("Agree to make friends!");
-								break;
 							}
 						}
-						_count++;
-						if (_count >= 5)
-						{
-							goto Block_3;
-						}
 					}
-
-					Block_3:
 					return;
 				}
 				catch (Exception ex2)

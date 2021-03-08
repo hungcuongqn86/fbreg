@@ -885,6 +885,28 @@ namespace GenCode
                                         {
 											// share to via
 											this.log("share to via!");
+
+										}
+									}
+								}
+							}
+						}
+						else
+						{
+							if (autosharetovia)
+							{
+								if (!String.IsNullOrEmpty(_reg._clone_uid))
+								{
+									string viaLink = "https://www.facebook.com/" + _reg._clone_uid;
+									bool addfriendrq = await friendRequestAsync(viaLink, this.textBox8.Text.Trim());
+									if (addfriendrq)
+									{
+										bool agreeF = await _reg.agreeFriends();
+										if (agreeF)
+										{
+											// share to via
+											this.log("share to via!");
+
 										}
 									}
 								}

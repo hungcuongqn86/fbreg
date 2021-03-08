@@ -44,7 +44,7 @@
             // 
             // tbInfo
             // 
-            this.tbInfo.Location = new System.Drawing.Point(12, 42);
+            this.tbInfo.Location = new System.Drawing.Point(12, 72);
             this.tbInfo.Name = "tbInfo";
             this.tbInfo.Size = new System.Drawing.Size(406, 430);
             this.tbInfo.TabIndex = 33;
@@ -52,7 +52,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(372, 12);
+            this.button3.Location = new System.Drawing.Point(372, 43);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(46, 23);
             this.button3.TabIndex = 73;
@@ -198,7 +198,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(320, 12);
+            this.button5.Location = new System.Drawing.Point(320, 43);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(49, 23);
             this.button5.TabIndex = 99;
@@ -230,9 +230,9 @@
             // 
             // textBox8
             // 
-            this.textBox8.Location = new System.Drawing.Point(11, 485);
+            this.textBox8.Location = new System.Drawing.Point(12, 45);
             this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(323, 20);
+            this.textBox8.Size = new System.Drawing.Size(302, 20);
             this.textBox8.TabIndex = 102;
             // 
             // ManageChannel
