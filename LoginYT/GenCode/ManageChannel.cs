@@ -874,32 +874,60 @@ namespace GenCode
                         if (addbanking)
                         {
 							bool bank = await _reg.addBank();
-						}
-
-						if (autosharetovia)
-						{
-							if (!String.IsNullOrEmpty(_reg._clone_uid))
+							if (bank)
 							{
-								string viaid = this.textBox8.Text.Trim();
-								bool addfriendrq = await friendRequestAsync("https://www.facebook.com/" + _reg._clone_uid, viaid);
-								if (addfriendrq)
+								if (autosharetovia)
 								{
-									bool agreeF = await _reg.agreeFriends();
-									if (agreeF)
+									if (!String.IsNullOrEmpty(_reg._clone_uid))
 									{
-										// share to via
-										this.log("share to via!");
-										bool share = await _reg.shareAdsToVia(viaid);
-										// Share BM
-										if (share)
+										string viaid = this.textBox8.Text.Trim();
+										bool addfriendrq = await friendRequestAsync("https://www.facebook.com/" + _reg._clone_uid, viaid);
+										if (addfriendrq)
 										{
-											await shareBmAsync(_reg._ads_id, viaid);
+											bool agreeF = await _reg.agreeFriends();
+											if (agreeF)
+											{
+												// share to via
+												this.log("share to via!");
+												bool share = await _reg.shareAdsToVia(viaid);
+												// Share BM
+												if (share)
+												{
+													await shareBmAsync(_reg._ads_id, viaid);
+												}
+											}
+										}
+									}
+								}
+							}
+                        }
+                        else
+                        {
+							if (autosharetovia)
+							{
+								if (!String.IsNullOrEmpty(_reg._clone_uid))
+								{
+									string viaid = this.textBox8.Text.Trim();
+									bool addfriendrq = await friendRequestAsync("https://www.facebook.com/" + _reg._clone_uid, viaid);
+									if (addfriendrq)
+									{
+										bool agreeF = await _reg.agreeFriends();
+										if (agreeF)
+										{
+											// share to via
+											this.log("share to via!");
+											bool share = await _reg.shareAdsToVia(viaid);
+											// Share BM
+											if (share)
+											{
+												await shareBmAsync(_reg._ads_id, viaid);
+											}
 										}
 									}
 								}
 							}
 						}
-					}
+                    }
                     else
                     {
 						_reg.QuitDriver();
