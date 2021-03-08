@@ -676,11 +676,24 @@ namespace GenCode
 							await this.OverLimitHandle();
 						}
 					}
+					// Lay adsid
+					this._driver.Navigate().GoToUrl("https://www.facebook.com/ads/manager/accounts");
+					Delay(1000);
+					WaitLoading();
+					Delay(1000);
+					string tdAdsInfo = "//td[@data-testid='all_accounts_table_account_id_cell']";
+					ReadOnlyCollection<IWebElement> tdAdsInfoObjs = this._driver.FindElements(By.XPath(tdAdsInfo));
+					if (tdAdsInfoObjs.Count > 0)
+					{
+						_ads_id = tdAdsInfoObjs.First().Text;
+					}
+
 					this.log("=====================================");
 					this.log("-------------------------------------");
 					this.log("Email: " + _randomEmail);
 					this.log("Pass: " + _passAcc);
 					this.log("Email khôi phục: " + _mailKhoiPhuc);
+					this.log("AdsID: " + _ads_id);
 					this.log("Cookie: " + _cookie);
 					this.log("-------------------------------------");
 					this.log("=====================================");
@@ -978,6 +991,26 @@ namespace GenCode
 		{
 			try
 			{
+                if (string.IsNullOrEmpty(_ads_id))
+                {
+					this._driver.Navigate().GoToUrl("https://www.facebook.com/ads/manager/accounts");
+					Delay(1000);
+					WaitLoading();
+					Delay(1000);
+					string tdAdsInfo = "//td[@data-testid='all_accounts_table_account_id_cell']";
+					ReadOnlyCollection<IWebElement> tdAdsInfoObjs = this._driver.FindElements(By.XPath(tdAdsInfo));
+					if (tdAdsInfoObjs.Count > 0)
+					{
+						_ads_id = tdAdsInfoObjs.First().Text;
+					}
+				}
+
+				if (string.IsNullOrEmpty(_ads_id))
+                {
+					this.log("AdsId false!");
+					return Task.FromResult(false);
+				}
+
 				string url = "https://www.facebook.com/ads/manager/account_settings/information/?act=" + _ads_id + "&pid=p1&page=account_settings&tab=account_information";
 				string adsAccount = this.GetData(null, url, _cookie, this._userAgent2);
 				string access_token = Regex.Match(adsAccount, "access_token:\"(.*?)\"").Groups[1].Value;
@@ -990,14 +1023,15 @@ namespace GenCode
 						access_token,
 						"&method=post"
 				});
-
+				// this.log(url);
 				string postdata = "_reqName=adaccount%2Fusers&_reqSrc=AdsPermissionDialogController" +
 					"&account_id=" + _ads_id +
 					"&include_headers=false" +
 					"&uid=" + viaid +
 					"&role=281423141961500" + 
 					"&locale=:&method=post&pretty=0&suppress_http_code=1&xref=";
-				this.PostData(null, url, postdata, this._contentType, this._userAgent2, _cookie);
+				string post = this.PostData(null, url, postdata, this._contentType, this._userAgent2, _cookie);
+				// this.log(post);
 				return Task.FromResult(true);
 			}
 			catch (Exception ex)
@@ -1331,181 +1365,189 @@ namespace GenCode
 					Delay(5000);
 					WaitLoading();
 
-					IWebElement _btAddStart = this.getElement(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgb(24, 119, 242)']"));
-					if (this.isValid(_btAddStart))
+                    IWebElement _btAddStart = this.getElement(By.CssSelector("button[type='button'][aria-disabled='false'][style*='background-color: rgb(24, 119, 242)']"));
+                    if (this.isValid(_btAddStart))
                     {
-						_btAddStart.Click();
-						Delay(1000);
-					}
-					WaitLoading();
-					string addPaymentDivName = "//div[@role='button']/div/div/span[contains(@class, '66pz984')]";
-					WaitAjaxLoading(By.XPath(addPaymentDivName), 300);
-					Delay(1000);
+                        _btAddStart.Click();
+                        Delay(1000);
+                    }
+                    WaitLoading();
+                    string addPaymentDivName = "//div[@role='button']/div/div/span[contains(@class, '66pz984')]";
+                    WaitAjaxLoading(By.XPath(addPaymentDivName), 300);
+                    Delay(1000);
 
-					IWebElement addPamt = null;
-					ReadOnlyCollection<IWebElement> addPaymentDev = this._driver.FindElements(By.XPath(addPaymentDivName));
-					if (addPaymentDev.Count < 1)
-					{
-						this.log("Not Add Payment button!");
-						return;
-					}
-
-					addPamt = addPaymentDev[0];
-					if (!this.isValid(addPamt))
-					{
-						this.log("Add Payment Btn Valid!");
-						return;
-					}
-
-					addPamt.Click();
-					Delay(1000);
-					WaitLoading();
-					string addPaymentRadName = "//div[@role='button']/div/div/div/div/i[contains(@class, 'x_18fa0a')]";
-					WaitAjaxLoading(By.XPath(addPaymentRadName), 30);
-					Delay(1000);
-					ReadOnlyCollection<IWebElement> _listRadio = this._driver.FindElements(By.XPath(addPaymentRadName));
-					if (_listRadio.Count < 1)
+                    IWebElement addPamt = null;
+                    ReadOnlyCollection<IWebElement> addPaymentDev = this._driver.FindElements(By.XPath(addPaymentDivName));
+                    if (addPaymentDev.Count < 1)
                     {
-						this.log("Not Banking Option!");
-						return;
-					}
+                        this.log("Not Add Payment button!");
+                        return;
+                    }
 
-					string btnNext1Name = "//div[@role='button' and contains(@class, 's1i5eluu')]/div/div/span[contains(@class, 'bwm1u5wc')]";
-					WaitAjaxLoading(By.XPath(btnNext1Name));
-					Delay(1000);
-					ReadOnlyCollection<IWebElement> _listButtons = this._driver.FindElements(By.XPath(btnNext1Name));
-					if (_listButtons.Count < 1)
+                    addPamt = addPaymentDev[0];
+                    if (!this.isValid(addPamt))
                     {
-						this.log("Not Banking Option Submit!");
-						return;
-					}
+                        this.log("Add Payment Btn Valid!");
+                        return;
+                    }
 
-					IWebElement bankingopt = _listRadio[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
-					if (!this.isValid(bankingopt))
-					{
-						this.log("Delay Banking Option Valid...!");
-						Delay(3000);
-						if (!this.isValid(bankingopt))
-						{
-							this.log("Delay Banking Option Valid...!");
-							Delay(3000);
-							if (!this.isValid(bankingopt))
-							{
-								this.log("Delay Banking Option Valid...!");
-								Delay(3000);
-							}
-						}
-					}
-					if (!this.isValid(bankingopt))
-					{
-						this.log("Banking Option Valid!");
-						return;
-					}
-					bankingopt.Click();
-					Delay(1000);
-					_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
+                    addPamt.Click();
+                    Delay(1000);
+                    WaitLoading();
+                    string addPaymentRadName = "//div[@role='button']/div/div/div/div/i[contains(@class, 'x_18fa0a')]";
+                    WaitAjaxLoading(By.XPath(addPaymentRadName), 30);
+                    Delay(1000);
+                    ReadOnlyCollection<IWebElement> _listRadio = this._driver.FindElements(By.XPath(addPaymentRadName));
+                    if (_listRadio.Count < 1)
+                    {
+                        this.log("Not Banking Option!");
+                        return;
+                    }
 
-					Delay(1000);
-					WaitLoading();
-					string inputTagName = "//input[@type='text']";
-					WaitAjaxLoading(By.XPath(inputTagName));
-					ReadOnlyCollection<IWebElement> inputs = this._driver.FindElements(By.XPath(inputTagName));
-					if (inputs.Count > 5)
-					{
-						inputs[0].Click();
-						inputs[0].SendKeys(_tmpName);
-						Delay(500);
-						inputs[1].Click();
-						inputs[1].SendKeys(_iban);
-						Delay(500);
-						inputs[2].Click();
-						inputs[2].SendKeys(_BIC);
-						Delay(500);
-						inputs[3].Click();
-						inputs[3].SendKeys(_address);
-						Delay(500);
-						inputs[4].Click();
-						inputs[4].SendKeys(_city);
-						Delay(500);
-						inputs[5].Click();
-						inputs[5].SendKeys(_postCode);
-						Delay(500);
-						// checkbox
-						string inputAccountName = "//input[@type='checkbox']";
-						WaitAjaxLoading(By.XPath(inputAccountName));
-						Delay(500);
-						IWebElement input = this._driver.FindElement(By.XPath(inputAccountName));
-						input.Click();
+                    string btnNext1Name = "//div[@role='button' and contains(@class, 's1i5eluu')]/div/div/span[contains(@class, 'bwm1u5wc')]";
+                    WaitAjaxLoading(By.XPath(btnNext1Name));
+                    Delay(1000);
+                    ReadOnlyCollection<IWebElement> _listButtons = this._driver.FindElements(By.XPath(btnNext1Name));
+                    if (_listButtons.Count < 1)
+                    {
+                        this.log("Not Banking Option Submit!");
+                        return;
+                    }
+
+                    IWebElement bankingopt = _listRadio[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath(".."));
+                    if (!this.isValid(bankingopt))
+                    {
+                        this.log("Delay Banking Option Valid...!");
+                        Delay(3000);
+                        if (!this.isValid(bankingopt))
+                        {
+                            this.log("Delay Banking Option Valid...!");
+                            Delay(3000);
+                            if (!this.isValid(bankingopt))
+                            {
+                                this.log("Delay Banking Option Valid...!");
+                                Delay(3000);
+                            }
+                        }
+                    }
+                    if (!this.isValid(bankingopt))
+                    {
+                        this.log("Banking Option Valid!");
+                        return;
+                    }
+                    bankingopt.Click();
+                    Delay(1000);
+                    _listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
+
+                    Delay(1000);
+                    WaitLoading();
+                    string inputTagName = "//input[@type='text']";
+                    WaitAjaxLoading(By.XPath(inputTagName));
+                    ReadOnlyCollection<IWebElement> inputs = this._driver.FindElements(By.XPath(inputTagName));
+                    if (inputs.Count > 5)
+                    {
+                        inputs[0].Click();
+                        inputs[0].SendKeys(_tmpName);
+                        Delay(500);
+                        inputs[1].Click();
+                        inputs[1].SendKeys(_iban);
+                        Delay(500);
+                        inputs[2].Click();
+                        inputs[2].SendKeys(_BIC);
+                        Delay(500);
+                        inputs[3].Click();
+                        inputs[3].SendKeys(_address);
+                        Delay(500);
+                        inputs[4].Click();
+                        inputs[4].SendKeys(_city);
+                        Delay(500);
+                        inputs[5].Click();
+                        inputs[5].SendKeys(_postCode);
+                        Delay(500);
+                        // checkbox
+                        string inputAccountName = "//input[@type='checkbox']";
+                        WaitAjaxLoading(By.XPath(inputAccountName));
+                        Delay(500);
+                        IWebElement input = this._driver.FindElement(By.XPath(inputAccountName));
+                        input.Click();
                     }
                     else
                     {
-						this.log("Not Banking Form!");
-						return;
-					}
+                        this.log("Not Banking Form!");
+                        return;
+                    }
 
-					string btnNext2Name = btnNext1Name;
-					WaitAjaxLoading(By.XPath(btnNext2Name));
-					Delay(500);
-					_listButtons = this._driver.FindElements(By.XPath(btnNext2Name));
-					if (_listButtons.Count < 1)
-					{
-						this.log("Not Banking Form Submit!");
-						return;
-					}
-
-					if (!this.isValid(_listButtons[0]))
+                    string btnNext2Name = btnNext1Name;
+                    WaitAjaxLoading(By.XPath(btnNext2Name));
+                    Delay(500);
+                    _listButtons = this._driver.FindElements(By.XPath(btnNext2Name));
+                    if (_listButtons.Count < 1)
                     {
-						this.log("Banking Form Submit Btn Valid!");
-						return;
-					}
+                        this.log("Not Banking Form Submit!");
+                        return;
+                    }
 
-					_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
+                    if (!this.isValid(_listButtons[0]))
+                    {
+                        this.log("Banking Form Submit Btn Valid!");
+                        return;
+                    }
 
-					// if hrsnp83r
-					string errorAlert = "//div[contains(@class, 'hrsnp83r')]";
-					WaitAjaxLoading(By.XPath(errorAlert), 5);
-					ReadOnlyCollection<IWebElement> _listAlerts = this._driver.FindElements(By.XPath(errorAlert));
-					if (_listAlerts.Count > 0)
-					{
-						inputs[5].Click();
-						clearWebField(inputs[5]);
-						inputs[5].SendKeys("1111");
-						Delay(500);
-						_listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
-					}
+                    _listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
 
-					// Check complate
-					string cplAlert = "//i[contains(@class, 'p_79DaOjpeIbN')]";
-					WaitAjaxLoading(By.XPath(cplAlert), 20);
-					ReadOnlyCollection<IWebElement> _cplAlert = this._driver.FindElements(By.XPath(cplAlert));
-					Delay(1000);
-					WaitLoading();
-					this._driver.Navigate().Refresh();
-					WaitLoading();
-					Waitf2AjaxLoading(By.CssSelector("button[type='button'][aria-disabled='true']"), By.CssSelector("div[role='button'][aria-disabled='true']"), 60);
-					Delay(1000);
+                    // if hrsnp83r
+                    string errorAlert = "//div[contains(@class, 'hrsnp83r')]";
+                    WaitAjaxLoading(By.XPath(errorAlert), 5);
+                    ReadOnlyCollection<IWebElement> _listAlerts = this._driver.FindElements(By.XPath(errorAlert));
+                    if (_listAlerts.Count > 0)
+                    {
+                        inputs[5].Click();
+                        clearWebField(inputs[5]);
+                        inputs[5].SendKeys("1111");
+                        Delay(500);
+                        _listButtons[0].FindElement(By.XPath("..")).FindElement(By.XPath("..")).FindElement(By.XPath("..")).Click();
+                    }
 
-					// check res
-					string resCheck = "//div[contains(@class, 'o1teu6h')]/div/div/span[contains(@class, '66pz984')]";
-					WaitAjaxLoading(By.XPath(resCheck), 8);
-					ReadOnlyCollection<IWebElement> _btCheck = this._driver.FindElements(By.XPath(resCheck));
+                    // Check complate
+                    string cplAlert = "//i[contains(@class, 'p_79DaOjpeIbN')]";
+                    WaitAjaxLoading(By.XPath(cplAlert), 20);
+                    ReadOnlyCollection<IWebElement> _cplAlert = this._driver.FindElements(By.XPath(cplAlert));
+                    Delay(1000);
+                    WaitLoading();
+                    this._driver.Navigate().Refresh();
+                    WaitLoading();
+                    Waitf2AjaxLoading(By.CssSelector("button[type='button'][aria-disabled='true']"), By.CssSelector("div[role='button'][aria-disabled='true']"), 60);
+                    Delay(1000);
+
+                    // check res
+                    string resCheck = "//div[contains(@class, 'o1teu6h')]/div/div/span[contains(@class, '66pz984')]";
+                    WaitAjaxLoading(By.XPath(resCheck), 8);
+                    ReadOnlyCollection<IWebElement> _btCheck = this._driver.FindElements(By.XPath(resCheck));
                     if (_btCheck.Count > 0)
                     {
-						string bankIcon = "//i[contains(@class, 'x_18fa0a')]";
-						WaitAjaxLoading(By.XPath(bankIcon));
-						Delay(1000);
-						ReadOnlyCollection<IWebElement> _bankIcon = this._driver.FindElements(By.XPath(bankIcon));
-						if (_bankIcon.Count > 0)
-						{
-							this.log("BANK OK!");
-							string pageSource = this._driver.PageSource;
-							_ads_id = Regex.Match(pageSource, "\"adAccountId\":\"(.*?)\"").Groups[1].Value;
+                        string bankIcon = "//i[contains(@class, 'x_18fa0a')]";
+                        WaitAjaxLoading(By.XPath(bankIcon));
+                        Delay(1000);
+                        ReadOnlyCollection<IWebElement> _bankIcon = this._driver.FindElements(By.XPath(bankIcon));
+                        if (_bankIcon.Count > 0)
+                        {
+                            this.log("BANK OK!");
+							this._driver.Navigate().GoToUrl("https://www.facebook.com/ads/manager/accounts");
+							Delay(1000);
+							WaitLoading();
+							Delay(1000);
+							string tdAdsInfo = "//td[@data-testid='all_accounts_table_account_id_cell']";
+							ReadOnlyCollection<IWebElement> tdAdsInfoObjs = this._driver.FindElements(By.XPath(tdAdsInfo));
+							if (tdAdsInfoObjs.Count > 0)
+							{
+								_ads_id = tdAdsInfoObjs.First().Text;
+							}
 							res = true;
-							return;
-						}
-					}
-					return;
-				}
+                            return;
+                        }
+                    }
+                    return;
+                }
 				catch (Exception ex2)
 				{
 					this.log(ex2);

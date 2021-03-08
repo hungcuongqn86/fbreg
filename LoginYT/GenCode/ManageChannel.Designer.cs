@@ -39,6 +39,7 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.textBox8 = new System.Windows.Forms.TextBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.tbNumberThread)).BeginInit();
             this.SuspendLayout();
             // 
@@ -209,7 +210,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(138, 19);
+            this.checkBox1.Location = new System.Drawing.Point(321, 18);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(43, 17);
             this.checkBox1.TabIndex = 100;
@@ -221,7 +222,7 @@
             this.checkBox2.AutoSize = true;
             this.checkBox2.Checked = true;
             this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(187, 19);
+            this.checkBox2.Location = new System.Drawing.Point(235, 18);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(72, 17);
             this.checkBox2.TabIndex = 101;
@@ -235,11 +236,24 @@
             this.textBox8.Size = new System.Drawing.Size(302, 20);
             this.textBox8.TabIndex = 102;
             // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Checked = true;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.Location = new System.Drawing.Point(144, 18);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(86, 17);
+            this.checkBox3.TabIndex = 103;
+            this.checkBox3.Text = "Add banking";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
             // ManageChannel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 569);
+            this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.textBox8);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
@@ -307,5 +321,6 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.CheckBox checkBox3;
     }
 }
