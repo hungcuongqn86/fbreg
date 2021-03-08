@@ -1274,6 +1274,15 @@ namespace GenCode
 					this._driver.Navigate().GoToUrl("https://www.facebook.com/friends");
 					WaitLoading();
 					Delay(1000);
+					var body = _driver.FindElement(By.XPath(".//body"));
+
+					Actions builder = new Actions(_driver);
+					builder
+						.MoveToElement(body, 100, 100)
+						.Click()
+						.Build()
+						.Perform();
+
 					string agreeTag = "//div[@role='button' and contains(@class, 's1i5eluu')]";
 
 					int _count = 0;
