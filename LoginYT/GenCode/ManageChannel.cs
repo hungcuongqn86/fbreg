@@ -896,32 +896,6 @@ namespace GenCode
 								}
 							}
 						}
-						else
-						{
-							if (autosharetovia)
-							{
-								if (!String.IsNullOrEmpty(_reg._clone_uid))
-								{
-									string viaid = this.textBox8.Text.Trim();
-									bool addfriendrq = await friendRequestAsync("https://www.facebook.com/" + _reg._clone_uid, viaid);
-									if (addfriendrq)
-									{
-										bool agreeF = await _reg.agreeFriends();
-										if (agreeF)
-										{
-											// share to via
-											this.log("share to via!");
-											bool share = await _reg.shareAdsToVia(viaid);
-											// Share BM
-											if (share)
-											{
-												await shareBmAsync(_reg._ads_id, viaid);
-											}
-										}
-									}
-								}
-							}
-						}
                     }
                     else
                     {
