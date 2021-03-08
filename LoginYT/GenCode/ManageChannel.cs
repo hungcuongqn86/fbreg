@@ -836,6 +836,12 @@ namespace GenCode
 		// Token: 0x06000034 RID: 52 RVA: 0x000033A4 File Offset: 0x000015A4
 		private void button3_Click(object sender, EventArgs e)
 		{
+			if (this.textBox8.Text.Trim().Length == 0)
+			{
+				MessageBox.Show("Phải nhập id VIA nhận!", "Thông báo!", MessageBoxButtons.OK);
+				return;
+			}
+
 			this.log("Kill Chrome!");
 			this.killChrome();
 
@@ -871,7 +877,7 @@ namespace GenCode
 								if (!String.IsNullOrEmpty(_reg._clone_uid))
 								{
 									string viaLink = "https://www.facebook.com/" + _reg._clone_uid;
-									bool addfriendrq = await friendRequestAsync(viaLink);
+									bool addfriendrq = await friendRequestAsync(viaLink, this.textBox8.Text.Trim());
 									if (addfriendrq)
 									{
 										bool agreeF = await _reg.agreeFriends();
@@ -893,17 +899,17 @@ namespace GenCode
 			}
 		}
 
-		private async Task<bool> friendRequestAsync(string viaLink)
+		private async Task<bool> friendRequestAsync(string cloneLink, string viaId)
 		{
 			try
 			{
-				this.log("Yêu cầu kết bạn: " + viaLink);
+				this.log("Yêu cầu kết bạn: " + cloneLink);
 				FireBaseMessage message = new FireBaseMessage();
 				int Timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
 				message.Id = Timestamp.ToString();
-				message.Profile = viaLink;
+				message.Profile = cloneLink;
 				message.Type = 1;
-				await firebase.Child("share/vps1").Child(message.Id).PutAsync(message);
+				await firebase.Child("share/" + viaId).Child(message.Id).PutAsync(message);
 				this.log("Gửi yêu cầu kết bạn thành công!");
 				return true;
 			}
@@ -1065,13 +1071,19 @@ namespace GenCode
 
         private async void button1_Click_1(object sender, EventArgs e)
         {
+			if (this.textBox8.Text.Trim().Length == 0)
+			{
+				MessageBox.Show("Phải nhập id VIA nhận!", "Thông báo!", MessageBoxButtons.OK);
+				return;
+			}
+
 			if (this.textBox1.Text.Trim().Length == 0)
 			{
 				MessageBox.Show("Phải nhập link facebook cá nhân!", "Thông báo!", MessageBoxButtons.OK);
 				return;
 			}
 
-			bool addfriendrq = await friendRequestAsync(this.textBox1.Text.Trim());
+			bool addfriendrq = await friendRequestAsync(this.textBox1.Text.Trim(), this.textBox8.Text.Trim());
             if (!addfriendrq)
             {
 				this.log("Gửi yêu cầu kết bạn KHÔNG thành công!");

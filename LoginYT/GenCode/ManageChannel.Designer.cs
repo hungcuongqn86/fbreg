@@ -38,6 +38,7 @@
             this.button5 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.tbNumberThread)).BeginInit();
             this.SuspendLayout();
             // 
@@ -163,21 +164,21 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(11, 488);
+            this.textBox1.Location = new System.Drawing.Point(11, 511);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(323, 20);
             this.textBox1.TabIndex = 95;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(11, 523);
+            this.textBox2.Location = new System.Drawing.Point(11, 536);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(323, 20);
             this.textBox2.TabIndex = 96;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(340, 485);
+            this.button1.Location = new System.Drawing.Point(340, 508);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(78, 23);
             this.button1.TabIndex = 97;
@@ -187,7 +188,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(341, 521);
+            this.button2.Location = new System.Drawing.Point(341, 534);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(78, 23);
             this.button2.TabIndex = 98;
@@ -227,11 +228,19 @@
             this.checkBox2.Text = "ShareAds";
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(11, 485);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(323, 20);
+            this.textBox8.TabIndex = 102;
+            // 
             // ManageChannel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 569);
+            this.Controls.Add(this.textBox8);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.button5);
@@ -297,5 +306,6 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.TextBox textBox8;
     }
 }
