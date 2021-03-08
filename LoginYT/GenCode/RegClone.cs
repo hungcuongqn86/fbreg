@@ -655,14 +655,13 @@ namespace GenCode
 						return;
 					}
 
-					string _tmpCoookie = "";
 					foreach (OpenQA.Selenium.Cookie _c in this._driver.Manage().Cookies.AllCookies)
 					{
                         if (_c.Name == "c_user")
                         {
 							_clone_uid = _c.Value;
 						}
-						_tmpCoookie = string.Concat(new string[] {_tmpCoookie, _c.Name, "=", _c.Value, "; "});
+						_cookie = string.Concat(new string[] { _cookie, _c.Name, "=", _c.Value, "; "});
 					}
 
                     // Vươt han che
@@ -670,7 +669,7 @@ namespace GenCode
                     {
                         if (useapi)
                         {
-							await this.OverLimit(_clone_uid, _tmpCoookie);
+							await this.OverLimit(_clone_uid, _cookie);
                         }
                         else
                         {
@@ -682,7 +681,7 @@ namespace GenCode
 					this.log("Email: " + _randomEmail);
 					this.log("Pass: " + _passAcc);
 					this.log("Email khôi phục: " + _mailKhoiPhuc);
-					this.log("Cookie: " + _tmpCoookie);
+					this.log("Cookie: " + _cookie);
 					this.log("-------------------------------------");
 					this.log("=====================================");
 					_status = true;
@@ -979,31 +978,26 @@ namespace GenCode
 		{
 			try
 			{
-				string clone_cookie = "";
-				string url = "https://www.facebook.com/ads/manager/campaign";
-				string data = this.GetData(null, url, clone_cookie, this._userAgent2);
-				string adAccountId = Regex.Match(data, "\"adAccountId\":\"(.*?)\"").Groups[1].Value;
-
-				url = "https://www.facebook.com/ads/manager/account_settings/information/?act=" + adAccountId + "&pid=p1&page=account_settings&tab=account_information";
-				string adsAccount = this.GetData(null, url, clone_cookie, this._userAgent2);
+				string url = "https://www.facebook.com/ads/manager/account_settings/information/?act=" + _ads_id + "&pid=p1&page=account_settings&tab=account_information";
+				string adsAccount = this.GetData(null, url, _cookie, this._userAgent2);
 				string access_token = Regex.Match(adsAccount, "access_token:\"(.*?)\"").Groups[1].Value;
 
 				url = string.Concat(new string[]
 				{
 						"https://graph.facebook.com/v9.0/",
-						"act_" + adAccountId,
+						"act_" + _ads_id,
 						"/users?_reqName=adaccount/users&access_token=",
 						access_token,
 						"&method=post"
 				});
 
 				string postdata = "_reqName=adaccount%2Fusers&_reqSrc=AdsPermissionDialogController" +
-					"&account_id=" + adAccountId +
+					"&account_id=" + _ads_id +
 					"&include_headers=false" +
 					"&uid=" + viaid +
 					"&role=281423141961500" + 
 					"&locale=:&method=post&pretty=0&suppress_http_code=1&xref=";
-				this.PostData(null, url, postdata, this._contentType, this._userAgent2, clone_cookie);
+				this.PostData(null, url, postdata, this._contentType, this._userAgent2, _cookie);
 				return Task.FromResult(true);
 			}
 			catch (Exception ex)
@@ -1504,6 +1498,8 @@ namespace GenCode
 						if (_bankIcon.Count > 0)
 						{
 							this.log("BANK OK!");
+							string pageSource = this._driver.PageSource;
+							_ads_id = Regex.Match(pageSource, "\"adAccountId\":\"(.*?)\"").Groups[1].Value;
 							res = true;
 							return;
 						}
