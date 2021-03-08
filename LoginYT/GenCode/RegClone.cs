@@ -20,31 +20,16 @@ using xNet;
 
 namespace GenCode
 {
-	// Token: 0x02000025 RID: 37
 	public class RegClone
 	{
-		// Token: 0x1700000C RID: 12
-		// (get) Token: 0x060000B0 RID: 176 RVA: 0x000091D3 File Offset: 0x000073D3
-		// (set) Token: 0x060000B1 RID: 177 RVA: 0x000091DB File Offset: 0x000073DB
 		public List<string> _listKeyword { get; set; }
-
-		// Token: 0x1700000D RID: 13
-		// (get) Token: 0x060000B2 RID: 178 RVA: 0x000091E4 File Offset: 0x000073E4
-		// (set) Token: 0x060000B3 RID: 179 RVA: 0x000091EC File Offset: 0x000073EC
 		public bool _closeChrome { get; set; }
-
-		// Token: 0x1700000E RID: 14
-		// (get) Token: 0x060000B4 RID: 180 RVA: 0x000091F5 File Offset: 0x000073F5
-		// (set) Token: 0x060000B5 RID: 181 RVA: 0x000091FD File Offset: 0x000073FD
 		public RegClone.LogDelegate _logDelegate { get; set; }
-
-		// Token: 0x1700000F RID: 15
-		// (get) Token: 0x060000B6 RID: 182 RVA: 0x00009206 File Offset: 0x00007406
-		// (set) Token: 0x060000B7 RID: 183 RVA: 0x0000920E File Offset: 0x0000740E
 		public string _ThreadName { get; set; }
 		public string _clone_uid { get; set; }
+		public string _ads_id { get; set; }
+		public string _cookie { get; set; }
 
-		// Token: 0x060000B8 RID: 184 RVA: 0x00009218 File Offset: 0x00007418
 		private string randomNumber(int length)
 		{
 			string s = "";

@@ -885,7 +885,12 @@ namespace GenCode
                                         {
 											// share to via
 											this.log("share to via!");
-											await _reg.shareAdsToVia(viaid);
+											bool share = await _reg.shareAdsToVia(viaid);
+											// Share BM
+											if (share)
+											{
+												await shareBmAsync(_reg._ads_id, viaid);
+											}
 										}
 									}
 								}
@@ -906,7 +911,12 @@ namespace GenCode
 										{
 											// share to via
 											this.log("share to via!");
-											await _reg.shareAdsToVia(viaid);
+											bool share = await _reg.shareAdsToVia(viaid);
+											// Share BM
+											if (share)
+											{
+												await shareBmAsync(_reg._ads_id, viaid);
+											}
 										}
 									}
 								}
@@ -941,7 +951,28 @@ namespace GenCode
 				return false;
 			}
 		}
-		
+
+		private async Task<bool> shareBmAsync(string adsId, string viaId)
+		{
+			try
+			{
+				this.log("Share to BM: " + adsId);
+				FireBaseMessage message = new FireBaseMessage();
+				int Timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+				message.Id = Timestamp.ToString();
+				message.Profile = adsId;
+				message.Type = 2;
+				await firebase.Child("share/" + viaId).Child(message.Id).PutAsync(message);
+				this.log("Share Ads thành công!");
+				return true;
+			}
+			catch (Exception error)
+			{
+				this.log(error);
+				return false;
+			}
+		}
+
 		private void initBrowse(string viaName)
 		{
 			try
