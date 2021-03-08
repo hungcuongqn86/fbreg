@@ -1125,21 +1125,15 @@ namespace GenCode
 				return;
 			}
 
-			try
+			if (this.textBox8.Text.Trim().Length == 0)
 			{
-				this.log("Share Ads: " + this.textBox2.Text.Trim());
-				// Post share
-				FireBaseMessage message = new FireBaseMessage();
-				int Timestamp = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-				message.Id = Timestamp.ToString();
-				message.Profile = this.textBox2.Text.Trim();
-				message.Type = 2;
-				await firebase.Child("share/vps1").Child(message.Id).PutAsync(message);
-				this.log("Share Ads thành công!");
+				MessageBox.Show("Phải nhập id VIA nhận!", "Thông báo!", MessageBoxButtons.OK);
+				return;
 			}
-			catch (Exception error)
+
+			bool addfriendrq = await shareBmAsync(this.textBox2.Text.Trim(), this.textBox8.Text.Trim());
+			if (!addfriendrq)
 			{
-				this.log(error);
 				this.log("Share Ads KHÔNG thành công!");
 			}
 		}
