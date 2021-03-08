@@ -1283,6 +1283,7 @@ namespace GenCode
 						.Build()
 						.Perform();
 
+					Delay(1000);
 					string agreeTag = "//div[@role='button' and contains(@class, 's1i5eluu')]";
 
 					int _count = 0;
