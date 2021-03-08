@@ -63,7 +63,7 @@ namespace GenCode
 		private string _userAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.5 Mobile/15E148 Snapchat/10.77.5.59 (like Safari/604.1)";
 
 		// Token: 0x0400005C RID: 92
-		private string _userAgent2 = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36";
+		private string _userAgent2 = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36";
 
 		// Token: 0x0400005D RID: 93
 		private string _contentType = "application/x-www-form-urlencoded";
@@ -990,46 +990,35 @@ namespace GenCode
 			return result;
 		}
 
-		public Task<bool> shareAdsToVia(string clone_uid, string clone_adsID, string clone_cookie)
+		public Task<bool> shareAdsToVia(string viaid)
 		{
 			try
 			{
-				this.log("Lấy thông tin ads...");
-				string text = clone_uid; // this.data_clone.Rows[index].Cells["clone_uid"].Value.ToString();
-				string text4 = clone_adsID; // this.data_clone.Rows[index].Cells["clone_adsID"].Value.ToString();
-				string text3 = clone_cookie; // this.data_clone.Rows[index].Cells["clone_cookie"].Value.ToString();
+				string clone_cookie = "";
+				string url = "https://www.facebook.com/ads/manager/campaign";
+				string data = this.GetData(null, url, clone_cookie, this._userAgent2);
+				string adAccountId = Regex.Match(data, "\"adAccountId\":\"(.*?)\"").Groups[1].Value;
 
-				string url = "https://m.facebook.com/";
-				string data = this.GetData(null, url, text3, this._userAgent);
-				string value = Regex.Match(data, "\"token\":\"(.*?)\"").Groups[1].Value;
-				string value2 = Regex.Match(data, "\"token\":\"(.*?)\"").NextMatch().Groups[1].Value;
+				url = "https://www.facebook.com/ads/manager/account_settings/information/?act=" + adAccountId + "&pid=p1&page=account_settings&tab=account_information";
+				string adsAccount = this.GetData(null, url, clone_cookie, this._userAgent2);
+				string access_token = Regex.Match(adsAccount, "access_token:\"(.*?)\"").Groups[1].Value;
 
-				url = "https://www.facebook.com/ads/manager/account_settings/information";
-				if (!string.IsNullOrEmpty(text4))
-				{
-					url = "https://www.facebook.com/ads/manager/account_settings/information/?act=" + text4;
-				}
-				string data3 = this.GetData(null, url, text3, this._userAgent2);
-
-				string text6 = Regex.Match(data3, "accountID:\"(.*?)\",accountName:\"(.*?)\"").Groups[1].Value;
-				string value5 = Regex.Match(data3, "accountID:\"(.*?)\",accountName:\"(.*?)\"").Groups[2].Value;
-				string value6 = Regex.Match(data3, "access_token:\"(.*?)\"").Groups[1].Value;
-
-
-				this.log("Gửi lời mời...");
 				url = string.Concat(new string[]
 				{
-						"https://graph.facebook.com/v7.0/",
-						this.bm_id,
-						"/client_ad_accounts?access_token=",
-						this.bm_token,
-						"&__cppo=1"
+						"https://graph.facebook.com/v9.0/",
+						"act_" + adAccountId,
+						"/users?_reqName=adaccount/users&access_token=",
+						access_token,
+						"&method=post"
 				});
 
-				string data2 = "_reqName=object%3Abrand%2Fclient_ad_accounts&_reqSrc=AdAccountActions.brands&access_type=AGENCY&adaccount_id=act_" + text6 + "&locale=vi_VN&method=post&permitted_roles=%5B%5D&permitted_tasks=%5B%22ADVERTISE%22%2C%22ANALYZE%22%2C%22DRAFT%22%2C%22MANAGE%22%5D&pretty=0&suppress_http_code=1&xref=f25bf97b92021a";
-				this.PostData(null, url, data2, this._contentType, this._userAgent, text3);
-
-				this.log("Share thành công");
+				string postdata = "_reqName=adaccount%2Fusers&_reqSrc=AdsPermissionDialogController" +
+					"&account_id=" + adAccountId +
+					"&include_headers=false" +
+					"&uid=" + viaid +
+					"&role=281423141961500" + 
+					"&locale=:&method=post&pretty=0&suppress_http_code=1&xref=";
+				this.PostData(null, url, postdata, this._contentType, this._userAgent2, clone_cookie);
 				return Task.FromResult(true);
 			}
 			catch (Exception ex)

@@ -876,8 +876,8 @@ namespace GenCode
                             {
 								if (!String.IsNullOrEmpty(_reg._clone_uid))
 								{
-									string viaLink = "https://www.facebook.com/" + _reg._clone_uid;
-									bool addfriendrq = await friendRequestAsync(viaLink, this.textBox8.Text.Trim());
+									string viaid = this.textBox8.Text.Trim();
+									bool addfriendrq = await friendRequestAsync("https://www.facebook.com/" + _reg._clone_uid, viaid);
 									if (addfriendrq)
 									{
 										bool agreeF = await _reg.agreeFriends();
@@ -885,7 +885,7 @@ namespace GenCode
                                         {
 											// share to via
 											this.log("share to via!");
-
+											await _reg.shareAdsToVia(viaid);
 										}
 									}
 								}
@@ -897,8 +897,8 @@ namespace GenCode
 							{
 								if (!String.IsNullOrEmpty(_reg._clone_uid))
 								{
-									string viaLink = "https://www.facebook.com/" + _reg._clone_uid;
-									bool addfriendrq = await friendRequestAsync(viaLink, this.textBox8.Text.Trim());
+									string viaid = this.textBox8.Text.Trim();
+									bool addfriendrq = await friendRequestAsync("https://www.facebook.com/" + _reg._clone_uid, viaid);
 									if (addfriendrq)
 									{
 										bool agreeF = await _reg.agreeFriends();
@@ -906,7 +906,7 @@ namespace GenCode
 										{
 											// share to via
 											this.log("share to via!");
-
+											await _reg.shareAdsToVia(viaid);
 										}
 									}
 								}
