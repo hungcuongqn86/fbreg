@@ -28,6 +28,7 @@ using System.IO.Compression;
 using System.Configuration;
 using Firebase.Database;
 using Firebase.Database.Query;
+using System.Linq;
 
 namespace GenCode
 {
@@ -753,6 +754,27 @@ namespace GenCode
 		{
 			this.StartPosition = FormStartPosition.CenterScreen;
 			this.log("Version 2.0.8");
+
+			// get init data
+			string m_Path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\init\\init.txt";
+			if (File.Exists(m_Path))
+			{
+				string line1 = File.ReadLines(m_Path).First();
+				if (line1.Trim().Length > 5)
+				{
+					string[] initdata = line1.Split('|');
+					if (initdata.Length >= 5)
+					{
+						this.tbNumberThread.Text = initdata[0];
+						this.checkBox3.Checked = bool.Parse(initdata[1]);
+						this.checkBox2.Checked = bool.Parse(initdata[2]);
+						this.checkBox1.Checked = bool.Parse(initdata[3]);
+						this.textBox8.Text = initdata[4];
+					}
+				}
+			}
+
+			// 
 			StartFirebase();
 		}
 
@@ -834,6 +856,25 @@ namespace GenCode
 			this.log(_s);
 		}
 
+		private void saveInitParam(int numberThread, bool addBanking, bool shareAds, bool useAPI, string viaid)
+		{
+			string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			try
+			{
+				string logPath = m_exePath + "\\init";
+				bool exists = System.IO.Directory.Exists(logPath);
+				if (!exists)
+					System.IO.Directory.CreateDirectory(logPath);
+
+				string initdata = string.Format("{0}|{1}|{2}|{3}|{4}", numberThread, addBanking, shareAds, useAPI, viaid);
+				File.WriteAllText(logPath + "\\init.txt", initdata);
+			}
+			catch
+			{
+				this.log("Save Init Param --- False!");
+			}
+		}
+
 		// Token: 0x06000034 RID: 52 RVA: 0x000033A4 File Offset: 0x000015A4
 		private void button3_Click(object sender, EventArgs e)
 		{
@@ -842,18 +883,19 @@ namespace GenCode
 				MessageBox.Show("Phải nhập id VIA nhận!", "Thông báo!", MessageBoxButtons.OK);
 				return;
 			}
-
-			this.log("Kill Chrome!");
-			this.killChrome();
-
-			this.log("Delete ChromePortable!");
-			this.killChromePortable();
-
-			this.log("New session!");
+			string viaid = this.textBox8.Text.Trim();
 			useapi = this.checkBox1.Checked;
 			autosharetovia = this.checkBox2.Checked;
 			addbanking = this.checkBox3.Checked;
 			int _numberThread = (int)this.tbNumberThread.Value;
+			saveInitParam(_numberThread, addbanking, autosharetovia, useapi, viaid);
+
+			this.log("Kill Chrome!");
+			this.killChrome();
+			this.log("Delete ChromePortable!");
+			this.killChromePortable();
+			this.log("New session!");
+
 			for (int i = 0; i < _numberThread; i++)
 			{
 				string _threadName = i.ToString().Clone().ToString();
@@ -880,7 +922,6 @@ namespace GenCode
 								{
 									if (!String.IsNullOrEmpty(_reg._clone_uid))
 									{
-										string viaid = this.textBox8.Text.Trim();
 										bool addfriendrq = await friendRequestAsync("https://www.facebook.com/" + _reg._clone_uid, viaid);
 										if (addfriendrq)
 										{
@@ -907,7 +948,6 @@ namespace GenCode
 							{
 								if (!String.IsNullOrEmpty(_reg._clone_uid))
 								{
-									string viaid = this.textBox8.Text.Trim();
 									bool addfriendrq = await friendRequestAsync("https://www.facebook.com/" + _reg._clone_uid, viaid);
 									if (addfriendrq)
 									{
