@@ -1650,6 +1650,9 @@ namespace GenCode
 				builder.Replace("\\", "/");
 				options.AddArgument("--user-data-dir=" + builder.ToString() + "/Data/profile");
 				options.AddArgument("profile-directory=Default");
+				options.AddArguments("--disable-extensions"); // to disable extension
+				options.AddArguments("--disable-notifications"); // to disable notification
+				options.AddArguments("--disable-application-cache"); // to disable cache
 				// options.AddArgument("--no-sandbox");
 				// options.AddArgument("--start-maximized");
 				// options.AddArgument("--headless");
