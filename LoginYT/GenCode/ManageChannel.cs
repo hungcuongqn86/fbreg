@@ -875,7 +875,34 @@ namespace GenCode
 			}
 		}
 
-		// Token: 0x06000034 RID: 52 RVA: 0x000033A4 File Offset: 0x000015A4
+		private void change911Proxy()
+		{
+			try
+			{
+				Process process = new Process
+				{
+					StartInfo = new ProcessStartInfo
+					{
+						CreateNoWindow = false,
+						UseShellExecute = true,
+						FileName = "AutoProxyTool.exe",
+						WorkingDirectory = @"D:\regClone\3.26\ProxyTool\",
+						WindowStyle = ProcessWindowStyle.Normal,
+						Arguments = "-changeproxy/FR"
+					}
+				};
+				process.Start();
+				process.WaitForExit();
+				this.log("Change proxy --- Done!");
+			}
+			catch (Exception error)
+			{
+				this.log(error);
+				this.log("Change proxy --- False!");
+				return;
+			}
+		}
+
 		private void button3_Click(object sender, EventArgs e)
 		{
 			if (this.textBox8.Text.Trim().Length == 0)
@@ -1237,6 +1264,11 @@ namespace GenCode
 					await _reg.RegFaceBook(useapi);
 				}).Start();
 			}
+		}
+
+		private void button6_Click(object sender, EventArgs e)
+		{
+			change911Proxy();
 		}
 	}
 }
